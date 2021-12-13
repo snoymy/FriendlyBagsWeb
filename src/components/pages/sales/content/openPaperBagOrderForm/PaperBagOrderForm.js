@@ -29,7 +29,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
             <table>
                 <thead>
                     <tr>
-                        <th><label style={{paddingLeft:"50px"}}>ลำดับที่</label></th>
+                        <th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>
                         <th><label>ชนิดกระดาษ</label></th>
                         <th><label>ความหน้ากระดาษ</label></th>
                         <th><label>ขนาดถุง</label></th>
@@ -52,36 +52,61 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                         <>
                         <tr key={index} id={index}>
                             <td>
-                                <label style={{paddingLeft:"50px"}}>{index+1}</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>
                             </td>
                             <td>
                                 <select name="paperType" id="paperType" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "paperType")}>
-                                    <option value="HD">HD</option>
-                                    <option value="KI">KI</option>
+                                    {
+                                        menuValue.paperType.map((menuItem) => {
+                                            return (
+                                                <option value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </td>
                             <td>
                                 <select name="paperThickness" id="paperThickness" value={item.paperThickness} onChange={(event) => onDetailChange(event.target.value, index, "paperThickness")}>
-                                    <option value="HD">HD</option>
-                                    <option value="KI">KI</option>
+                                    {
+                                        menuValue.paperThickness.map((menuItem) => {
+                                            return (
+                                                <option value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </td>
                             <td>
                                 <select name="bagSize" id="bagSize" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "bagSize")}>
-                                    <option value="HD">HD</option>
-                                    <option value="KI">KI</option>
+                                    {
+                                        menuValue.bagSize.map((menuItem) => {
+                                            return (
+                                                <option value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </td>
                             <td>
                                 <select name="shape" id="shape" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "shape")}>
-                                    <option value="HD">HD</option>
-                                    <option value="KI">KI</option>
+                                    {
+                                        menuValue.shape.map((menuItem) => {
+                                            return (
+                                                <option value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </td>
                             <td>
                                 <select name="bagEars" id="bagEars" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "bagEars")}>
-                                    <option value="HD">HD</option>
-                                    <option value="KI">KI</option>
+                                    {
+                                        menuValue.bagEars.map((menuItem) => {
+                                            return (
+                                                <option value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </td>
                             <td>
@@ -92,8 +117,13 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                             </td>
                             <td>
                                 <select name="color" id="" value={item.color} onChange={(event) => onDetailChange(event.target.value, index, "color")}>
-                                    <option value="HD">HD</option>
-                                    <option value="KI">KI</option>
+                                    {
+                                        menuValue.color.map((menuItem) => {
+                                            return (
+                                                <option value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </td>
                             <td>
@@ -114,11 +144,11 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                             <td>
                                 <label></label>
                             </td>
-                            <td style={{textAlign:"center"}}>
+                            <td style={{textAlign:"center", verticalAlign: "top"}}>
                                 <label>Comment:</label>
                             </td>
-                            <td style={{textAlign:"left"}} colSpan="3">
-                                <textarea style={{width:"100%"}} value={item.comment} onChange={(event) => onDetailChange(event.target.value, index, "comment")}/>
+                            <td style={{textAlign:"left", verticalAlign: "top"}} colSpan="4">
+                                <textarea style={{width:"100%", height:"70px"}} value={item.comment} onChange={(event) => onDetailChange(event.target.value, index, "comment")}/>
                             </td>
                         </tr>
                         <tr>

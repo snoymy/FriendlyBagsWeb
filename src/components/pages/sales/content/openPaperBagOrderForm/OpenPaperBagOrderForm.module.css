@@ -17,3 +17,11 @@
     padding: 5px 10px;
     margin-right: 5px;
 }
+
+.paper-bag-order-form-clear-button{
+    color: white;
+    background-color: #ee0000;
+    border: none;
+    border: 2px solid #ee0000 !important;
+    font-weight: bold;
+}

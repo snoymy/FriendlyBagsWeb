@@ -20,10 +20,10 @@ const OpenPaperBagOrderForm = () => {
         bagSize:["S", "M", "L"],
         shape:["shape1", "shape2"],
         bagEars:["bagear1", "bagear2"],
-        colorAmount:"",
+        colorAmount:"1",
         baseColor:false,
         color:["color1", "color2"],
-        quantity:"",
+        quantity:"1",
         price:"",
         comment:"",
     }
@@ -50,19 +50,19 @@ const OpenPaperBagOrderForm = () => {
         )
     }
 
-    const addItem = () => {
+    const addNewOrder = () => {
         let newOrder = {
-            paperType:"HD",
-            paperThickness:"",
-            bagSize:"M",
-            shape:"",
-            bagEars:"",
-            colorAmount:"",
-            baseColor:"",
-            color:"",
-            quantity:"",
-            price:"",
-            comment:"",
+            paperType: menuValue.paperType[0],
+            paperThickness: menuValue.paperThickness[0],
+            bagSize: menuValue.bagSize[0],
+            shape: menuValue.shape[0],
+            bagEars: menuValue.bagEars[0],
+            colorAmount: menuValue.colorAmount,
+            baseColor: menuValue.baseColor,
+            color: menuValue.color[0],
+            quantity: menuValue.quantity,
+            price: menuValue.price,
+            comment: menuValue.comment,
         }
         setOrderDetails([...orderDetails, newOrder])
     }
@@ -72,7 +72,7 @@ const OpenPaperBagOrderForm = () => {
     }
 
     return (
-        <div>
+        <div style={{marginBottom:"100px"}}>
             {/*}
             <input type="radio" id="newCustomer" name="customerType" value="newCustomer" defaultChecked onChange={(event)=>setCustomerType(event.target.value)}/>
             <label htmlFor="newCustomer">ลูกค้าใหม่</label>
@@ -87,9 +87,9 @@ const OpenPaperBagOrderForm = () => {
                     <NameForm nameForm={nameForm} setNameForm={setNameForm}/>
                     <PaperBagOrder orderDetails={orderDetails} setOrderDetails={setOrderDetails} menuValue={menuValue}/>
 
-                    <button type="button" onClick={addItem}>+Add</button>
-                    <button type="button" onClick={clearItem}>Clear</button>
+                    <button type="button" onClick={addNewOrder}>+Add Order</button>
                     <button type="button">Order history</button>
+                    <button className={styles["paper-bag-order-form-clear-button"]} type="button" onClick={clearItem}>Clear All Order</button>
                     <button type="button" onClick={() => {alert("confirm")}}>Confirm</button>
                 </form> 
             </div>

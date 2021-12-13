@@ -1,21 +1,15 @@
-.display-row{
-    display: flex;
-    margin-bottom: 50px;
+.paper-bag-order-form td{
+    padding-bottom: 50px;
 }
-
-.input-area{
-    display: flex;
-}
-
 .paper-bag-order-form label{
     text-align: right;
     margin-right: 10px;
-    width: 100px;
 }
 
 .paper-bag-order-form input{
     border: none;
     border-bottom: 2px solid #e0e0e0;
+    margin-right: 30px;
 }
 
 .paper-bag-order-form input:focus{
@@ -24,7 +18,6 @@
 }
 
 .paper-bag-order-form textarea{
-    margin-right: 50px;
     border-radius: 5px;
     border: 2px solid #e0e0e0;
 }
