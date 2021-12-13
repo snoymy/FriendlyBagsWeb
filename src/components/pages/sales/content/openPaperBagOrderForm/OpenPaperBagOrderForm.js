@@ -2,6 +2,7 @@ import {useState } from "react"
 import PaperBagOrder from "./PaperBagOrderForm"
 import NameForm from "./NameForm"
 import styles from "./OpenPaperBagOrderForm.module.css"
+import "./container.css"
 
 const OpenPaperBagOrderForm = () => {
     const [customerType, setCustomerType] = useState("newCustomer") 
@@ -82,8 +83,8 @@ const OpenPaperBagOrderForm = () => {
             {customerType === "oldCustomer" ? NameSearch():<></>}
             {*/}
             <div className={styles["paper-bag-order-form"]}>
-                <h1>ใบสั่งพิมพ์ ORDER กระดาษ</h1>
-                <form onSubmit={(event) => {event.preventDefault()}}>
+                <center><h1>ใบสั่งพิมพ์ ORDER กระดาษ</h1></center>
+                <div className="container">
                     <NameForm nameForm={nameForm} setNameForm={setNameForm}/>
                     <PaperBagOrder orderDetails={orderDetails} setOrderDetails={setOrderDetails} menuValue={menuValue}/>
 
@@ -91,7 +92,7 @@ const OpenPaperBagOrderForm = () => {
                     <button type="button">Order history</button>
                     <button className={styles["paper-bag-order-form-clear-button"]} type="button" onClick={clearItem}>Clear All Order</button>
                     <button type="button" onClick={() => {alert("confirm")}}>Confirm</button>
-                </form> 
+                </div>
             </div>
         </div>
     )

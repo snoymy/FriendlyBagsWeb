@@ -1,6 +1,10 @@
 .paper-bag-order-form td{
     padding-bottom: 50px;
 }
+
+.paper-bag-order-form tr{
+}
+
 .paper-bag-order-form label{
     text-align: right;
     margin-right: 10px;

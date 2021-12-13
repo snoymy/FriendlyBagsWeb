@@ -9,11 +9,10 @@ const NameForm = ({nameForm, setNameForm}) => {
 
     return (
         <div className={styles["paper-bag-order-form"]}>
-                            <input type="text" id="fname" name="fname" value={nameForm.fname} onChange={(event) => onFormChange(event, "fname")} style={{minWidth: "300px"}}/>
             <table>
                 <tbody>
                     <tr>
-                        <td>
+                        <td style={{textAlign: "right"}}>
                             <label>นามลูกค้า:</label> 
                         </td>
                         <td>
