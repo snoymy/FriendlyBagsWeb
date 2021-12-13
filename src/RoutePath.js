@@ -1,22 +1,16 @@
-import {Switch, Route} from "react-router"
-import {Redirect} from "react-router-dom/cjs/react-router-dom.min"
+import {Routes, Route, Navigate} from "react-router-dom"
 import Login from "./components/pages/login/Login"
+import Sales from "./components/pages/sales/Sales"
 
 const RoutePath = () => {
     return (
-        <>
-        <Switch>
-            <Route exact path="/">
-                <Redirect to="/login">
-                    <Login/>
-                </Redirect>
-            </Route> 
-            <Route path="/login">
-                <Login/>
-            </Route> 
-        </Switch>
-        </>
+        <Routes>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/sales/:type" element={<Sales/>}/>
+            <Route path="/sales" element={<Sales/>}/>
+            <Route path="/" element={<Navigate to="login"/>}/>
+        </Routes>
     )
 }
 
-export default RoutePath;
+export {RoutePath, Navigate};

@@ -1,0 +1,51 @@
+.paper-bag-order{
+    height: 300px;
+    overflow-y: scroll;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.paper-bag-order th{
+    text-align: center;
+    padding: 20px 10px 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #fff;
+    min-width: 100px;
+}
+
+.paper-bag-order td{
+    text-align: center;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.paper-bag-order select{
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 5px 5px;
+    margin-right: 5px;
+    width: 90%;
+}
+
+.paper-bag-order input{
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 5px 5px;
+    margin-right: 5px;
+    width: 70px;
+}
+
+.paper-bag-order-delete-button{
+    color: white;
+    background-color: #ee0000;
+    border: none;
+    font-weight: bold;
+}

@@ -1,13 +1,12 @@
-import Login from "./components/pages/login/Login";
-import Banner from "./components/ui/banner/Banner";
-import Navbar from "./components/ui/navbar/Navbar";
-//import RoutePath from "./RoutePath";
+import {RoutePath} from "./RoutePath";
+import { BrowserRouter as Router} from "react-router-dom";
 
 const App = () => {
     return (
         <>
-            <Banner/>
-            <Navbar/>
+            <Router>
+                <RoutePath/>
+            </Router>
         </>
     )
 }

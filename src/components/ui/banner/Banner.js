@@ -1,10 +1,11 @@
 import "./Banner.css"
 
-const Banner = (props) => {
+const Banner = ({role}) => {
     return (
         <div className="top-banner">
-            <h1>Friendly Bags</h1>
-            <h2>Role</h2>
+            <p className="top-banner-company-name">Friendly Bags</p>
+            <p className="top-banner-role">•</p>
+            <p className="top-banner-role">{role}</p>
         </div> 
     )
 }

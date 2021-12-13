@@ -1,36 +1,46 @@
 import {useState} from "react"
 import "./Login.css"
+import {RoutePath, Navigate} from "../../../RoutePath"
 
 const Login = () => {
     const [id, setID] = useState("")
     const [password, setPassword] = useState("")
+    const [loginResult, setLoginResult] = useState(()=><p>&nbsp;</p>)
 
     const mockUserData = [
         {
             id:"user",
-            password:"password"
+            password:"pass",
+            role:"sales"
         }
     ]
 
     const onLogin = () => {
         if(!id.trim()){
-            alert("Please Enter ID")
+            setLoginResult(() => <p>Please Enter ID</p>)
             return
         }
         if(!password.trim()){
-            alert("Please Enter Password")
+            setLoginResult(() => <p>Please Enter Password</p>)
             return
         }
+
+        // mock up
+
         const status = mockUserData.filter((item) => {
-            console.log(item)
-            console.log(id, password)
             return item.id === id && item.password === password;
         })
-        console.log(status.length)
-        if(status.length > 0)
-            alert("Success")
-        else
-            alert("Invalid ID or Password")
+        console.log(status)
+        const role = status.length > 0 ? status[0].role : "" 
+
+        // end mockup
+        
+        if(role !== ""){
+            setLoginResult(() => <Navigate to={"/" + role}/>)
+        }
+        else{
+            setLoginResult(() => <p>Invalid ID or Password</p>)
+        }
     }
 
     return (
@@ -40,6 +50,7 @@ const Login = () => {
                 <input type="text" placeholder="ID" value={id} onChange={(e) => setID(e.target.value)}/>
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button onClick={onLogin}>Login</button>
+                <div className="login-form-result">{loginResult}</div>  
             </div>
         </div>
     )
