@@ -14,6 +14,20 @@ const OpenPaperBagOrderForm = () => {
                                                 address:""
                                             })
 
+    const menuValue = {
+        paperType:["paper1", "paper2"],
+        paperThickness:["thick1", "thick2"],
+        bagSize:["S", "M", "L"],
+        shape:["shape1", "shape2"],
+        bagEars:["bagear1", "bagear2"],
+        colorAmount:"",
+        baseColor:false,
+        color:["color1", "color2"],
+        quantity:"",
+        price:"",
+        comment:"",
+    }
+
     const mockDataBase = [
         {
             fname:"user",
@@ -47,7 +61,8 @@ const OpenPaperBagOrderForm = () => {
             baseColor:"",
             color:"",
             quantity:"",
-            price:""
+            price:"",
+            comment:"",
         }
         setOrderDetails([...orderDetails, newOrder])
     }
@@ -70,7 +85,7 @@ const OpenPaperBagOrderForm = () => {
                 <h1>ใบสั่งพิมพ์ ORDER กระดาษ</h1>
                 <form onSubmit={(event) => {event.preventDefault()}}>
                     <NameForm nameForm={nameForm} setNameForm={setNameForm}/>
-                    <PaperBagOrder orderDetails={orderDetails} setOrderDetails={setOrderDetails}/>
+                    <PaperBagOrder orderDetails={orderDetails} setOrderDetails={setOrderDetails} menuValue={menuValue}/>
 
                     <button type="button" onClick={addItem}>+Add</button>
                     <button type="button" onClick={clearItem}>Clear</button>

@@ -9,18 +9,19 @@
 
 .paper-bag-order th{
     text-align: center;
-    padding: 20px 10px 15px 0;
+    padding: 20px 5px 15px 5px;
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: #fff;
+    background-color: #eee;
     min-width: 100px;
 }
 
 .paper-bag-order td{
     text-align: center;
-    padding-bottom: 10px;
-    padding-right: 10px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .paper-bag-order select{
@@ -30,6 +31,7 @@
     border-bottom: 2px solid #e0e0e0;
     padding: 5px 5px;
     margin-right: 5px;
+    margin-left: 5px;
     width: 90%;
 }
 
@@ -48,4 +50,27 @@
     background-color: #ee0000;
     border: none;
     font-weight: bold;
+}
+
+.paper-bag-order textarea{
+    margin-top: 10px;
+    margin-right: 50px;
+    border-radius: 5px;
+    border: 2px solid #e0e0e0;
+}
+
+.paper-bag-order textarea:focus{
+    outline: none;
+    border: 2px solid #b8b8b8;
+}
+
+.paper-bag-order-form textarea:focus{
+    outline: none;
+    border: 2px solid #b8b8b8;
+}
+
+.paper-bag-order hr{
+    width: 100%;
+    color: #e0e0e0;
+    border: 1px solid #e0e0e0;
 }
