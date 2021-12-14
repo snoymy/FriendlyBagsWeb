@@ -1,3 +1,4 @@
+import { Fragment } from "react" 
 import styles from "./PaperBagOrderForm.module.css"
 
 const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
@@ -15,10 +16,11 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
     }
 
     const onDetailChange = (value, index, prop) => {
+        console.log(value)
         setOrderDetails(orderDetails.map(
                 (subItem, subIndex) => {
                     if(index !== subIndex) return {...subItem}
-                    return {...subItem, [prop]: value}
+                    return {...subItem, [prop]: {value:value, editable:true}}
                 }
             )
         )
@@ -46,91 +48,92 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                 </thead>
 
                 <tbody>
+                    <tr><td><label>&nbsp;</label></td></tr>
                 {orderDetails.map((item, index) => {
                     console.log("map", item)
                     return (
-                        <>
-                        <tr key={index} id={index}>
+                        <Fragment key={index}>
+                        <tr>
                             <td>
                                 <label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>
                             </td>
                             <td>
-                                <select name="paperType" id="paperType" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "paperType")}>
+                                <select name="paperType" id="paperType" value={item.paperType.value} disabled={!item.paperType.editable} onChange={(event) => onDetailChange(event.target.value, index, "paperType")}>
                                     {
-                                        menuValue.paperType.map((menuItem) => {
+                                        menuValue.paperType.map((menuItem, subIndex) => {
                                             return (
-                                                <option value={menuItem}>{menuItem}</option>
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </td>
                             <td>
-                                <select name="paperThickness" id="paperThickness" value={item.paperThickness} onChange={(event) => onDetailChange(event.target.value, index, "paperThickness")}>
+                                <select name="paperThickness" id="paperThickness" value={item.paperThickness.value} disabled={!item.paperThickness.editable} onChange={(event) => onDetailChange(event.target.value, index, "paperThickness")}>
                                     {
-                                        menuValue.paperThickness.map((menuItem) => {
+                                        menuValue.paperThickness.map((menuItem, subIndex) => {
                                             return (
-                                                <option value={menuItem}>{menuItem}</option>
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </td>
                             <td>
-                                <select name="bagSize" id="bagSize" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "bagSize")}>
+                                <select name="bagSize" id="bagSize" value={item.bagSize.value} disabled={!item.bagSize.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagSize")}>
                                     {
-                                        menuValue.bagSize.map((menuItem) => {
+                                        menuValue.bagSize.map((menuItem, subIndex) => {
                                             return (
-                                                <option value={menuItem}>{menuItem}</option>
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </td>
                             <td>
-                                <select name="shape" id="shape" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "shape")}>
+                                <select name="shape" id="shape" value={item.shape.value} disabled={!item.shape.editable} onChange={(event) => onDetailChange(event.target.value, index, "shape")}>
                                     {
-                                        menuValue.shape.map((menuItem) => {
+                                        menuValue.shape.map((menuItem, subIndex) => {
                                             return (
-                                                <option value={menuItem}>{menuItem}</option>
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </td>
                             <td>
-                                <select name="bagEars" id="bagEars" value={item.paperType} onChange={(event) => onDetailChange(event.target.value, index, "bagEars")}>
+                                <select name="bagEars" id="bagEars" value={item.bagEars.value} disabled={!item.bagEars.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagEars")}>
                                     {
-                                        menuValue.bagEars.map((menuItem) => {
+                                        menuValue.bagEars.map((menuItem, subIndex) => {
                                             return (
-                                                <option value={menuItem}>{menuItem}</option>
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </td>
                             <td>
-                                <input type="number" min={0} name="colorAmount" id="colorAmount" value={item.colorAmount} onChange={(event) => onDetailChange(event.target.value, index, "colorAmount")}/>
+                                <input type="number" min={0} name="colorAmount" id="colorAmount" value={item.colorAmount.value} disabled={!item.colorAmount.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmount")}/>
                             </td>
                             <td>
-                                <input type="checkbox" name="baseColor" id="baseColor" value={item.baseColor} onChange={(event) => onDetailChange(event.target.checked, index, "baseColor")}/>
+                                <input type="checkbox" name="baseColor" id="baseColor" value={item.baseColor.value} disabled={!item.baseColor.editable} onChange={(event) => onDetailChange(event.target.checked, index, "baseColor")}/>
                             </td>
                             <td>
-                                <select name="color" id="" value={item.color} onChange={(event) => onDetailChange(event.target.value, index, "color")}>
+                                <select name="color" id="" value={item.color.value} disabled={!item.color.editable} onChange={(event) => onDetailChange(event.target.value, index, "color")}>
                                     {
-                                        menuValue.color.map((menuItem) => {
+                                        menuValue.color.map((menuItem, subIndex) => {
                                             return (
-                                                <option value={menuItem}>{menuItem}</option>
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </td>
                             <td>
-                                <input type="number" min={0} name="quantity" id="quantity" value={item.quantity} onChange={(event) => onDetailChange(event.target.value, index, "quantity")}/>
+                                <input type="number" min={0} name="quantity" id="quantity" value={item.quantity.value} disabled={!item.quantity.editable} onChange={(event) => onDetailChange(event.target.value, index, "quantity")}/>
                             </td>
                             <td>
-                                <input type="number" min={0} name="price" id="price" value={item.price} onChange={(event) => onDetailChange(event.target.value, index, "price")}/>
+                                <input type="number" min={0} name="price" id="price" value={item.price.value} disabled={!item.price.editable} onChange={(event) => onDetailChange(event.target.value, index, "price")}/>
                             </td>
                             <td>
                                 <input type="file" id="file-upload" style={{display:"none"}}/>
@@ -144,11 +147,23 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                             <td>
                                 <label></label>
                             </td>
-                            <td style={{textAlign:"center", verticalAlign: "top"}}>
+                            <td style={{textAlign:"right", paddingRight:"0"}}>
+                                <label>งานขาย</label>
+                            </td>
+                            <td style={{textAlign:"left", paddingLeft:"0"}}>
+                                <input type="radio" name={"workType"+index} id="workType" checked={item.workType.value === menuValue.workType.sell?"checked":""} value={menuValue.workType.sell} disabled={!item.workType.editable} onChange={(event) => onDetailChange(event.target.value, index, "workType")}/>
+                            </td>
+                            <td style={{textAlign:"right", paddingRight:"0"}}>
+                                <label>งานพิมพ์</label>
+                            </td>
+                            <td style={{textAlign:"left", paddingLeft:"0"}}>
+                                <input type="radio" name={"workType"+index} id="workType" checked={item.workType.value === menuValue.workType.print?"checked":""} value={menuValue.workType.print} disabled={!item.workType.editable} onChange={(event) => onDetailChange(event.currentTarget.value, index, "workType")}/>
+                            </td>
+                            <td style={{}}>
                                 <label>Comment:</label>
                             </td>
                             <td style={{textAlign:"left", verticalAlign: "top"}} colSpan="4">
-                                <textarea style={{width:"100%", height:"70px"}} value={item.comment} onChange={(event) => onDetailChange(event.target.value, index, "comment")}/>
+                                <textarea style={{width:"100%", height:"70px"}} value={item.comment.value} disabled={!item.comment.editable} onChange={(event) => onDetailChange(event.target.value, index, "comment")}/>
                             </td>
                         </tr>
                         <tr>
@@ -160,7 +175,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                                 <label></label>
                             </td>
                         </tr>
-                        </>
+                        </Fragment>
                     )
                 })}
                 </tbody>

@@ -9,10 +9,10 @@ const OpenPaperBagOrderForm = () => {
     const [test, setTest] = useState(false)
     const [orderDetails, setOrderDetails] = useState([])
     const [nameForm, setNameForm] = useState({
-                                                fname:"",
-                                                lname:"",
-                                                date:"",
-                                                address:""
+        fname:{value:"", editable:true},
+        lname:{value:"", editable:true},
+        date:{value:"", editable:true},
+        address:{value:"", editable:true}
                                             })
 
     const menuValue = {
@@ -27,6 +27,7 @@ const OpenPaperBagOrderForm = () => {
         quantity:"1",
         price:"",
         comment:"",
+        workType:{sell:"sell", print:"print"}
     }
 
     const mockDataBase = [
@@ -53,18 +54,20 @@ const OpenPaperBagOrderForm = () => {
 
     const addNewOrder = () => {
         let newOrder = {
-            paperType: menuValue.paperType[0],
-            paperThickness: menuValue.paperThickness[0],
-            bagSize: menuValue.bagSize[0],
-            shape: menuValue.shape[0],
-            bagEars: menuValue.bagEars[0],
-            colorAmount: menuValue.colorAmount,
-            baseColor: menuValue.baseColor,
-            color: menuValue.color[0],
-            quantity: menuValue.quantity,
-            price: menuValue.price,
-            comment: menuValue.comment,
+            paperType: {value:menuValue.paperType[0], editable:true},
+            paperThickness: {value:menuValue.paperThickness[0], editable:true},
+            bagSize: {value:menuValue.bagSize[0], editable:true},
+            shape: {value:menuValue.shape[0], editable:true},
+            bagEars: {value:menuValue.bagEars[0], editable:true},
+            colorAmount: {value:menuValue.colorAmount, editable:true},
+            baseColor: {value:menuValue.baseColor, editable:true},
+            color: {value:menuValue.color[0], editable:true},
+            quantity: {value:menuValue.quantity, editable:true},
+            price: {value:menuValue.price, editable:true},
+            workType: {value:menuValue.workType.sell, editable:true},
+            comment: {value:menuValue.comment, editable:true},
         }
+
         setOrderDetails([...orderDetails, newOrder])
     }
 
