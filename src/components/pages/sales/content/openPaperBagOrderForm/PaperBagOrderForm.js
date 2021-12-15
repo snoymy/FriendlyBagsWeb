@@ -15,12 +15,12 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
         setOrderDetails(tempOrderDetails)
     }
 
-    const onDetailChange = (value, index, prop) => {
+    const onDetailChange = (value, index, prop, state=true) => {
         console.log(value)
         setOrderDetails(orderDetails.map(
                 (subItem, subIndex) => {
                     if(index !== subIndex) return {...subItem}
-                    return {...subItem, [prop]: {value:value, editable:true}}
+                    return {...subItem, [prop]: {value:value, editable:state}}
                 }
             )
         )
@@ -38,8 +38,9 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                         <th><label>ทรง</label></th>
                         <th><label>หูถุง</label></th>
                         <th><label>จำนวนสีพิมพ์</label></th>
-                        <th><label>ย้อมพื้น</label></th>
                         <th><label>สี</label></th>
+                        <th><label>ย้อมพื้น</label></th>
+                        <th><label>สีย้อม</label></th>
                         <th><label>จำนวน</label></th>
                         <th><label>ราคา</label></th>
                         <th><label>แนบแบบ</label></th>
@@ -113,15 +114,23 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                                 </select>
                             </td>
                             <td>
-                                <input type="number" min={0} name="colorAmount" id="colorAmount" value={item.colorAmount.value} disabled={!item.colorAmount.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmount")}/>
+                                <input type="number" min={menuValue.colorAmount.min} max={menuValue.colorAmount.max} name="colorAmount" id="colorAmount" value={item.colorAmount.value} disabled={!item.colorAmount.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmount")}/>
                             </td>
                             <td>
-                                <input type="checkbox" name="baseColor" id="baseColor" value={item.baseColor.value} disabled={!item.baseColor.editable} onChange={(event) => onDetailChange(event.target.checked, index, "baseColor")}/>
+                                <input type="text" name="color" id="color" placeholder="ระบุสี" value={item.color.value} disabled={!item.color.editable} onChange={(event) => onDetailChange(event.target.value, index, "color")}/>
                             </td>
                             <td>
-                                <select name="color" id="" value={item.color.value} disabled={!item.color.editable} onChange={(event) => onDetailChange(event.target.value, index, "color")}>
+                                <input type="checkbox" name="baseColorCheck" id="baseColorCheck" value={item.baseColorCheck.value} disabled={!item.baseColorCheck.editable} onChange={(event) => {
+                                onDetailChange(event.target.checked, index, "baseColorCheck")
+                                onDetailChange(item.baseColor, index, "baseColor", event.target.checked)
+                                }
+                            }
+                            />
+                            </td>
+                            <td>
+                                <select name="baseColor" id="baseColor" value={item.baseColor.value} disabled={!item.baseColor.editable} onChange={(event) => onDetailChange(event.target.value, index, "baseColor")}>
                                     {
-                                        menuValue.color.map((menuItem, subIndex) => {
+                                        menuValue.baseColor.map((menuItem, subIndex) => {
                                             return (
                                                 <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
@@ -130,10 +139,10 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue}) => {
                                 </select>
                             </td>
                             <td>
-                                <input type="number" min={0} name="quantity" id="quantity" value={item.quantity.value} disabled={!item.quantity.editable} onChange={(event) => onDetailChange(event.target.value, index, "quantity")}/>
+                                <input type="number" min={menuValue.quantity.min} name="quantity" id="quantity" value={item.quantity.value} disabled={!item.quantity.editable} onChange={(event) => onDetailChange(event.target.value, index, "quantity")}/>
                             </td>
                             <td>
-                                <input type="number" min={0} name="price" id="price" value={item.price.value} disabled={!item.price.editable} onChange={(event) => onDetailChange(event.target.value, index, "price")}/>
+                                <input type="number" min={menuValue.quantity.min} name="price" id="price" value={item.price.value} disabled={!item.price.editable} onChange={(event) => onDetailChange(event.target.value, index, "price")}/>
                             </td>
                             <td>
                                 <input type="file" id="file-upload" style={{display:"none"}}/>
