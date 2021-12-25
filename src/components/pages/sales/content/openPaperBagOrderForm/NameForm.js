@@ -1,7 +1,11 @@
 import { useMemo, useState } from "react"
 import Modal from "../../../../ui/modal/Modal"
 import styles from "./NameForm.module.css"
-import DataBase from "../../../../../MockDatabase"
+import BackEndInterface from "../../../../../BackEndInterface"
+
+const getCustomerData = () => {
+    return BackEndInterface.getCustomer()
+}
 
 const NameForm = ({nameForm, setNameForm}) => {
     const [showModal, setShowModal] = useState(false)
@@ -18,7 +22,8 @@ const NameForm = ({nameForm, setNameForm}) => {
        const clearName = {
            name: {value:"", editable:true},
            address: {value:"", editable:true},
-           date: {value:"" , editable:true}
+           date: {value:"" , editable:true},
+           deadline: {value:"", editable:true}
        }
         setNameForm(clearName)
     }
@@ -27,15 +32,30 @@ const NameForm = ({nameForm, setNameForm}) => {
        const selectedName = {
            name: {value:item.name, editable:false},
            address: {value:item.address, editable:false},
-           date: {value:nameForm.date.value, editable:true}
+           date: {value:nameForm.date.value, editable:true},
+           deadline: {value:nameForm.deadline.value, editable:true}
        }
         setNameForm(selectedName)
         setShowModal(false)
     }
+    const addDays = (date, days) => {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
+    const updateDeadline = (date, days) => {
+        if(nameForm.deadline.value === "" && nameForm.date.value !== "")
+            setNameForm({...nameForm, ["deadline"]:{value:addDays(date, days).toISOString().split("T")[0], editable:true}}) 
+    }
+
+    const updateDeadlineMemo = useMemo(() => {
+        updateDeadline(nameForm.date.value, 30)
+    }, [nameForm.date.value]) 
 
     const fetchName = () => {
         let temp = []
-        const customerData = DataBase.getCustomer()
+        const customerData = getCustomerData() 
         customerData.map((item) => {
             if(name !== ""){
                 if(item.name.toLowerCase().search(name.toLowerCase()) >= 0){
@@ -115,7 +135,14 @@ const NameForm = ({nameForm, setNameForm}) => {
                             <label>วันที่:</label> 
                         </td>
                         <td>
-                            <input type="date" id="date" name="date" value={nameForm.date.value} disabled={!nameForm.date.editable} onChange={(event) => onFormChange(event, "date")}/>
+                            <input type="date" id="date" name="date" value={nameForm.date.value} disabled={!nameForm.date.editable} onChange={(event) => { onFormChange(event, "date") } } />
+                        </td>
+                        {updateDeadlineMemo}
+                        <td>
+                            <label>กำหนดส่ง:</label> 
+                        </td>
+                        <td>
+                            <input type="date" id="deadline" name="deadline" value={nameForm.deadline.value} disabled={!nameForm.deadline.editable} onChange={(event) => onFormChange(event, "deadline")}/>
                         </td>
                     </tr>
                     <tr>
@@ -125,7 +152,7 @@ const NameForm = ({nameForm, setNameForm}) => {
                         <td style={{textAlign:"right", verticalAlign: "top"}}>
                             <label>ที่อยู่:</label> 
                         </td>
-                        <td style={{textAlign:"left"}} >
+                        <td style={{textAlign:"left"}} colSpan={3}>
                             <textarea style={{width:"95%", height:"100px"}}type="text" id="address" name="address" value={nameForm.address.value} disabled={!nameForm.address.editable} onChange={(event) => onFormChange(event, "address")}/>
                         </td>
                         <td>
@@ -139,7 +166,7 @@ const NameForm = ({nameForm, setNameForm}) => {
                     </tr>
                 </tbody>
             </table>
-            <Modal content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
+            <Modal style={{width:"1000px"}} content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
         </div>
     )
 }

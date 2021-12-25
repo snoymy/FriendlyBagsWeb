@@ -9,7 +9,7 @@ const Sales = () => {
 
     const Content = () => {
         switch(type){
-            case "paper":
+            case "open-paper-bag-order":
                 return (
                     <OpenPaperBagOrderForm/>
                 )
@@ -26,24 +26,20 @@ const Sales = () => {
             <Navbar
                 menu={[
                     {
-                        path:"/sales",
-                        text:"Open plastic bag order"
+                        path:"/sales/open-paper-bag-order",
+                        text:"เปิดออร์เดอร์ถุงกระดาษ"
                     },
                     {
-                        path:"/sales/paper",
-                        text:"Open paper bag order"
-                    },
-                    {
-                        path:"/sales",
-                        text:"Reject order"
+                        path:"/sales/open-plastic-bag-order",
+                        text:"เปิดออร์เดอร์ถุงพลาสติก"
                     },
                     {
                         path:"/sales",
-                        text:"Open paper bag order"
+                        text:"Rejected order"
                     },
                     {
                         path:"/sales",
-                        text:"Open paper bag order"
+                        text:"สถานะออร์เดอร์"
                     },
                 ]}
             />

@@ -1,12 +1,16 @@
 .paper-bag-order{
+    margin-bottom: 50px;
+}
+
+.paper-bag-order-table{
     height: 500px;
     overflow-y: scroll;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
-.paper-bag-order th{
+.paper-bag-order-table th{
     text-align: center;
     padding: 20px 5px 15px 5px;
     position: sticky;
@@ -16,14 +20,14 @@
     min-width: 100px;
 }
 
-.paper-bag-order td{
+.paper-bag-order-table td{
     text-align: center;
     padding-bottom: 20px;
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.paper-bag-order select{
+.paper-bag-order-table select{
     text-align: center;
     border: 2px solid #e0e0e0;
     border-radius: 5px;
@@ -34,7 +38,7 @@
     width: 90px;
 }
 
-.paper-bag-order input{
+.paper-bag-order-table input{
     text-align: center;
     border: 2px solid #e0e0e0;
     border-radius: 5px;
@@ -45,41 +49,117 @@
     width: 70px;
 }
 
-.paper-bag-order-delete-button{
+.paper-bag-order-table-delete-button{
     color: white;
     background-color: #ee0000;
     border: none;
     font-weight: bold;
 }
 
-.paper-bag-order-work-name input{
+.paper-bag-order-table-delete-button:active{
+    color: white;
+    background-color: #aa0000;
+    border: none;
+    font-weight: bold;
+}
+
+.paper-bag-order-table-work-name input{
     border: none;
     border-bottom: 2px solid #e0e0e0;
     margin-right: 30px;
 }
 
-.paper-bag-order-work-name input:focus{
+.paper-bag-order-table-work-name input:focus{
     outline: none;
     border-bottom: 2px solid #b8b8b8;
 }
 
-.paper-bag-order textarea{
+.paper-bag-order-table textarea{
     margin-right: 50px;
     border-radius: 5px;
     border: 2px solid #e0e0e0;
 }
 
-.paper-bag-order textarea:focus{
+.paper-bag-order-table textarea:focus{
     outline: none;
     border: 2px solid #b8b8b8;
 }
 
-.paper-bag-order-form textarea:focus{
-    outline: none;
-    border: 2px solid #b8b8b8;
+.paper-bag-order-table hr{
+    width: 100%;
+    color: #e0e0e0;
+    border: 1px solid #e0e0e0;
 }
 
-.paper-bag-order hr{
+.paper-bag-order button{
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+.paper-bag-order-clear-button{
+    color: white;
+    background-color: #ee0000;
+    border: none;
+    border: 2px solid #ee0000 !important;
+    font-weight: bold;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.paper-bag-order-clear-button:active{
+    color: white;
+    background-color: #aa0000;
+    border: none;
+    border: 2px solid #aa0000 !important;
+}
+
+.paper-bag-order-add-button{
+    color: white;
+    background-color: #00cc00;
+    border: none;
+    font-weight: bold;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.paper-bag-order-add-button:active{
+    color: white;
+    background-color: #00aa00;
+}
+
+.paper-bag-order-add-order-button{
+    color: white;
+    background-color: #00cc00;
+    border: 2px solid #00cc00 !important;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.paper-bag-order-add-order-button:active{
+    color: white;
+    background-color: #00aa00;
+    border: 2px solid #00aa00 !important;
+}
+
+.modal-content td{
+    padding-bottom: 20px;
+    padding-right: 30px;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+.modal-content span{
+    padding: 5px;
+    height: 100px;
+    display: block;
+    overflow: auto;
+    border-radius: 10px;
+}
+
+.modal-content hr{
     width: 100%;
     color: #e0e0e0;
     border: 1px solid #e0e0e0;
