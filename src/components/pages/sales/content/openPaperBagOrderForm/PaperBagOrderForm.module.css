@@ -52,6 +52,17 @@
     font-weight: bold;
 }
 
+.paper-bag-order-work-name input{
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    margin-right: 30px;
+}
+
+.paper-bag-order-work-name input:focus{
+    outline: none;
+    border-bottom: 2px solid #b8b8b8;
+}
+
 .paper-bag-order textarea{
     margin-right: 50px;
     border-radius: 5px;

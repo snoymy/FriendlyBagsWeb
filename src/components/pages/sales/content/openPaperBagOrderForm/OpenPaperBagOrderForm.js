@@ -10,11 +10,10 @@ const OpenPaperBagOrderForm = () => {
     const [showModal, setShowModal] = useState(false)
     const [orderDetails, setOrderDetails] = useState([])
     const [nameForm, setNameForm] = useState({
-        fname:{value:"", editable:true},
-        lname:{value:"", editable:true},
+        name:{value:"", editable:true},
         date:{value:"", editable:true},
         address:{value:"", editable:true}
-                                            })
+    })
 
     const getBagSize = () => {
         let bagSize = []
@@ -26,23 +25,29 @@ const OpenPaperBagOrderForm = () => {
         return bagSize
     }
 
+    const getColor = () => {
+        //get from database
+        return DataBase.getBaseColor()
+    }
+
     const getBaseColor = () => {
         //get from database
         return DataBase.getBaseColor()
     }
 
     const menuValue = {
+        workname:"",
         paperType:["KW", "KI", "กระดาษขาว", "KA", "ART"],
         paperThickness:["thick1", "thick2"],
         bagSize:getBagSize(),
         shape:["ตั้ง", "ขวาง"],
         bagEars:["หูเจาะ", "หูช็อปปิ้ง", "หูเชือก", "เกลียวมัด"],
         colorAmount:{min:0, max:4},
+        color:getColor(),
         baseColorCheck:false,
         baseColor:getBaseColor(),
-        color:"",
         quantity:{min:1},
-        unit:[""],
+        unit:["ใบ","กิโล","ลูก"],
         price:{min:0},
         comment:"",
         workType:{sell:"sell", print:"print"}
@@ -50,16 +55,18 @@ const OpenPaperBagOrderForm = () => {
 
     const addNewOrder = () => {
         let newOrder = {
+            workname: {value:menuValue.workname, editable:true},
             paperType: {value:menuValue.paperType[0], editable:true},
             paperThickness: {value:menuValue.paperThickness[0], editable:true},
             bagSize: {value:menuValue.bagSize[0], editable:true},
             shape: {value:menuValue.shape[0], editable:true},
             bagEars: {value:menuValue.bagEars[0], editable:true},
             colorAmount: {value:menuValue.colorAmount.min, editable:true},
+            color: {value:menuValue.color[0], editable:false},
             baseColorCheck: {value:menuValue.baseColorCheck, editable:true},
             baseColor: {value:menuValue.baseColor[0], editable:false},
-            color: {value:menuValue.color, editable:true},
             quantity: {value:menuValue.quantity.min, editable:true},
+            unit: {value:menuValue.unit[0], editable:true},
             price: {value:menuValue.price.min, editable:true},
             workType: {value:menuValue.workType.sell, editable:true},
             comment: {value:menuValue.comment, editable:true},

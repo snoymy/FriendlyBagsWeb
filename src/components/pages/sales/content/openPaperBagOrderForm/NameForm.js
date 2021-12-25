@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import Modal from "../../../../ui/modal/Modal"
 import styles from "./NameForm.module.css"
 import DataBase from "../../../../../MockDatabase"
@@ -6,8 +6,7 @@ import DataBase from "../../../../../MockDatabase"
 const NameForm = ({nameForm, setNameForm}) => {
     const [showModal, setShowModal] = useState(false)
     const [searchResult, setSearchResult] = useState([])
-    const [fname, setFname] = useState("")
-    const [lname, setLname] = useState("")
+    const [name, setName] = useState("")
     const [date, setDate] = useState("")
     
     const onFormChange = (event, prop) => {
@@ -17,8 +16,7 @@ const NameForm = ({nameForm, setNameForm}) => {
 
     const clearForm = () => {
        const clearName = {
-           fname: {value:"", editable:true},
-           lname: {value:"", editable:true},
+           name: {value:"", editable:true},
            address: {value:"", editable:true},
            date: {value:"" , editable:true}
        }
@@ -27,8 +25,7 @@ const NameForm = ({nameForm, setNameForm}) => {
 
     const onSelectName = (item) => {
        const selectedName = {
-           fname: {value:item.fname, editable:false},
-           lname: {value:item.lname, editable:false},
+           name: {value:item.name, editable:false},
            address: {value:item.address, editable:false},
            date: {value:nameForm.date.value, editable:true}
        }
@@ -40,16 +37,16 @@ const NameForm = ({nameForm, setNameForm}) => {
         let temp = []
         const customerData = DataBase.getCustomer()
         customerData.map((item) => {
-            if(fname !== ""){
-                if(lname !== ""){
-                    if(item.fname.toLowerCase() === fname.toLowerCase() && item.lname.toLowerCase() === lname.toLowerCase()){
-                        temp = [...temp, item] 
-                    }
+            if(name !== ""){
+                if(item.name.toLowerCase().search(name.toLowerCase()) >= 0){
+                    temp = [...temp, item] 
                 }
             }
         })
         setSearchResult(temp)
     }
+
+    const onNameChange = useMemo(fetchName, [name])
 
     const modalContent = (
         <div style={{padding:"30px"}}>
@@ -58,11 +55,8 @@ const NameForm = ({nameForm, setNameForm}) => {
                     <tr>
                         <td><label>นามลูกค้า</label></td>
                         <td>
-                            <input type="text" value={fname} onChange={(event) => setFname(event.target.value)}/>
-                        </td>
-                        <td><label>สกุล</label></td>
-                        <td>
-                            <input type="text" value={lname} onChange={(event) => setLname(event.target.value)}/>
+                            <input type="text" value={name} onChange={(event) => {setName(event.target.value);}}/>
+                            {onNameChange}
                         </td>
                         <button type="button" onClick={fetchName}>🔍</button>
                     </tr>
@@ -77,10 +71,7 @@ const NameForm = ({nameForm, setNameForm}) => {
                                     <>
                                     <tr>
                                         <td>
-                                            <span>{item.fname}</span>
-                                        </td>
-                                        <td>
-                                            <span>{item.lname}</span>
+                                            <span>{item.name}</span>
                                         </td>
                                         <td>
                                             <span style={{border: "2px solid #e8e8e8"}}>{item.address}</span>
@@ -118,13 +109,7 @@ const NameForm = ({nameForm, setNameForm}) => {
                             <label>นามลูกค้า:</label> 
                         </td>
                         <td>
-                            <input type="text" id="fname" name="fname" value={nameForm.fname.value} disabled={!nameForm.fname.editable} onChange={(event) => onFormChange(event, "fname")} style={{minWidth: "300px"}}/>
-                        </td>
-                        <td>
-                            <label>สกุล:</label>
-                        </td>
-                        <td>
-                             <input type="text" id="lname" name="lname" value={nameForm.lname.value} disabled={!nameForm.lname.editable} onChange={(event) => onFormChange(event, "lname")} style={{minWidth: "300px"}}/>
+                            <input type="text" id="name" name="name" value={nameForm.name.value} disabled={!nameForm.name.editable} onChange={(event) => onFormChange(event, "name")} style={{minWidth: "300px"}}/>
                         </td>
                         <td>
                             <label>วันที่:</label> 
@@ -140,7 +125,7 @@ const NameForm = ({nameForm, setNameForm}) => {
                         <td style={{textAlign:"right", verticalAlign: "top"}}>
                             <label>ที่อยู่:</label> 
                         </td>
-                        <td style={{textAlign:"left"}} colSpan="3">
+                        <td style={{textAlign:"left"}} >
                             <textarea style={{width:"95%", height:"100px"}}type="text" id="address" name="address" value={nameForm.address.value} disabled={!nameForm.address.editable} onChange={(event) => onFormChange(event, "address")}/>
                         </td>
                         <td>
