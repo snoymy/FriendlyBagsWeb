@@ -31,6 +31,8 @@ let dataBase = {
             workType:           "sell",
             pattern:            "pattern1",
             comment:            "no",
+            sameBlock:          false,
+            sameColor:          false,
             design_id:          "",
         }
     ]
