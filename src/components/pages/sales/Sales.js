@@ -22,8 +22,7 @@ const Sales = () => {
 
     return (
         <>
-            <Banner role="Sales"/>
-            <Navbar
+            <Banner role="Sales"
                 menu={[
                     {
                         path:"/sales/open-paper-bag-order",
