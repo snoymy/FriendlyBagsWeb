@@ -1,7 +1,8 @@
+import {useEffect, useState} from "react"
 import styles from "./Modal.module.css"
 
 const Modal = ({content, showModal, style}) => {
-
+    const [modalContent, setModalContent] = useState(content) 
     if(!showModal){
         return null
     }

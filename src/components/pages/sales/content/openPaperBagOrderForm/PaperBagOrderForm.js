@@ -10,6 +10,7 @@ const getOrderHistory = (name="") => {
 
 const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName}) => {
     const [showModal, setShowModal] = useState(false)
+    const [orderHistory, setOrderHistory] = useState(getOrderHistory(customerName))
 
     const removeOrder = (index) => {
         let tempOrderDetails = []
@@ -35,6 +36,17 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
         )
     }
 
+    const onDetailChangeV2 = (value, index, prop) => {
+        console.log(value)
+        setOrderHistory(orderHistory.map(
+                (subItem, subIndex) => {
+                    if(index !== subIndex) return {...subItem}
+                    return {...subItem, [prop]: value}
+                }
+            )
+        )
+    }
+
     const addNewOrder = () => {
         let newOrder = {
             workName: {value:menuValue.workName, editable:true},
@@ -50,9 +62,12 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
             quantity: {value:menuValue.quantity.min, editable:true},
             unit: {value:menuValue.unit[0], editable:true},
             price: {value:menuValue.price.min, editable:true},
+            design: {value:menuValue.design, editable:true},
             workType: {value:menuValue.workType.sell, editable:true},
             pattern: {value:menuValue.pattern[0], editable:true},
             comment: {value:menuValue.comment, editable:true},
+            sameBlock: {value:menuValue.sameBlock, editable:true},
+            sameColor: {value:menuValue.sameColor, editable:true}
         }
 
         setOrderDetails([...orderDetails, newOrder])
@@ -73,9 +88,12 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
             quantity: {value:order.quantity, editable:true},
             unit: {value:order.unit, editable:true},
             price: {value:order.price, editable:true},
+            design: {value:menuValue.design, editable:true},
             workType: {value:order.workType, editable:true},
             pattern: {value:order.pattern, editable:true},
             comment: {value:order.comment, editable:true},
+            sameBlock: {value:order.sameBlock, editable:true},
+            sameColor: {value:order.sameColor, editable:true}
         }
 
         setOrderDetails([...orderDetails, newOrder])
@@ -110,14 +128,14 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
 
                 <tbody>
                     <tr><td><label>&nbsp;</label></td></tr>
-                {getOrderHistory(customerName).map((item, index) => {
+                {orderHistory.map((item, index) => {
                     console.log("map", item)
                     return (
                         <Fragment key={index}>
                         <tr>
                             <td></td>
                             <td className={styles["paper-bag-order-table-work-name"]} style={{textAlign:"left"}} colSpan={5}>
-                                <labal style={{width:"60%", textAlign:"left", fontSize:"25px"}}>ชื่องาน: {item.workName}</labal>
+                                <label style={{width:"60%", textAlign:"left", fontSize:"25px"}}>ชื่องาน: {item.workName}</label>
                             </td>
                         </tr>
                         <tr>
@@ -125,37 +143,37 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.paperType}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.paperType}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.paperThickness} gram</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.paperThickness} gram</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.bagSize}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSize}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.bagShape}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagShape}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.bagEars}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagEars}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.colorAmount}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmount}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.colorAmount !== 0 ? item.color : "-"}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmount !== 0 ? item.color : "-"}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.baseColorCheck ? "ย้อม" : "ไม่ย้อม"}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.baseColorCheck ? "ย้อม" : "ไม่ย้อม"}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.baseColorCheck ? item.baseColor : "-"}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.baseColorCheck ? item.baseColor : "-"}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.quantity} {item.unit}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.quantity} {item.unit}</label>
                             </td>
                             <td>
-                                <labal style={{width:"60%", textAlign:"left"}}>{item.price}</labal>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.price}</label>
                             </td>
                             <td>
                                 <input type="button" id="file-upload" style={{display:"none"}}/>
@@ -180,8 +198,31 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                             <td style={{}}>
                                 <label>Comment:</label>
                             </td>
-                            <td style={{textAlign:"left", verticalAlign: "top"}} colSpan="4">
+                            <td style={{textAlign:"left", verticalAlign: "top", border: "2px solid #e6e6e6", borderRadius: "5px"}} colSpan="4">
                                 <label>{item.comment}</label>
+                            </td>
+                            <td style={{position:"absolute"}}>
+                                <label style={{position:"relative", left:"20px"}}>
+                                    Block เดิม
+                                </label>
+                                <input 
+                                    style={{position:"relative"}}
+                                    type="checkbox" 
+                                    name="sameBlock" 
+                                    id="sameBlock" 
+                                    onChange={(event) => onDetailChangeV2(event.target.checked, index, "sameBlock")}
+                                />
+
+                                <label style={{position:"relative", left:"20px"}}>
+                                   สีเดิม
+                                </label>
+                                <input 
+                                    style={{position:"relative"}}
+                                    type="checkbox" 
+                                    name="sameColor" 
+                                    id="sameColor" 
+                                    onChange={(event) => onDetailChangeV2(event.target.checked, index, "sameColor")}
+                                />
                             </td>
                         </tr>
                         <tr>
@@ -204,6 +245,8 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
         </div>
         </div>
     )
+    
+    console.log("history", orderHistory)
 
     return (
         <div className={styles["paper-bag-order"]}>
@@ -232,6 +275,18 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                     <tr><td><label>&nbsp;</label></td></tr>
                 {orderDetails.map((item, index) => {
                     console.log("map", item)
+                    console.log("sc", item.sameColor.value)
+                    console.log("sb", item.sameBlock.value)
+                    if(item.sameColor.value === true){
+                        item.colorAmount.editable = false
+                        item.color.editable = false
+                        item.baseColorCheck.editable = false
+                        item.baseColor.editable = false
+                    }
+                    if(item.sameBlock.value === true){
+                        item.bagSize.editable = false
+                        item.design.editable = false
+                    }
                     return (
                         <Fragment key={index}>
                         <tr>
@@ -265,7 +320,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                         })
                                     }
                                 </select>
-                                <lable>gram</lable>
+                                <label>gram</label>
                             </td>
                             <td>
                                 <select name="bagSize" id="bagSize" value={item.bagSize.value} disabled={!item.bagSize.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagSize")}>
@@ -304,7 +359,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <input type="number" min={menuValue.colorAmount.min} max={menuValue.colorAmount.max} name="colorAmount" id="colorAmount" value={item.colorAmount.value} disabled={!item.colorAmount.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmount")}/>
                             </td>
                             {
-                                item.color.editable = item.colorAmount.value == 0? false:true
+                                item.color.editable = item.colorAmount.value != 0 && item.colorAmount.editable
                             }
                             <td>
                                 <input list="color" name="color" value={item.colorAmount.value == 0 ? "" : item.color.value} disabled={!item.color.editable} placeholder="ระบุสี" onChange={(event) => onDetailChange(event.target.value, index, "color")}/>
@@ -326,7 +381,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                             />
                             </td>
                             {
-                                item.baseColor.editable = item.baseColorCheck.value
+                                item.baseColor.editable = item.baseColorCheck.value && item.baseColorCheck.editable
                             }
                             <td>
                                 <input list="baseColor" name="baseColor" value={item.baseColorCheck.value ? item.baseColor.value : ""} disabled={!item.baseColor.editable} placeholder="ระบุสี" onChange={(event) => onDetailChange(event.target.value, index, "baseColor")}/>
@@ -357,7 +412,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                             </td>
                             <td>
                                 <input type="file" id="file-upload" style={{display:"none"}}/>
-                                <button type="button" onClick={()=>document.getElementById("file-upload").click()}>Upload</button>
+                                <button type="button" disabled={!item.design.editable} onClick={()=>document.getElementById("file-upload").click()}>Upload</button>
                             </td>
                             <td>
                                 <button className={styles["paper-bag-order-table-delete-button"]} type="button" style={{border:"none"}} onClick={()=>removeOrder(index)}>X</button>
@@ -380,8 +435,8 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                             {
                                 item.pattern.editable = item.workType.value === "print"? false:true
                             }
-                            <td>
-                                <select style={{width: "70px"}} name="pattern" id="pattern" value={item.pattern.value} disabled={!item.pattern.editable} onChange={(event) => onDetailChange(event.target.value, index, "pattern")}>
+                            <td style={{position: "absolute"}}>
+                                <select style={{width: "70px", position: "relative", top: "25px", left: "-70px"}} name="pattern" id="pattern" value={item.pattern.value} disabled={!item.pattern.editable} onChange={(event) => onDetailChange(event.target.value, index, "pattern")}>
                                     {
                                         menuValue.pattern.map((menuItem, subIndex) => {
                                             return (
@@ -415,9 +470,9 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
             </table>
         </div>
         <button className={styles["paper-bag-order-add-order-button"]} type="button" onClick={addNewOrder}>+Add Order</button>
-        <button type="button" onClick={() => setShowModal(true)}>Order history</button>
+        <button type="button" onClick={() => {setOrderHistory(getOrderHistory(customerName));setShowModal(true)}}>Order history</button>
         <button className={styles["paper-bag-order-clear-button"]} type="button" onClick={clearItem}>Clear All Order</button>
-        <Modal style={{width:"1700px"}}content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
+        <Modal style={{width:"1700px"}} content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
         </div>
     )
 }

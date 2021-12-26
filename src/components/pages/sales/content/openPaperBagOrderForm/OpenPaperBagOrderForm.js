@@ -116,7 +116,9 @@ const OpenPaperBagOrderForm = () => {
         comment:"",
         workType: getWorkType(),
         pattern: getPattern(),
-        design: getDesign()
+        design: getDesign(),
+        sameBlock: false,
+        sameColor: false
     }
 
     const checkPrice = () => {
@@ -186,6 +188,8 @@ const OpenPaperBagOrderForm = () => {
                 workType:           item.workType.value,
                 pattern:            item.pattern.value,
                 comment:            item.comment.value,
+                sameBlock:          item.sameBlock,
+                sameColor:          item.sameColor,
             }
             order = [...order, data]
         })
