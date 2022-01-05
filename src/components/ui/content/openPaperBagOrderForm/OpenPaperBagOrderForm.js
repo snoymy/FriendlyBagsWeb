@@ -2,9 +2,9 @@ import { useState } from "react"
 import PaperBagOrder from "./PaperBagOrderForm"
 import NameForm from "./NameForm"
 import styles from "./OpenPaperBagOrderForm.module.css"
-import "./container.css"
-import BackEndInterface from "../../../../../BackEndInterface"
-import Modal from "../../../../ui/modal/Modal"
+import ContainerStyles from "./container.module.css"
+import BackEndInterface from "../../../../BackEndInterface"
+import Modal from "../../modal/Modal"
 
 const getPaperType = () => {
     return ["KW", "KI", "กระดาษขาว", "KA", "ART"]
@@ -70,6 +70,27 @@ const getBaseColor = () => {
     return BackEndInterface.getBaseColor()
 }
 
+const getArea = () => {
+    let area = []
+    for(let i = 0; i < 3; i++){
+        area = [...area, "N"+(i+1)]
+    }
+    for(let i = 0; i < 3; i++){
+        area = [...area, "C"+(i+1)]
+    }
+    for(let i = 0; i < 4; i++){
+        area = [...area, "E"+(i+1)]
+    }
+    for(let i = 0; i < 3; i++){
+        area = [...area, "S"+(i+1)]
+    }
+    for(let i = 0; i < 8; i++){
+        area = [...area, "กทม "+(i+1)]
+    }
+
+    return area
+}
+
 const sentDataToBackEnd = (order) => {
     BackEndInterface.sentOrder(order)
 }
@@ -83,7 +104,8 @@ const OpenPaperBagOrderForm = () => {
         name:{value:"", editable:true},
         date:{value:"", editable:true},
         deadline:{value:"", editable:true},
-        address:{value:"", editable:true}
+        address:{value:"", editable:true},
+        area:{value:"", editable:true},
     })
 
     const resetPageValue = () => {
@@ -95,11 +117,13 @@ const OpenPaperBagOrderForm = () => {
                 name:{value:"", editable:true},
                 date:{value:"", editable:true},
                 deadline:{value:"", editable:true},
-                address:{value:"", editable:true}
+                address:{value:"", editable:true},
+                area:{value:"", editable:true},
         })
     }
 
     const menuValue = {
+        area: getArea(),
         workName:"",
         paperType: getPaperType(),
         paperThickness: getPaperThickness(),
@@ -168,6 +192,7 @@ const OpenPaperBagOrderForm = () => {
         }
         orderDetails.map((item) => {
             const data = {
+                area:               nameForm.area.value,
                 date:               nameForm.date.value,
                 deadline:           nameForm.deadline.value,
                 name:               nameForm.name.value,
@@ -190,6 +215,8 @@ const OpenPaperBagOrderForm = () => {
                 comment:            item.comment.value,
                 sameBlock:          item.sameBlock,
                 sameColor:          item.sameColor,
+                vat:                addVAT ? 7 : 0,
+                bagType:            "กระดาษ"
             }
             order = [...order, data]
         })
@@ -233,8 +260,8 @@ const OpenPaperBagOrderForm = () => {
         <div style={{marginBottom:"100px"}}>
             <div className={styles["paper-bag-order-form"]}>
                 <center><h1>ใบสั่งพิมพ์ ORDER กระดาษ</h1></center>
-                <div className="container">
-                    <NameForm nameForm={nameForm} setNameForm={setNameForm}/>
+                <div className={ContainerStyles["container"]}>
+                    <NameForm nameForm={nameForm} setNameForm={setNameForm} menuValue={menuValue}/>
                     <PaperBagOrder orderDetails={orderDetails} setOrderDetails={setOrderDetails} menuValue={menuValue} customerName={nameForm.name.value}/>
                     <label>VAT 7%</label>
                     <input type="checkbox" name="VAT" id="VAT" checked={addVAT} onChange={(event) => setAddVAT(event.target.checked)}/>

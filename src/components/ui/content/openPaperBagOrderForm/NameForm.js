@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react"
-import Modal from "../../../../ui/modal/Modal"
 import styles from "./NameForm.module.css"
-import BackEndInterface from "../../../../../BackEndInterface"
+import BackEndInterface from "../../../../BackEndInterface"
+import Modal from "../../modal/Modal"
 
 const getCustomerData = () => {
     return BackEndInterface.getCustomer()
 }
 
-const NameForm = ({nameForm, setNameForm}) => {
+const NameForm = ({nameForm, setNameForm, menuValue}) => {
     const [showModal, setShowModal] = useState(false)
     const [searchResult, setSearchResult] = useState([])
     const [name, setName] = useState("")
@@ -23,7 +23,8 @@ const NameForm = ({nameForm, setNameForm}) => {
            name: {value:"", editable:true},
            address: {value:"", editable:true},
            date: {value:"" , editable:true},
-           deadline: {value:"", editable:true}
+           deadline: {value:"", editable:true},
+           area: {value:"", editable:true},
        }
         setNameForm(clearName)
     }
@@ -33,7 +34,8 @@ const NameForm = ({nameForm, setNameForm}) => {
            name: {value:item.name, editable:false},
            address: {value:item.address, editable:false},
            date: {value:nameForm.date.value, editable:true},
-           deadline: {value:nameForm.deadline.value, editable:true}
+           deadline: {value:nameForm.deadline.value, editable:true},
+           area: {value:item.area, editable:true},
        }
         setNameForm(selectedName)
         setShowModal(false)
@@ -144,6 +146,20 @@ const NameForm = ({nameForm, setNameForm}) => {
                         <td>
                             <input type="date" id="deadline" name="deadline" value={nameForm.deadline.value} disabled={!nameForm.deadline.editable} onChange={(event) => onFormChange(event, "deadline")}/>
                         </td>
+                        <td>
+                            <label>เขตพื้นที่:</label>
+                        </td>
+                        <td>
+                            <select name="area" id="area" value={nameForm.area.value} disabled={!nameForm.area.editable} onChange={(event) => onFormChange(event, "area")}>
+                                {
+                                    menuValue.area.map((menuItem, subIndex) => {
+                                        return (
+                                            <option key={subIndex} value={menuItem}>{menuItem}</option>
+                                        )
+                                    })
+                                }
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -152,12 +168,14 @@ const NameForm = ({nameForm, setNameForm}) => {
                         <td style={{textAlign:"right", verticalAlign: "top"}}>
                             <label>ที่อยู่:</label> 
                         </td>
-                        <td style={{textAlign:"left"}} colSpan={3}>
+                        <td style={{textAlign:"left"}} colSpan={5}>
                             <textarea style={{width:"95%", height:"100px"}}type="text" id="address" name="address" value={nameForm.address.value} disabled={!nameForm.address.editable} onChange={(event) => onFormChange(event, "address")}/>
                         </td>
                         <td>
                             <label></label>
                         </td>
+                    </tr>
+                    <tr>
                         <td>
                             <button className={styles["paper-bag-order-form-clear-button"]} type="button" onClick={clearForm}>
                                 Clear form

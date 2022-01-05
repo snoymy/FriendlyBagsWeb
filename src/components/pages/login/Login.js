@@ -1,6 +1,7 @@
 import {useState} from "react"
 import "./Login.css"
 import {RoutePath, Navigate} from "../../../RoutePath"
+import BackEndInterface from "../../../BackEndInterface"
 
 const Login = () => {
     const [id, setID] = useState("")
@@ -9,9 +10,14 @@ const Login = () => {
 
     const mockUserData = [
         {
-            id:"user",
+            id:"sales",
             password:"pass",
             role:"sales"
+        },
+        {
+            id:"artwork",
+            password:"pass",
+            role:"artwork"
         }
     ]
 

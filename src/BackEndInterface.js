@@ -3,17 +3,21 @@ let dataBase = {
     customer:[
         {
             name:"customer1",
-            address:"11/11 road xxx city xxx country xxx"
+            address:"11/11 road xxx city xxx country xxx",
+            area:               "กทม 1",
         },
         {
             name:"customer2",
-            address:"11/11 road xxx city xxx country xxx"
+            address:"11/11 road xxx city xxx country xxx",
+            area:               "กทม 1",
         }
     ],
     order:[
         {
+            area:               "กทม 1",
             date:               "2021-01-01",
             deadline:           "2021-02-01",
+            orderID:            "1234567890",
             name:               "customer1",
             workName:           "demo",
             paperType:          "KW",
@@ -21,6 +25,7 @@ let dataBase = {
             bagSize:            "ตัด1",
             bagShape:           "ตั้ง",
             bagEars:            "หูเจาะ",
+            bagType:            "กระดาษ",
             colorAmount:        1,
             color:              "color1",
             baseColorCheck:     true,
@@ -33,16 +38,29 @@ let dataBase = {
             comment:            "no",
             sameBlock:          false,
             sameColor:          false,
+            vat:                7,
             design_id:          "",
+            status:             "ตรวจสอบออร์เดอร์",
+            cs:                 "123450",
+            edit:               "..."
         }
     ]
 }
 
 const getOrderHistory = (name) => {
     let filteredOrder = []
-    dataBase["order"].map((order, index) => {
-        if(order.name === name)
+    if(name === "*"){
+        dataBase["order"].map((order, index) => {
+            order.status = "ตรวจสอบออร์เดอร์"
             filteredOrder = [...filteredOrder, order] 
+        })
+        return filteredOrder 
+    }
+    dataBase["order"].map((order, index) => {
+        if(order.name === name){
+            filteredOrder = [...filteredOrder, order] 
+        }
+            
     })
     return filteredOrder
 }

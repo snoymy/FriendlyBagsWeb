@@ -1,0 +1,54 @@
+.top-banner{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    background-color: #f6f6f6;
+}
+
+.top-banner-company-name{
+    padding: 20px 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.top-banner-role{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 17px;
+}
+
+.top-navbar{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.top-navbar ul{
+    justify-content: center;
+    list-style: none;
+}
+
+.top-navbar li{
+    display: inline-block;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.top-navbar li a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 15px 15px 10px 15px;
+    border-bottom: 3px solid #d6d6d6;
+    min-width: 170px;
+}
+
+.top-navbar li a:hover{
+    text-decoration: none;
+    color: black;
+    border-bottom: 3px solid #e7e7e7;
+}

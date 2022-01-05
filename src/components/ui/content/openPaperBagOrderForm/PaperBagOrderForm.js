@@ -1,7 +1,7 @@
 import { Fragment, useState} from "react" 
 import styles from "./PaperBagOrderForm.module.css"
-import Modal from "../../../../ui/modal/Modal"
-import BackEndInterface from "../../../../../BackEndInterface"
+import BackEndInterface from "../../../../BackEndInterface"
+import Modal from "../../modal/Modal"
 
 const getOrderHistory = (name="") => {
     console.log(name)
@@ -67,7 +67,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
             pattern: {value:menuValue.pattern[0], editable:true},
             comment: {value:menuValue.comment, editable:true},
             sameBlock: {value:menuValue.sameBlock, editable:true},
-            sameColor: {value:menuValue.sameColor, editable:true}
+            sameColor: {value:menuValue.sameColor, editable:true},
         }
 
         setOrderDetails([...orderDetails, newOrder])
@@ -201,23 +201,23 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                             <td style={{textAlign:"left", verticalAlign: "top", border: "2px solid #e6e6e6", borderRadius: "5px"}} colSpan="4">
                                 <label>{item.comment}</label>
                             </td>
-                            <td style={{position:"absolute"}}>
-                                <label style={{position:"relative", left:"20px"}}>
+                            <td style={{}} colSpan={2}>
+                                <label style={{}}>
                                     Block เดิม
                                 </label>
                                 <input 
-                                    style={{position:"relative"}}
+                                    style={{marginLeft:"-20px"}}
                                     type="checkbox" 
                                     name="sameBlock" 
                                     id="sameBlock" 
                                     onChange={(event) => onDetailChangeV2(event.target.checked, index, "sameBlock")}
                                 />
 
-                                <label style={{position:"relative", left:"20px"}}>
+                                <label style={{}}>
                                    สีเดิม
                                 </label>
                                 <input 
-                                    style={{position:"relative"}}
+                                    style={{marginLeft:"-20px"}}
                                     type="checkbox" 
                                     name="sameColor" 
                                     id="sameColor" 
@@ -362,16 +362,25 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 item.color.editable = item.colorAmount.value != 0 && item.colorAmount.editable
                             }
                             <td>
-                                <input list="color" name="color" value={item.colorAmount.value == 0 ? "" : item.color.value} disabled={!item.color.editable} placeholder="ระบุสี" onChange={(event) => onDetailChange(event.target.value, index, "color")}/>
-                                <datalist id="color">
-                                {
-                                    menuValue.color.map((menuItem, subIndex) => {
-                                        return (
-                                            <option key={subIndex} value={menuItem}/>
-                                        )
-                                    })
-                                }
-                                </datalist>
+                                <div style={{whiteSpace:"nowrap", width:"100px", overflowX:"auto"}}>
+                                    {
+                                        [...Array(item.colorAmount.value).keys()].map((menuItem, subIndex) => {
+                                            return (
+                                                <></>
+                                            )
+                                        })
+                                    }
+                                    <input list="color" name="color" value={item.colorAmount.value == 0 ? "" : item.color.value} disabled={!item.color.editable} placeholder="ระบุสี" onChange={(event) => onDetailChange(event.target.value, index, "color")}/>
+                                    <datalist id="color">
+                                    {
+                                        menuValue.color.map((menuItem, subIndex) => {
+                                            return (
+                                                <option key={subIndex} value={menuItem}/>
+                                            )
+                                        })
+                                    }
+                                    </datalist>
+                                </div>
                             </td>
                             <td>
                                 <input type="checkbox" name="baseColorCheck" id="baseColorCheck" checked={item.baseColorCheck.value} disabled={!item.baseColorCheck.editable} onChange={(event) => {
@@ -427,16 +436,14 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <br/>
                                 <label>งานพิมพ์</label>
                             </td>
-                            <td style={{textAlign:"left", paddingLeft:"0"}}>
+                            <td style={{textAlign:"left", paddingLeft:"0"}} colSpan={2}>
                                 <input type="radio" name={"workType"+index} id="workType" checked={item.workType.value === menuValue.workType.sell?"checked":""} value={menuValue.workType.sell} disabled={!item.workType.editable} onChange={(event) => onDetailChange(event.target.value, index, "workType")}/>
                                 <br/>
                                 <input type="radio" name={"workType"+index} id="workType" checked={item.workType.value === menuValue.workType.print?"checked":""} value={menuValue.workType.print} disabled={!item.workType.editable} onChange={(event) => onDetailChange(event.currentTarget.value, index, "workType")}/>
-                            </td>
                             {
                                 item.pattern.editable = item.workType.value === "print"? false:true
                             }
-                            <td style={{position: "absolute"}}>
-                                <select style={{width: "70px", position: "relative", top: "25px", left: "-70px"}} name="pattern" id="pattern" value={item.pattern.value} disabled={!item.pattern.editable} onChange={(event) => onDetailChange(event.target.value, index, "pattern")}>
+                                <select style={{width: "70px", top: "25px", left: "-70px"}} name="pattern" id="pattern" value={item.pattern.value} disabled={!item.pattern.editable} onChange={(event) => onDetailChange(event.target.value, index, "pattern")}>
                                     {
                                         menuValue.pattern.map((menuItem, subIndex) => {
                                             return (

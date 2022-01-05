@@ -1,17 +1,22 @@
 import { useParams } from "react-router";
 import Banner from "../../ui/banner/Banner";
-import OpenPaperBagOrderForm from "../../ui/content/openPaperBagOrderForm/OpenPaperBagOrderForm";
 import OrderStatus from "../../ui/content/orderStatus/OrderStatus";
+// import NewArtWorkOrder from "../../ui/content/newArtWorkOrder/NewArtWorkOrder";
+// import RecheckArtWork from "../../ui/content/recheckArtWork/RecheckArtWork";
 
-const Sales = () => {
+const HeadOfMarketing = () => {
     const {type} = useParams()
     console.log(type)
 
     const Content = () => {
         switch(type){
-            case "open-paper-bag-order":
+            case "new-artwork-order":
                 return (
-                    <OpenPaperBagOrderForm/>
+                    <></> 
+                )
+            case "recheck-artwork":
+                return (
+                    <></> 
                 )
             case "order-status":
                 return (
@@ -26,22 +31,18 @@ const Sales = () => {
 
     return (
         <>
-            <Banner role="Sales"
+            <Banner role="หัวหน้าแผนกการตลาด"
                 menu={[
                     {
-                        path:"/sales/open-paper-bag-order",
-                        text:"เปิดออร์เดอร์ถุงกระดาษ"
+                        path:"/headofmarketing/check-block-order",
+                        text:"Check Block&Order"
                     },
                     {
-                        path:"/sales",
-                        text:"เปิดออร์เดอร์ถุงพลาสติก"
+                        path:"/headofmarketing/Check Artwork",
+                        text:"Check Artwork"
                     },
                     {
-                        path:"/sales",
-                        text:"Rejected order"
-                    },
-                    {
-                        path:"/sales/order-status",
+                        path:"/headofmarketing/order-status",
                         text:"สถานะออร์เดอร์"
                     },
                 ]}
@@ -51,4 +52,4 @@ const Sales = () => {
     )
 }
 
-export default Sales;
+export default HeadOfMarketing;
