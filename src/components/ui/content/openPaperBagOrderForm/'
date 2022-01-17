@@ -56,10 +56,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
             bagShape: {value:menuValue.bagShape[0], editable:true},
             bagEars: {value:menuValue.bagEars[0], editable:true},
             colorAmount: {value:menuValue.colorAmount.min, editable:true},
-            color1: {value:menuValue.color[0], editable:false},
-            color2: {value:"", editable:false},
-            color3: {value:"", editable:false},
-            color4: {value:"", editable:false},
+            color: {value:menuValue.color[0], editable:false},
             baseColorCheck: {value:menuValue.baseColorCheck, editable:true},
             baseColor: {value:menuValue.baseColor[0], editable:false},
             quantity: {value:menuValue.quantity.min, editable:true},
@@ -85,10 +82,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
             bagShape: {value:order.bagShape, editable:true},
             bagEars: {value:order.bagEars, editable:true},
             colorAmount: {value:order.colorAmount, editable:true},
-            color1: {value:order.color1, editable:false},
-            color2: {value:order.color2, editable:false},
-            color3: {value:order.color3, editable:false},
-            color4: {value:order.color4, editable:false},
+            color: {value:order.color, editable:false},
             baseColorCheck: {value:order.baseColorCheck, editable:true},
             baseColor: {value:order.baseColor, editable:false},
             quantity: {value:order.quantity, editable:true},
@@ -301,7 +295,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <input style={{width:"60%", textAlign:"left"}} type="text" name="workName" id="workName" value={item.workName.value} disabled={!item.workName.editable} placeholder="ระบุชื่องาน" onChange={(event) => onDetailChange(event.target.value, index, "workName")}/>
                             </td>
                         </tr>
-                        <tr style={{height: "100px"}}>
+                        <tr>
                             <td>
                                 <label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>
                             </td>
@@ -364,65 +358,28 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                             <td>
                                 <input type="number" min={menuValue.colorAmount.min} max={menuValue.colorAmount.max} name="colorAmount" id="colorAmount" value={item.colorAmount.value} disabled={!item.colorAmount.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmount")}/>
                             </td>
+                            {
+                                item.color.editable = item.colorAmount.value != 0 && item.colorAmount.editable
+                            }
                             <td>
-                                <div style={{whiteSpace:"nowrap", width:"130px", overflowX:"auto"}}>
-                                    { 
-                                        (item.color1.editable = item.colorAmount.value >= 1 && item.colorAmount.editable)
-                                    }
-                                        <input list="color" name="color" value={item.colorAmount.value >= 1 ? item.color1.value : ""} disabled={!item.color1.editable} placeholder="ระบุสี1" onChange={(event) => onDetailChange(event.target.value, index, "color1")}/>
-                                        <datalist id="color">
-                                        {
-                                            menuValue.color.map((menuItem, subIndex) => {
-                                                return (
-                                                    <option key={subIndex} value={menuItem}/>
-                                                )
-                                            })
-                                        }
-                                        </datalist>
-                                    { 
-                                        (item.color2.editable = item.colorAmount.value >= 2 && item.colorAmount.editable) &&
-                                        <>
-                                        <input list="color" name="color" value={item.colorAmount.value >= 2 ? item.color2.value : ""} disabled={!item.color2.editable} placeholder="ระบุสี2" onChange={(event) => onDetailChange(event.target.value, index, "color2")}/>
-                                        <datalist id="color">
-                                        {
-                                            menuValue.color.map((menuItem, subIndex) => {
-                                                return (
-                                                    <option key={subIndex} value={menuItem}/>
-                                                )
-                                            })
-                                        }
-                                        </datalist>
-                                        </>
-                                    }
-                                    { 
-                                        (item.color3.editable = item.colorAmount.value >= 3 && item.colorAmount.editable) &&
-                                        <>
-                                        <input list="color" name="color" value={item.colorAmount.value >= 3 ? item.color3.value : ""} disabled={!item.color3.editable} placeholder="ระบุสี3" onChange={(event) => onDetailChange(event.target.value, index, "color3")}/>
-                                        <datalist id="color">
-                                        {
-                                            menuValue.color.map((menuItem, subIndex) => {
-                                                return (
-                                                    <option key={subIndex} value={menuItem}/>
-                                                )
-                                            })
-                                        }
-                                        </datalist>
-                                        </>
-                                    }
-                                    { 
-                                        (item.color4.editable = item.colorAmount.value >= 4 && item.colorAmount.editable) &&
-                                        <>
-                                        <input list="color" name="color" value={item.colorAmount.value >= 4 ? item.color4.value : ""} disabled={!item.color4.editable} placeholder="ระบุสี4" onChange={(event) => onDetailChange(event.target.value, index, "color4")}/>
-                                        <datalist id="color">
-                                        {
-                                            menuValue.color.map((menuItem, subIndex) => {
-                                                return (
-                                                    <option key={subIndex} value={menuItem}/>
-                                                )
-                                            })
-                                        }
-                                        </datalist>
-                                        </>
+                                <div style={{whiteSpace:"nowrap", width:"100px", overflowX:"auto"}}>
+                                    {
+                                        [...Array(item.colorAmount.value).keys()].map((menuItem, subIndex) => {
+                                            return (
+                                                <>
+                                                    <input list="color" name="color" value={item.colorAmount.value == 0 ? "" : item.color.value} disabled={!item.color.editable} placeholder="ระบุสี" onChange={(event) => onDetailChange(event.target.value, index, "color")}/>
+                                                    <datalist id="color">
+                                                    {
+                                                        menuValue.color.map((menuItem, subIndex) => {
+                                                            return (
+                                                                <option key={subIndex} value={menuItem}/>
+                                                            )
+                                                        })
+                                                    }
+                                                    </datalist>
+                                                </>
+                                            )
+                                        })
                                     }
                                 </div>
                             </td>

@@ -1,6 +1,8 @@
 import { useParams } from "react-router";
 import Banner from "../../ui/banner/Banner";
 import OrderStatus from "../../ui/content/orderStatus/OrderStatus";
+import ApproveOrder from "../../ui/content/approveOrder/ApproveOrder";
+import CheckArtWork from "../../ui/content/checkArtWork/CheckArtWork";
 // import NewArtWorkOrder from "../../ui/content/newArtWorkOrder/NewArtWorkOrder";
 // import RecheckArtWork from "../../ui/content/recheckArtWork/RecheckArtWork";
 
@@ -10,13 +12,13 @@ const HeadOfMarketing = () => {
 
     const Content = () => {
         switch(type){
-            case "new-artwork-order":
+            case "approve-order":
                 return (
-                    <></> 
+                    <ApproveOrder filter={{}}/>
                 )
-            case "recheck-artwork":
+            case "check-artwork":
                 return (
-                    <></> 
+                    <CheckArtWork/>
                 )
             case "order-status":
                 return (
@@ -34,11 +36,11 @@ const HeadOfMarketing = () => {
             <Banner role="หัวหน้าแผนกการตลาด"
                 menu={[
                     {
-                        path:"/headofmarketing/check-block-order",
-                        text:"Check Block&Order"
+                        path:"/headofmarketing/approve-order",
+                        text:"Approve Order"
                     },
                     {
-                        path:"/headofmarketing/Check Artwork",
+                        path:"/headofmarketing/check-artwork",
                         text:"Check Artwork"
                     },
                     {

@@ -41,6 +41,41 @@ let dataBase = {
             vat:                7,
             design_id:          "",
             status:             "ตรวจสอบออร์เดอร์",
+            filmStatus:         "กำลังดำเนินการ",
+            approveStatus:      "checking",
+            cs:                 "123450",
+            edit:               "..."
+        },
+        {
+            area:               "กทม 1",
+            date:               "2021-01-01",
+            deadline:           "2021-02-01",
+            orderID:            "1234567890",
+            name:               "customer1",
+            workName:           "demo1",
+            paperType:          "KW",
+            paperThickness:     "thick1",
+            bagSize:            "ตัด1",
+            bagShape:           "ตั้ง",
+            bagEars:            "หูเจาะ",
+            bagType:            "กระดาษ",
+            colorAmount:        1,
+            color:              "color1",
+            baseColorCheck:     true,
+            baseColor:          "color2",
+            quantity:           1,
+            unit:               "กิโล",
+            price:              100,
+            workType:           "sell",
+            pattern:            "pattern1",
+            comment:            "no",
+            sameBlock:          false,
+            sameColor:          false,
+            vat:                7,
+            design_id:          "",
+            status:             "ตรวจสอบออร์เดอร์",
+            filmStatus:         "กำลังดำเนินการ",
+            approveStatus:      "checking",
             cs:                 "123450",
             edit:               "..."
         }
@@ -73,11 +108,16 @@ const getCustomer = () => {
     return dataBase["customer"]
 }
 
-const sentOrder = (newOrder) => {
+const sentNewOrder = (newOrder) => {
     dataBase["order"] = [...dataBase["order"], ...newOrder]
     let newcustomer = {name: newOrder[0].name, address:newOrder[0].address}
     dataBase["customer"] = [...dataBase["customer"], newcustomer]
     console.log(dataBase["customer"])
 }
 
-export default {getBaseColor, getCustomer, getOrderHistory, sentOrder}
+const sentEditedOrder = (editedOrder) => {
+    dataBase["order"] = editedOrder
+    console.log(dataBase["customer"])
+}
+
+export default {getBaseColor, getCustomer, getOrderHistory, sentNewOrder, sentEditedOrder}

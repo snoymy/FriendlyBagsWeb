@@ -92,7 +92,7 @@ const getArea = () => {
 }
 
 const sentDataToBackEnd = (order) => {
-    BackEndInterface.sentOrder(order)
+    BackEndInterface.sentNewOrder(order)
 }
 
 const OpenPaperBagOrderForm = () => {
@@ -204,7 +204,10 @@ const OpenPaperBagOrderForm = () => {
                 bagShape:           item.bagShape.value,
                 bagEars:            item.bagEars.value,
                 colorAmount:        item.colorAmount.value,
-                color:              item.color.value,
+                color1:             (item.colorAmount.value >= 1 ? item.color1.value : ""),
+                color2:             (item.colorAmount.value >= 2 ? item.color2.value : ""),
+                color3:             (item.colorAmount.value >= 3 ? item.color3.value : ""),
+                color4:             (item.colorAmount.value >= 4 ? item.color4.value : ""),
                 baseColorCheck:     item.baseColorCheck.value,
                 baseColor:          item.baseColor.value,
                 quantity:           item.quantity.value,

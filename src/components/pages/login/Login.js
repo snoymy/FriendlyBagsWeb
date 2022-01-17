@@ -18,6 +18,11 @@ const Login = () => {
             id:"artwork",
             password:"pass",
             role:"artwork"
+        },
+        {
+            id:"headofmarketing",
+            password:"pass",
+            role:"headofmarketing"
         }
     ]
 

@@ -3,6 +3,7 @@ import Banner from "../../ui/banner/Banner";
 import OrderStatus from "../../ui/content/orderStatus/OrderStatus";
 import NewArtWorkOrder from "../../ui/content/newArtWorkOrder/NewArtWorkOrder";
 import RecheckArtWork from "../../ui/content/recheckArtWork/RecheckArtWork";
+import LasorFilm from "../../ui/content/lasorFilm/LasorFilm";
 
 const ArtWork = () => {
     const {type} = useParams()
@@ -17,6 +18,10 @@ const ArtWork = () => {
             case "recheck-artwork":
                 return (
                     <RecheckArtWork/> 
+                )
+            case "lasor-film":
+                return (
+                    <LasorFilm/> 
                 )
             case "order-status":
                 return (
@@ -37,6 +42,7 @@ const ArtWork = () => {
                         path:"/artwork/new-artwork-order",
                         text:"New Artwork Order"
                     },
+                    /*
                     {
                         path:"/artwork/recheck-artwork",
                         text:"Recheck Artwork"
@@ -45,6 +51,7 @@ const ArtWork = () => {
                         path:"/artwork/new-comment",
                         text:"New Comment"
                     },
+                    */
                     {
                         path:"/artwork/lasor-film",
                         text:"Lasor Film"
