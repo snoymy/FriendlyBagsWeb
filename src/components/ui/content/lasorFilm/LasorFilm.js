@@ -37,7 +37,7 @@ const LasorFilm = ()=>{
 
     const modalContent = (
         <div style={{padding: "30px"}}>
-            <div className={styles["paper-bag-order-table"]} style={{paddingBottom:"50px"}}>
+            <div className={styles["lasor-film-table"]} style={{paddingBottom:"50px"}}>
             <table>
                 <thead>
                     <tr>
@@ -207,7 +207,7 @@ const LasorFilm = ()=>{
                     })}
                     </tbody>
                 </table>
-            <Modal style={{width:"1750px"}} content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
+            <Modal style={{width:"92%"}} content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
             </div>
             <button type="button" onClick={packDataAndSent}>Submit</button>
         </div>
