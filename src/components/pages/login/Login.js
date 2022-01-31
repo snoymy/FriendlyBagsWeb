@@ -23,7 +23,12 @@ const Login = () => {
             id:"headofmarketing",
             password:"pass",
             role:"headofmarketing"
-        }
+        },
+        {
+            id:"marketingmanager",
+            password:"pass",
+            role:"marketingmanager"
+        },
     ]
 
     const onLogin = () => {

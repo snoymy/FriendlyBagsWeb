@@ -1,5 +1,5 @@
 import { Fragment, useState} from "react" 
-import styles from "./CheckArtWork.module.css"
+import styles from "./OrderBlockPlate.module.css"
 import containerStyles from "./container.module.css" 
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
@@ -28,7 +28,7 @@ const sentDataToBackEnd = (order) => {
     BackEndInterface.sentEditedOrder(order)
 }
 
-const CheckArtWork = ({filter})=>{
+const OrderBlockPlate = ({filter})=>{
     const [orderHistory, setOrderHistory] = useState(getOrderHistory("*", filter))
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
@@ -52,7 +52,7 @@ const CheckArtWork = ({filter})=>{
 
     const modalContent = (
         <div style={{padding: "30px"}}>
-            <div className={styles["check-artwork-table"]} style={{paddingBottom:"50px"}}>
+            <div className={styles["approve-order-table"]} style={{paddingBottom:"50px"}}>
             <table>
                 <thead>
                     <tr>
@@ -163,8 +163,8 @@ const CheckArtWork = ({filter})=>{
 
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
-        <div className={styles["check-artwork"]}>
-            <div className={styles["check-artwork-table"]}>
+        <div className={styles["approve-order"]}>
+            <div className={styles["approve-order-table"]}>
                 <table>
                     <thead>
                         <tr>
@@ -175,9 +175,7 @@ const CheckArtWork = ({filter})=>{
                             <th style={{width:"300px"}}><label>ชื่องาน</label></th>
                             <th style={{width:"300px"}}><label>CS</label></th>
                             <th style={{width:"130px"}}><label></label></th>
-                            <th style={{width:"200px"}}><label>Artwork</label></th>
-                            <th style={{width:"200px"}}><label>แก้ไข</label></th>
-                            <th style={{width:"200px"}}><label>Approve</label></th>
+                            <th style={{width:"200px"}}><label>Block/Plate</label></th>
                         </tr>
                     </thead>
 
@@ -208,16 +206,12 @@ const CheckArtWork = ({filter})=>{
                                     <button type="button" onClick={()=>{setViewIndex(index); setShowModal(true)}}>View Details</button>
                                 </td>
                                 <td>
-                                    <button type="button">View</button>
-                                </td>
-                                <td style={{textAlign:"left", verticalAlign: "top"}}>
-                                    <textarea style={{width:"100%", height:"70px"}} value={item.edit}  onChange={(event) => onDetailChange(event.target.value, index, "edit")}/>
-                                </td>
-                                <td>
-                                    <select style={{width: "100px", top: "25px", left: "-70px"}} name="status" id="status" value={item.approveStatus}onChange={(event) => onDetailChange(event.target.value, index, "approveStatus")}>
-                                            <option value="checking">Checking</option>
-                                            <option value="confirm">Confirm</option>
-                                            <option value="reject">Reject</option>
+                                    <select style={{width: "100px", top: "25px", left: "-70px"}} name="status" id="status" value={item.blockPlateStatus} onChange={(event) => onDetailChange(event.target.value, index, "blockPlateStatus")}>
+                                            <option value="พร้อมใช้งาน">พร้อมใช้งาน</option>
+                                            <option value="ชำรุด">ชำรุด</option>
+                                            <option value="สั่งทำ">สั่งทำ</option>
+                                            <option value="กำลังผลิต">กำลังผลิต</option>
+                                            <option value="รอดำเนินงาน">รอดำเนินงาน</option>
                                     </select>
                                 </td>
                             </tr>
@@ -235,4 +229,4 @@ const CheckArtWork = ({filter})=>{
     )
 }
 
-export default CheckArtWork;
+export default OrderBlockPlate;

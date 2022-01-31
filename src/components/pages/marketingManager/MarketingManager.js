@@ -1,0 +1,57 @@
+import { useParams } from "react-router";
+import Banner from "../../ui/banner/Banner";
+import OrderStatus from "../../ui/content/orderStatus/OrderStatus";
+import ApproveOrder from "../../ui/content/approveOrder/ApproveOrder";
+import CheckArtWork from "../../ui/content/checkArtWork/CheckArtWork";
+// import NewArtWorkOrder from "../../ui/content/newArtWorkOrder/NewArtWorkOrder";
+// import RecheckArtWork from "../../ui/content/recheckArtWork/RecheckArtWork";
+
+const MarketingManager = () => {
+    const {type} = useParams()
+    console.log(type)
+
+    const Content = () => {
+        switch(type){
+            case "approve-order":
+                return (
+                    <ApproveOrder filter={{}}/>
+                )
+            case "check-artwork":
+                return (
+                    <CheckArtWork/>
+                )
+            case "order-status":
+                return (
+                    <OrderStatus/>
+                )
+            default:
+                return (
+                    <></> 
+                )
+        }
+    }
+
+    return (
+        <>
+            <Banner role="ผู้จัดการฝ่ายการตลาด"
+                menu={[
+                    {
+                        path:"/marketingmanager/approve-order",
+                        text:"Approve Order"
+                    },
+                    {
+                        path:"/marketingmanager/check-artwork",
+                        text:"Check Artwork"
+                    },
+                    {
+                        path:"/marketingmanager/order-status",
+                        text:"สถานะออร์เดอร์"
+                    },
+                ]}
+            />
+            <Content/>
+        </>
+    )
+}
+
+export default MarketingManager;
