@@ -32,6 +32,7 @@ const ApproveOrder = ({filter})=>{
     const [orderHistory, setOrderHistory] = useState(getOrderHistory("*", filter))
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
+    const [showBagType, setShowBagType] = useState("กระดาษ")
 
     const onDetailChange = (value, index, prop) => {
         console.log(value)
@@ -49,8 +50,8 @@ const ApproveOrder = ({filter})=>{
         alert("Success")
         //window.location.reload();
     }
-
-    const modalContent = (
+    
+    const modalContentPaper = (
         <div style={{padding: "30px"}}>
             <div className={styles["approve-order-table"]} style={{paddingBottom:"50px"}}>
             <table>
@@ -78,7 +79,7 @@ const ApproveOrder = ({filter})=>{
                     <tr><td><label>&nbsp;</label></td></tr>
                 {orderHistory.map((item, index) => {
                     console.log("map", item)
-                    if(index === viewIndex)
+                    if(index === viewIndex && item.color !== undefined){
                     return (
                         <Fragment key={index}>
                         <tr>
@@ -112,7 +113,7 @@ const ApproveOrder = ({filter})=>{
                                 <label style={{width:"60%", textAlign:"left"}}>{item.colorAmount}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmount !== 0 ? item.color : "-"}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmount !== 0 ? item.color.filter(n => n).join() : "-"}</label>
                             </td>
                             <td>
                                 <label style={{width:"60%", textAlign:"left"}}>{item.baseColorCheck ? "ย้อม" : "ไม่ย้อม"}</label>
@@ -151,15 +152,142 @@ const ApproveOrder = ({filter})=>{
                         </tr>
                         </Fragment>
                     )
+                    }
                 })}
                 </tbody>
             </table>
         </div>
-        <div style={{textAlign:"right", marginRight:"30px", marginTop:"30px"}}>
+        <div style={{textAlign:"right", marginRight:"30px"}}>
             <button type="button" onClick={() => setShowModal(false)}>close</button>
         </div>
         </div>
     )
+
+    const modalContentPlastic = (
+        <div style={{padding: "30px"}}>
+            <div className={styles["approve-order-table"]} style={{paddingBottom:"50px"}}>
+            <table>
+                <thead>
+                    <tr>
+                        <th><label>ชนิดถุง</label></th>
+                        <th><label>งาน</label></th>
+                        <th><label>อัดลาย</label></th>
+                        <th><label>ขนาดถุง</label></th>
+                        <th><label>เนื้อถุง</label></th>
+                        <th><label>สีเนื้อถุง</label></th>
+                        <th><label>ข้างถุง</label></th>
+                        <th><label>ความหนาถุง</label></th>
+                        <th><label>พิมพ์</label></th>
+                        <th><label>จำนวนสีพิมพ์หน้า</label></th>
+                        <th><label>หน้า</label></th>
+                        <th><label>จำนวนสีพิมพ์หลัง</label></th>
+                        <th><label>หลัง</label></th>
+                        <th style={{width:"200px"}}><label>จำนวน</label></th>
+                        <th><label>ราคา</label></th>
+                        <th><label>แบบ</label></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr><td><label>&nbsp;</label></td></tr>
+                {orderHistory.map((item, index) => {
+                    if(index === viewIndex && item.colorFront !== undefined && item.colorBack !== undefined)
+                    return (
+                        <Fragment key={index}>
+                        <tr>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.type}</label>
+                            </td>
+                            <td>
+                                <label>{item.workType === "sell" ? "งานขาย" : "งานพิมพ์"}</label>
+                            </td>
+                            <td>
+                                <label>{item.emboss === true ? "อัด" : "ไม่อัด"}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSize.length}x{item.bagSize.width} นิ้ว</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagMat}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagMatColor}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSide} นิ้ว</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.plasticThickness} gram</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.printFace}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountFront}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountFront !== 0 ? item.colorFront.filter(n => n).join() : "-"}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountBack}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountBack !== 0 ? item.colorBack.filter(n => n).join() : "-"}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.quantity} {item.unit}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.price}</label>
+                            </td>
+                            <td>
+                                <input type="button" id="file-upload" style={{display:"none"}}/>
+                                <button type="button" onClick={()=>document.getElementById("file-upload").click()}>View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style={{}}>
+                                <label>Comment:</label>
+                            </td>
+                            <td style={{textAlign:"left", verticalAlign: "top", border: "2px solid #e6e6e6", borderRadius: "5px"}} colSpan="4">
+                                <label>{item.comment}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style={{textAlign:"left", paddingTop:"50px"}} colSpan={3}>
+                                <label style={{width:"60%", marginLeft:"10px"}}>ราคารวม </label> {item.vat !== 0 && <label>(vat {item.vat}%) </label>}
+                                <label>:&nbsp;&nbsp;&nbsp;</label>
+                                <div style={{display:"inline-block", padding: "0 5px", width: "70px", textAlign: "right", border: "2px solid #d7d7d7", borderRadius:"5px"}}>
+                                    <label>{item.quantity * item.price + ( (item.vat/100) * (item.quantity*item.price) )}</label>
+                                </div>
+                                <label>&nbsp;Baht</label>
+                            </td>
+                        </tr>
+                        </Fragment>
+                    )
+                })}
+                </tbody>
+            </table>
+        </div>
+        <div style={{textAlign:"right", marginRight:"30px"}}>
+            <button type="button" onClick={() => setShowModal(false)}>close</button>
+        </div>
+        </div>
+    )
+
+    const modalContent = (showBagType) => {
+        if(showBagType === "กระดาษ"){
+            return modalContentPaper
+        }
+        else if(showBagType === "พลาสติก"){
+            return modalContentPlastic
+        }
+    }
 
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
@@ -204,7 +332,7 @@ const ApproveOrder = ({filter})=>{
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.cs}</label>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={()=>{setViewIndex(index); setShowModal(true)}}>View Details</button>
+                                    <button type="button" onClick={()=>{setViewIndex(index); setShowBagType(item.bagType); setShowModal(true)}}>View Details</button>
                                 </td>
                                 <td>
                                     <input type="button" id="file-upload" style={{display:"none"}}/>
@@ -223,7 +351,7 @@ const ApproveOrder = ({filter})=>{
                     })}
                     </tbody>
                 </table>
-            <Modal style={{width:"92%"}} content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
+            <Modal style={{width:"92%"}} content={modalContent(showBagType)} showModal={showModal} setShowModal={setShowModal}/>
             </div>
             <button type="button" onClick={packDataAndSent}>Submit</button>
         </div>

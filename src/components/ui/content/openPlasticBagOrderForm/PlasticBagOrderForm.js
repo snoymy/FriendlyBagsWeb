@@ -1,9 +1,9 @@
 import { Fragment, useState} from "react" 
-import styles from "./PaperBagOrderForm.module.css"
+import styles from "./PlasticBagOrderForm.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
-const getOrderHistory = (name="", filter={bagType:"กระดาษ"}) => {
+const getOrderHistory = (name="", filter={bagType:"พลาสติก"}) => {
     console.log(name)
     let ret = []
     const item = BackEndInterface.getOrderHistory(name)
@@ -23,7 +23,7 @@ const getOrderHistory = (name="", filter={bagType:"กระดาษ"}) => {
     return ret
 }
 
-const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName}) => {
+const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName}) => {
     const [showModal, setShowModal] = useState(false)
     const [orderHistory, setOrderHistory] = useState(getOrderHistory(customerName))
 
@@ -65,24 +65,31 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
     const addNewOrder = () => {
         let newOrder = {
             workName: {value:menuValue.workName, editable:true},
-            paperType: {value:menuValue.paperType[0], editable:true},
-            paperThickness: {value:menuValue.paperThickness[0], editable:true},
-            bagSize: {value:menuValue.bagSize[0], editable:true},
-            bagShape: {value:menuValue.bagShape[0], editable:true},
-            bagEars: {value:menuValue.bagEars[0], editable:true},
-            colorAmount: {value:menuValue.colorAmount.min, editable:true},
-            color1: {value:menuValue.color[0], editable:false},
-            color2: {value:"", editable:false},
-            color3: {value:"", editable:false},
-            color4: {value:"", editable:false},
-            baseColorCheck: {value:menuValue.baseColorCheck, editable:true},
-            baseColor: {value:menuValue.baseColor[0], editable:false},
+            type: {value:menuValue.type[0], editable:true},
+            bagSizeLength: {value:menuValue.bagSize.length, editable:true},
+            bagSizeWidth: {value:menuValue.bagSize.width, editable:true},
+            bagMat: {value:menuValue.bagMat[0], editable:true},
+            bagMatColor: {value:menuValue.bagMatColor[0], editable:true},
+            bagSide: {value:menuValue.bagSide.min, editable:true},
+            plasticThickness: {value:menuValue.plasticThickness[0], editable:true},
+            printFace: {value:menuValue.printFace.min, editable:true},
+            colorAmountFront: {value:menuValue.colorAmount.min, editable:true},
+            colorFront1: {value:menuValue.color[0], editable:false},
+            colorFront2: {value:"", editable:false},
+            colorFront3: {value:"", editable:false},
+            colorFront4: {value:"", editable:false},
+            colorAmountBack: {value:menuValue.colorAmount.min, editable:true},
+            colorBack1: {value:menuValue.color[0], editable:false},
+            colorBack2: {value:"", editable:false},
+            colorBack3: {value:"", editable:false},
+            colorBack4: {value:"", editable:false},
             quantity: {value:menuValue.quantity.min, editable:true},
             unit: {value:menuValue.unit[0], editable:true},
             price: {value:menuValue.price.min, editable:true},
             design: {value:menuValue.design, editable:true},
             workType: {value:menuValue.workType.sell, editable:true},
             pattern: {value:menuValue.pattern[0], editable:true},
+            emboss: {value:menuValue.emboss, editable:true},
             comment: {value:menuValue.comment, editable:true},
             sameBlock: {value:menuValue.sameBlock, editable:true},
             sameColor: {value:menuValue.sameColor, editable:true},
@@ -94,24 +101,30 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
     const addOrder = (order) => {
         let newOrder = {
             workName: {value:order.workName, editable:true},
-            paperType: {value:order.paperType, editable:true},
-            paperThickness: {value:order.paperThickness, editable:true},
+            type: {value:order.type, editable:true},
             bagSize: {value:order.bagSize, editable:true},
-            bagShape: {value:order.bagShape, editable:true},
-            bagEars: {value:order.bagEars, editable:true},
-            colorAmount: {value:order.colorAmount, editable:true},
-            color1: {value:order.color1, editable:false},
-            color2: {value:order.color2, editable:false},
-            color3: {value:order.color3, editable:false},
-            color4: {value:order.color4, editable:false},
-            baseColorCheck: {value:order.baseColorCheck, editable:true},
-            baseColor: {value:order.baseColor, editable:false},
+            bagMat: {value:order.bagMat, editable:true},
+            bagMatColor: {value:order.bagMatColor, editable:true},
+            bagSide: {value:menuValue.bagSide.min, editable:true},
+            plasticThickness: {value:order.plasticThickness, editable:true},
+            printFace: {value:menuValue.printFace.min, editable:true},
+            colorAmountFront: {value:order.colorAmount, editable:true},
+            colorFront1: {value:order.color1, editable:false},
+            colorFront2: {value:order.color2, editable:false},
+            colorFront3: {value:order.color3, editable:false},
+            colorFront4: {value:order.color4, editable:false},
+            colorAmountBack: {value:order.colorAmount, editable:true},
+            colorBack1: {value:order.color1, editable:false},
+            colorBack2: {value:order.color2, editable:false},
+            colorBack3: {value:order.color3, editable:false},
+            colorBack4: {value:order.color4, editable:false},
             quantity: {value:order.quantity, editable:true},
             unit: {value:order.unit, editable:true},
             price: {value:order.price, editable:true},
             design: {value:menuValue.design, editable:true},
             workType: {value:order.workType, editable:true},
             pattern: {value:order.pattern, editable:true},
+            emboss: {value:menuValue.emboss, editable:true},
             comment: {value:order.comment, editable:true},
             sameBlock: {value:order.sameBlock, editable:true},
             sameColor: {value:order.sameColor, editable:true}
@@ -126,23 +139,25 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
 
     const modalContent = (
         <div style={{padding: "30px"}}>
-        <div className={styles["paper-bag-order-table"]}>
+        <div className={styles["plastic-bag-order-table"]}>
             <table>
                 <thead>
                     <tr>
                         <th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>
-                        <th><label>ชนิดกระดาษ</label></th>
-                        <th><label>ความหนากระดาษ</label></th>
+                        <th><label>ชนิดถุง</label></th>
                         <th><label>ขนาดถุง</label></th>
-                        <th><label>ทรง</label></th>
-                        <th><label>หูถุง</label></th>
-                        <th><label>จำนวนสีพิมพ์</label></th>
-                        <th><label>สี</label></th>
-                        <th><label>ย้อมพื้น</label></th>
-                        <th><label>สีย้อม</label></th>
+                        <th><label>เนื้อถุง</label></th>
+                        <th><label>สีเนื้อถุง</label></th>
+                        <th><label>ข้างถุง</label></th>
+                        <th><label>ความหนาถุง</label></th>
+                        <th><label>พิมพ์</label></th>
+                        <th><label>จำนวนสีพิมพ์หน้า</label></th>
+                        <th><label>หน้า</label></th>
+                        <th><label>จำนวนสีพิมพ์หลัง</label></th>
+                        <th><label>หลัง</label></th>
                         <th style={{width:"200px"}}><label>จำนวน</label></th>
                         <th><label>ราคา</label></th>
-                        <th><label>แบบ</label></th>
+                        <th><label>แนบแบบ</label></th>
                         <th><label></label></th>
                     </tr>
                 </thead>
@@ -155,7 +170,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                         <Fragment key={index}>
                         <tr>
                             <td></td>
-                            <td className={styles["paper-bag-order-table-work-name"]} style={{textAlign:"left"}} colSpan={5}>
+                            <td className={styles["plastic-bag-order-table-work-name"]} style={{textAlign:"left"}} colSpan={5}>
                                 <label style={{width:"60%", textAlign:"left", fontSize:"25px"}}>ชื่องาน: {item.workName}</label>
                             </td>
                         </tr>
@@ -164,31 +179,37 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.paperType}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.type}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.paperThickness} gram</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSize.length}x{item.bagSize.width} นิ้ว</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSize}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagMat}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.bagShape}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagMatColor}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.bagEars}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSide} นิ้ว</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmount}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.plasticThickness} gram</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmount !== 0 ? item.color.filter(n => n).join() : "-"}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.printFace}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.baseColorCheck ? "ย้อม" : "ไม่ย้อม"}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountFront}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.baseColorCheck ? item.baseColor : "-"}</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountFront !== 0 ? item.colorFront.filter(n => n).join() : "-"}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountBack}</label>
+                            </td>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountBack !== 0 ? item.colorBack.filter(n => n).join() : "-"}</label>
                             </td>
                             <td>
                                 <label style={{width:"60%", textAlign:"left"}}>{item.quantity} {item.unit}</label>
@@ -201,7 +222,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <button type="button" onClick={()=>document.getElementById("file-upload").click()}>View</button>
                             </td>
                             <td>
-                                <button className={styles["paper-bag-order-add-button"]} type="button" style={{border:"none"}} onClick={()=>addOrder(item)}>+</button>
+                                <button className={styles["plastic-bag-order-add-button"]} type="button" style={{border:"none"}} onClick={()=>addOrder(item)}>+</button>
                             </td>
                         </tr>
                         <tr>
@@ -216,13 +237,17 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 item.workType === "sell" && <label>ลาย: {item.pattern}</label>
                             }
                             </td>
+                            <td>
+                                <label>อัดลาย: </label>
+                                <label>{item.emboss === true ? "อัด" : "ไม่อัด"}</label>
+                            </td>
                             <td style={{}}>
                                 <label>Comment:</label>
                             </td>
                             <td style={{textAlign:"left", verticalAlign: "top", border: "2px solid #e6e6e6", borderRadius: "5px"}} colSpan="4">
                                 <label>{item.comment}</label>
                             </td>
-                            <td style={{}} colSpan={2}>
+                            <td style={{}} colSpan={3}>
                                 <label style={{}}>
                                     Block เดิม
                                 </label>
@@ -270,22 +295,24 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
     console.log("history", orderHistory)
 
     return (
-        <div className={styles["paper-bag-order"]}>
-        <div className={styles["paper-bag-order-table"]}>
+        <div className={styles["plastic-bag-order"]}>
+        <div className={styles["plastic-bag-order-table"]}>
             <table>
                 <thead>
                     <tr>
                         <th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>
-                        <th><label>ชนิดกระดาษ</label></th>
-                        <th><label>ความหนากระดาษ</label></th>
-                        <th><label>ขนาดถุง</label></th>
-                        <th><label>ทรง</label></th>
-                        <th><label>หูถุง</label></th>
-                        <th><label>จำนวนสีพิมพ์</label></th>
-                        <th><label>สี</label></th>
-                        <th><label>ย้อมพื้น</label></th>
-                        <th><label>สีย้อม</label></th>
-                        <th style={{width:"200px"}}><label>จำนวน</label></th>
+                        <th><label>ชนิดถุง</label></th>
+                        <th style={{minWidth:"250px"}}><label>ขนาดถุง</label></th>
+                        <th><label>เนื้อถุง</label></th>
+                        <th><label>สีเนื้อถุง</label></th>
+                        <th><label>ข้างถุง</label></th>
+                        <th><label>ความหนาถุง</label></th>
+                        <th><label>พิมพ์</label></th>
+                        <th><label>จำนวนสีพิมพ์หน้า</label></th>
+                        <th><label>หน้า</label></th>
+                        <th><label>จำนวนสีพิมพ์หลัง</label></th>
+                        <th><label>หลัง</label></th>
+                        <th style={{minWidth:"200px"}}><label>จำนวน</label></th>
                         <th><label>ราคา</label></th>
                         <th><label>แนบแบบ</label></th>
                         <th><label></label></th>
@@ -295,12 +322,9 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                 <tbody>
                     <tr><td><label>&nbsp;</label></td></tr>
                 {orderDetails.map((item, index) => {
-                    console.log("map", item)
-                    console.log("sc", item.sameColor.value)
-                    console.log("sb", item.sameBlock.value)
                     if(item.sameColor.value === true){
-                        item.colorAmount.editable = false
-                        item.color.editable = false
+                        item.colorAmountFront.editable = false
+                        item.colorFront.editable = false
                         item.baseColorCheck.editable = false
                         item.baseColor.editable = false
                     }
@@ -312,7 +336,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                         <Fragment key={index}>
                         <tr>
                             <td></td>
-                            <td className={styles["paper-bag-order-table-work-name"]} style={{textAlign:"left"}} colSpan={5}>
+                            <td className={styles["plastic-bag-order-table-work-name"]} style={{textAlign:"left"}} colSpan={5}>
                                 <input style={{width:"60%", textAlign:"left"}} type="text" name="workName" id="workName" value={item.workName.value} disabled={!item.workName.editable} placeholder="ระบุชื่องาน" onChange={(event) => onDetailChange(event.target.value, index, "workName")}/>
                             </td>
                         </tr>
@@ -321,9 +345,9 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>
                             </td>
                             <td>
-                                <select name="paperType" id="paperType" value={item.paperType.value} disabled={!item.paperType.editable} onChange={(event) => onDetailChange(event.target.value, index, "paperType")}>
+                                <select name="type" id="type" value={item.type.value} disabled={!item.type.editable} onChange={(event) => onDetailChange(event.target.value, index, "type")}>
                                     {
-                                        menuValue.paperType.map((menuItem, subIndex) => {
+                                        menuValue.type.map((menuItem, subIndex) => {
                                             return (
                                                 <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
@@ -332,9 +356,41 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 </select>
                             </td>
                             <td>
-                                <select style={{width:"50%"}}name="paperThickness" id="paperThickness" value={item.paperThickness.value} disabled={!item.paperThickness.editable} onChange={(event) => onDetailChange(event.target.value, index, "paperThickness")}>
+                                <input style={{width:"20%"}} type="number" min={0} name="bagSizeLength" id="bagSizeLength" value={item.bagSizeLength.value} disabled={!item.bagSizeLength.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagSizeLength")}/>
+                                <label>x</label>
+                                <input style={{width:"20%"}} type="number" min={0} name="bagSizeWidth" id="bagSizeWidth" value={item.bagSizeWidth.value} disabled={!item.bagSizeWidth.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagSizeWidth")}/>
+                                <label>นิ้ว</label>
+                            </td>
+                            <td>
+                                <select name="bagMat" id="bagMat" value={item.bagMat.value} disabled={!item.bagMat.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagMat")}>
                                     {
-                                        menuValue.paperThickness.map((menuItem, subIndex) => {
+                                        menuValue.bagMat.map((menuItem, subIndex) => {
+                                            return (
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="bagMatColor" id="bagMatColor" value={item.bagMatColor.value} disabled={!item.bagMatColor.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagMatColor")}>
+                                    {
+                                        menuValue.bagMatColor.map((menuItem, subIndex) => {
+                                            return (
+                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <input style={{width:"40%"}}type="number" min={menuValue.bagSide.min} name="bagSide" id="bagSide" value={item.bagSide.value} disabled={!item.bagSide.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagSide")}/>
+                                <label>นิ้ว</label>
+                            </td>
+                            <td>
+                                <select style={{width:"50%"}}name="plasticThickness" id="plasticThickness" value={item.plasticThickness.value} disabled={!item.plasticThickness.editable} onChange={(event) => onDetailChange(event.target.value, index, "plasticThickness")}>
+                                    {
+                                        menuValue.plasticThickness.map((menuItem, subIndex) => {
                                             return (
                                                 <option key={subIndex} value={menuItem}>{menuItem}</option>
                                             )
@@ -344,48 +400,19 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <label>gram</label>
                             </td>
                             <td>
-                                <select name="bagSize" id="bagSize" value={item.bagSize.value} disabled={!item.bagSize.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagSize")}>
-                                    {
-                                        menuValue.bagSize.map((menuItem, subIndex) => {
-                                            return (
-                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                <input style={{width:"40%"}}type="number" min={menuValue.printFace.min} max={menuValue.printFace.max} name="printFace" id="printFace" value={item.printFace.value} disabled={!item.printFace.editable} onChange={(event) => onDetailChange(event.target.value, index, "printFace")}/>
+                                <label>หน้า</label>
                             </td>
                             <td>
-                                <select name="bagShape" id="bagShape" value={item.bagShape.value} disabled={!item.bagShape.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagShape")}>
-                                    {
-                                        menuValue.bagShape.map((menuItem, subIndex) => {
-                                            return (
-                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            </td>
-                            <td>
-                                <select name="bagEars" id="bagEars" value={item.bagEars.value} disabled={!item.bagEars.editable} onChange={(event) => onDetailChange(event.target.value, index, "bagEars")}>
-                                    {
-                                        menuValue.bagEars.map((menuItem, subIndex) => {
-                                            return (
-                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            </td>
-                            <td>
-                                <input type="number" min={menuValue.colorAmount.min} max={menuValue.colorAmount.max} name="colorAmount" id="colorAmount" value={item.colorAmount.value} disabled={!item.colorAmount.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmount")}/>
+                                <input type="number" min={menuValue.colorAmount.min} max={menuValue.colorAmount.max} name="colorAmountFront" id="colorAmountFront" value={item.colorAmountFront.value} disabled={!item.colorAmountFront.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmountFront")}/>
                             </td>
                             <td>
                                 <div style={{whiteSpace:"nowrap", width:"130px", overflowX:"auto"}}>
                                     { 
-                                        (item.color1.editable = item.colorAmount.value >= 1 && item.colorAmount.editable)
+                                        (item.colorFront1.editable = item.colorAmountFront.value >= 1 && item.colorAmountFront.editable)
                                     }
-                                        <input list="color" name="color" value={item.colorAmount.value >= 1 ? item.color1.value : ""} disabled={!item.color1.editable} placeholder="ระบุสี1" onChange={(event) => onDetailChange(event.target.value, index, "color1")}/>
-                                        <datalist id="color">
+                                        <input list="colorFront" name="colorFront" value={item.colorAmountFront.value >= 1 ? item.colorFront1.value : ""} disabled={!item.colorFront1.editable} placeholder="ระบุสี1" onChange={(event) => onDetailChange(event.target.value, index, "colorFront1")}/>
+                                        <datalist id="colorFront">
                                         {
                                             menuValue.color.map((menuItem, subIndex) => {
                                                 return (
@@ -395,25 +422,10 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                         }
                                         </datalist>
                                     { 
-                                        (item.color2.editable = item.colorAmount.value >= 2 && item.colorAmount.editable) &&
+                                        (item.colorFront2.editable = item.colorAmountFront.value >= 2 && item.colorAmountFront.editable) &&
                                         <>
-                                        <input list="color" name="color" value={item.colorAmount.value >= 2 ? item.color2.value : ""} disabled={!item.color2.editable} placeholder="ระบุสี2" onChange={(event) => onDetailChange(event.target.value, index, "color2")}/>
-                                        <datalist id="color">
-                                        {
-                                            menuValue.color.map((menuItem, subIndex) => {
-                                                return (
-                                                    <option key={subIndex} value={menuItem}/>
-                                                )
-                                            })
-                                        }
-                                        </datalist>
-                                        </>
-                                    }
-                                    { 
-                                        (item.color3.editable = item.colorAmount.value >= 3 && item.colorAmount.editable) &&
-                                        <>
-                                        <input list="color" name="color" value={item.colorAmount.value >= 3 ? item.color3.value : ""} disabled={!item.color3.editable} placeholder="ระบุสี3" onChange={(event) => onDetailChange(event.target.value, index, "color3")}/>
-                                        <datalist id="color">
+                                        <input list="colorFront" name="colorFront" value={item.colorAmountFront.value >= 2 ? item.colorFront2.value : ""} disabled={!item.colorFront2.editable} placeholder="ระบุสี2" onChange={(event) => onDetailChange(event.target.value, index, "colorFront2")}/>
+                                        <datalist id="colorFront">
                                         {
                                             menuValue.color.map((menuItem, subIndex) => {
                                                 return (
@@ -425,10 +437,25 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                         </>
                                     }
                                     { 
-                                        (item.color4.editable = item.colorAmount.value >= 4 && item.colorAmount.editable) &&
+                                        (item.colorFront3.editable = item.colorAmountFront.value >= 3 && item.colorAmountFront.editable) &&
                                         <>
-                                        <input list="color" name="color" value={item.colorAmount.value >= 4 ? item.color4.value : ""} disabled={!item.color4.editable} placeholder="ระบุสี4" onChange={(event) => onDetailChange(event.target.value, index, "color4")}/>
-                                        <datalist id="color">
+                                        <input list="colorFront" name="colorFront" value={item.colorAmountFront.value >= 3 ? item.colorFront3.value : ""} disabled={!item.colorFront3.editable} placeholder="ระบุสี3" onChange={(event) => onDetailChange(event.target.value, index, "colorFront3")}/>
+                                        <datalist id="colorFront">
+                                        {
+                                            menuValue.color.map((menuItem, subIndex) => {
+                                                return (
+                                                    <option key={subIndex} value={menuItem}/>
+                                                )
+                                            })
+                                        }
+                                        </datalist>
+                                        </>
+                                    }
+                                    { 
+                                        (item.colorFront4.editable = item.colorAmountFront.value >= 4 && item.colorAmountFront.editable) &&
+                                        <>
+                                        <input list="colorFront" name="colorFront" value={item.colorAmountFront.value >= 4 ? item.colorFront4.value : ""} disabled={!item.colorFront4.editable} placeholder="ระบุสี4" onChange={(event) => onDetailChange(event.target.value, index, "colorFront4")}/>
+                                        <datalist id="colorFront">
                                         {
                                             menuValue.color.map((menuItem, subIndex) => {
                                                 return (
@@ -442,26 +469,69 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 </div>
                             </td>
                             <td>
-                                <input type="checkbox" name="baseColorCheck" id="baseColorCheck" checked={item.baseColorCheck.value} disabled={!item.baseColorCheck.editable} onChange={(event) => {
-                                onDetailChange(event.target.checked, index, "baseColorCheck")
-                                }
-                            }
-                            />
+                                <input type="number" min={menuValue.colorAmount.min} max={menuValue.colorAmount.max} name="colorAmountBack" id="colorAmountBack" value={item.colorAmountBack.value} disabled={!item.colorAmountBack.editable} onChange={(event) => onDetailChange(event.target.value, index, "colorAmountBack")}/>
                             </td>
-                            {
-                                item.baseColor.editable = item.baseColorCheck.value && item.baseColorCheck.editable
-                            }
                             <td>
-                                <input list="baseColor" name="baseColor" value={item.baseColorCheck.value ? item.baseColor.value : ""} disabled={!item.baseColor.editable} placeholder="ระบุสี" onChange={(event) => onDetailChange(event.target.value, index, "baseColor")}/>
-                                    <datalist id="baseColor">
-                                    {
-                                        menuValue.baseColor.map((menuItem, subIndex) => {
-                                            return (
-                                                <option key={subIndex} value={menuItem}/>
-                                            )
-                                        })
+                                <div style={{whiteSpace:"nowrap", width:"130px", overflowX:"auto"}}>
+                                    { 
+                                        (item.colorBack1.editable = item.colorAmountBack.value >= 1 && item.colorAmountBack.editable)
                                     }
-                                  </datalist>
+                                        <input list="colorBack" name="colorBack" value={item.colorAmountBack.value >= 1 ? item.colorBack1.value : ""} disabled={!item.colorBack1.editable} placeholder="ระบุสี1" onChange={(event) => onDetailChange(event.target.value, index, "colorBack1")}/>
+                                        <datalist id="colorBack">
+                                        {
+                                            menuValue.color.map((menuItem, subIndex) => {
+                                                return (
+                                                    <option key={subIndex} value={menuItem}/>
+                                                )
+                                            })
+                                        }
+                                        </datalist>
+                                    { 
+                                        (item.colorBack2.editable = item.colorAmountBack.value >= 2 && item.colorAmountBack.editable) &&
+                                        <>
+                                        <input list="colorBack" name="colorBack" value={item.colorAmountBack.value >= 2 ? item.colorBack2.value : ""} disabled={!item.colorBack2.editable} placeholder="ระบุสี2" onChange={(event) => onDetailChange(event.target.value, index, "colorBack2")}/>
+                                        <datalist id="colorBack">
+                                        {
+                                            menuValue.color.map((menuItem, subIndex) => {
+                                                return (
+                                                    <option key={subIndex} value={menuItem}/>
+                                                )
+                                            })
+                                        }
+                                        </datalist>
+                                        </>
+                                    }
+                                    { 
+                                        (item.colorBack3.editable = item.colorAmountBack.value >= 3 && item.colorAmountBack.editable) &&
+                                        <>
+                                        <input list="colorBack" name="colorBack" value={item.colorAmountBack.value >= 3 ? item.colorBack3.value : ""} disabled={!item.colorBack3.editable} placeholder="ระบุสี3" onChange={(event) => onDetailChange(event.target.value, index, "colorBack3")}/>
+                                        <datalist id="colorBack">
+                                        {
+                                            menuValue.color.map((menuItem, subIndex) => {
+                                                return (
+                                                    <option key={subIndex} value={menuItem}/>
+                                                )
+                                            })
+                                        }
+                                        </datalist>
+                                        </>
+                                    }
+                                    { 
+                                        (item.colorBack4.editable = item.colorAmountBack.value >= 4 && item.colorAmountBack.editable) &&
+                                        <>
+                                        <input list="colorBack" name="colorBack" value={item.colorAmountBack.value >= 4 ? item.colorBack4.value : ""} disabled={!item.colorBack4.editable} placeholder="ระบุสี4" onChange={(event) => onDetailChange(event.target.value, index, "colorBack4")}/>
+                                        <datalist id="colorBack">
+                                        {
+                                            menuValue.color.map((menuItem, subIndex) => {
+                                                return (
+                                                    <option key={subIndex} value={menuItem}/>
+                                                )
+                                            })
+                                        }
+                                        </datalist>
+                                        </>
+                                    }
+                                </div>
                             </td>
                             <td>
                                 <input style={{width: "50px"}}type="number" min={menuValue.quantity.min} name="quantity" id="quantity" value={item.quantity.value} disabled={!item.quantity.editable} onChange={(event) => onDetailChange(event.target.value, index, "quantity")}/>
@@ -483,7 +553,7 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                 <button type="button" disabled={!item.design.editable} onClick={()=>document.getElementById("file-upload").click()}>Upload</button>
                             </td>
                             <td>
-                                <button className={styles["paper-bag-order-table-delete-button"]} type="button" style={{border:"none"}} onClick={()=>removeOrder(index)}>X</button>
+                                <button className={styles["plastic-bag-order-table-delete-button"]} type="button" style={{border:"none"}} onClick={()=>removeOrder(index)}>X</button>
                             </td>
                         </tr>
                         <tr>
@@ -511,6 +581,12 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                                         })
                                     }
                                 </select>
+                                <label style={{marginLeft:"30px"}}>อัดลาย</label>
+                                <input type="checkbox" name="emboss" id="emboss" checked={item.emboss.value} disabled={!item.emboss.editable} onChange={(event) => {
+                                    onDetailChange(event.target.checked, index, "emboss")
+                                }
+                                    }
+                                />
                             </td>
                             <td style={{}}>
                                 <label>Comment:</label>
@@ -535,11 +611,11 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
 
             </table>
         </div>
-        <button className={styles["paper-bag-order-add-order-button"]} type="button" onClick={addNewOrder}>+Add Order</button>
+        <button className={styles["plastic-bag-order-add-order-button"]} type="button" onClick={addNewOrder}>+Add Order</button>
         <button type="button" onClick={() => {setOrderHistory(getOrderHistory(customerName));setShowModal(true)}}>Order history</button>
-        <button className={styles["paper-bag-order-clear-button"]} type="button" onClick={clearItem}>Clear All Order</button>
+        <button className={styles["plastic-bag-order-clear-button"]} type="button" onClick={clearItem}>Clear All Order</button>
         <Modal style={{width:"1700px"}} content={modalContent} showModal={showModal} setShowModal={setShowModal}/>
         </div>
     )
 }
-export default PaperBagOrder;
+export default PlasticBagOrder;

@@ -1,8 +1,8 @@
-.paper-bag-order{
+.plastic-bag-order{
     margin-bottom: 50px;
 }
 
-.paper-bag-order-table{
+.plastic-bag-order-table{
     height: 500px;
     overflow-y: scroll;
     border: 2px solid #e0e0e0;
@@ -10,7 +10,7 @@
     margin-bottom: 20px;
 }
 
-.paper-bag-order-table th{
+.plastic-bag-order-table th{
     text-align: center;
     padding: 20px 5px 15px 5px;
     position: sticky;
@@ -20,14 +20,14 @@
     min-width: 100px;
 }
 
-.paper-bag-order-table td{
+.plastic-bag-order-table td{
     text-align: center;
     padding-bottom: 20px;
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.paper-bag-order-table select{
+.plastic-bag-order-table select{
     text-align: center;
     border: 2px solid #e0e0e0;
     border-radius: 5px;
@@ -38,7 +38,7 @@
     width: 90px;
 }
 
-.paper-bag-order-table input{
+.plastic-bag-order-table input{
     text-align: center;
     border: 2px solid #e0e0e0;
     border-radius: 5px;
@@ -49,49 +49,49 @@
     width: 70px;
 }
 
-.paper-bag-order-table-delete-button{
+.plastic-bag-order-table-delete-button{
     color: white;
     background-color: #ee0000;
     border: none;
     font-weight: bold;
 }
 
-.paper-bag-order-table-delete-button:active{
+.plastic-bag-order-table-delete-button:active{
     color: white;
     background-color: #aa0000;
     border: none;
     font-weight: bold;
 }
 
-.paper-bag-order-table-work-name input{
+.plastic-bag-order-table-work-name input{
     border: none;
     border-bottom: 2px solid #e0e0e0;
     margin-right: 30px;
 }
 
-.paper-bag-order-table-work-name input:focus{
+.plastic-bag-order-table-work-name input:focus{
     outline: none;
     border-bottom: 2px solid #b8b8b8;
 }
 
-.paper-bag-order-table textarea{
+.plastic-bag-order-table textarea{
     margin-right: 50px;
     border-radius: 5px;
     border: 2px solid #e0e0e0;
 }
 
-.paper-bag-order-table textarea:focus{
+.plastic-bag-order-table textarea:focus{
     outline: none;
     border: 2px solid #b8b8b8;
 }
 
-.paper-bag-order-table hr{
+.plastic-bag-order-table hr{
     width: 100%;
     color: #e0e0e0;
     border: 1px solid #e0e0e0;
 }
 
-.paper-bag-order button{
+.plastic-bag-order button{
     border: 2px solid #e0e0e0;
     border-radius: 5px;
     border-bottom: 2px solid #e0e0e0;
@@ -99,7 +99,7 @@
     margin-right: 5px;
 }
 
-.paper-bag-order-clear-button{
+.plastic-bag-order-clear-button{
     color: white;
     background-color: #ee0000;
     border: none;
@@ -109,14 +109,14 @@
     margin-left: 30px;
 }
 
-.paper-bag-order-clear-button:active{
+.plastic-bag-order-clear-button:active{
     color: white;
     background-color: #aa0000;
     border: none;
     border: 2px solid #aa0000 !important;
 }
 
-.paper-bag-order-add-button{
+.plastic-bag-order-add-button{
     color: white;
     background-color: #00cc00;
     border: none;
@@ -125,12 +125,12 @@
     margin-left: 30px;
 }
 
-.paper-bag-order-add-button:active{
+.plastic-bag-order-add-button:active{
     color: white;
     background-color: #00aa00;
 }
 
-.paper-bag-order-add-order-button{
+.plastic-bag-order-add-order-button{
     color: white;
     background-color: #00cc00;
     border: 2px solid #00cc00 !important;
@@ -138,7 +138,7 @@
     margin-right: 30px;
 }
 
-.paper-bag-order-add-order-button:active{
+.plastic-bag-order-add-order-button:active{
     color: white;
     background-color: #00aa00;
     border: 2px solid #00aa00 !important;
@@ -164,25 +164,25 @@
     color: #e0e0e0;
     border: 1px solid #e0e0e0;
 }
-
-.paper-bag-order-table tr td div::-webkit-scrollbar {
+.plastic-bag-order-table tr td div::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
 
-.paper-bag-order-table tr td div::-webkit-scrollbar:hover {
+.plastic-bag-order-table tr td div::-webkit-scrollbar:hover {
   width: 10px;
   height: 10px;
 }
 
-.paper-bag-order-table tr td div::-webkit-scrollbar-track {
+.plastic-bag-order-table tr td div::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
  
-.paper-bag-order-table tr td div::-webkit-scrollbar-thumb {
+.plastic-bag-order-table tr td div::-webkit-scrollbar-thumb {
   background: #888; 
 }
 
-.paper-bag-order-table tr td div::-webkit-scrollbar-thumb:hover {
+.plastic-bag-order-table tr td div::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+

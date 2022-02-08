@@ -1,0 +1,68 @@
+.paper-bag-order-form td{
+    padding-bottom: 50px;
+}
+
+.paper-bag-order-form tr{
+}
+
+.paper-bag-order-form label{
+    text-align: right;
+    margin-right: 10px;
+}
+
+.paper-bag-order-form input{
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    margin-right: 30px;
+}
+
+.paper-bag-order-form input:focus{
+    outline: none;
+    border-bottom: 2px solid #b8b8b8;
+}
+
+.paper-bag-order-form textarea{
+    border-radius: 5px;
+    border: 2px solid #e0e0e0;
+}
+
+.paper-bag-order-form textarea:focus{
+    outline: none;
+    border: 2px solid #b8b8b8;
+}
+
+.paper-bag-order-form-clear-button{
+    color: white;
+    background-color: #ee0000;
+    border: none;
+    border: 2px solid #ee0000 !important;
+    font-weight: bold;
+}
+
+.paper-bag-order-form-clear-button:active{
+    color: white;
+    background-color: #aa0000;
+    border: none;
+    border: 2px solid #aa0000 !important;
+}
+
+.modal-content td{
+    padding-bottom: 20px;
+    padding-right: 30px;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+.modal-content span{
+    padding: 5px;
+    height: 100px;
+    display: block;
+    overflow: auto;
+    border-radius: 10px;
+}
+
+.modal-content hr{
+    width: 100%;
+    color: #e0e0e0;
+    border: 1px solid #e0e0e0;
+}

@@ -1,17 +1,29 @@
 import { useState } from "react"
-import PaperBagOrder from "./PaperBagOrderForm"
+import PlasticBagOrder from "./PlasticBagOrderForm"
 import NameForm from "./NameForm"
-import styles from "./OpenPaperBagOrderForm.module.css"
+import styles from "./OpenPlasticBagOrderForm.module.css"
 import ContainerStyles from "./container.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
-const getPaperType = () => {
-    return ["KW", "KI", "กระดาษขาว", "KA", "ART"]
+const getType = () => {
+    return ["เสื้อกล้าม", "เจาะ"]
 }
 
-const getPaperThickness = () => {
+const getPlasticThickness = () => {
     return ["thick1", "thick2"]
+}
+
+const getBagMat = () => {
+    return ["PE", "HD.A", "HD.B"]
+}
+
+const getBagMatColor = () => {
+    return ["Color1", "Color2", "Color3"]
+}
+
+const getBagSide = () => {
+    return {min:0}
 }
 
 const getShape = () => {
@@ -24,6 +36,10 @@ const getBagEar = () => {
 
 const getColorAmount = () => {
     return {min:0, max:4}
+}
+
+const getPrintFace = () => {
+    return {min:0, max:2}
 }
 
 const getQuantity = () => {
@@ -47,13 +63,7 @@ const getPattern = () => {
 }
 
 const getBagSize = () => {
-    let bagSize = []
-
-    for(let i = 0; i < 24; i++){
-        bagSize = [...bagSize, "ตัด"+ (i+1)]
-    }
-
-    return bagSize
+    return {length:0, width:0} 
 }
 
 const getDesign = () => {
@@ -62,7 +72,7 @@ const getDesign = () => {
 
 const getColor = () => {
     //get from database
-    return ["color1", "color2", "color3", "color4"] 
+    return BackEndInterface.getBaseColor()
 }
 
 const getBaseColor = () => {
@@ -95,7 +105,7 @@ const sentDataToBackEnd = (order) => {
     BackEndInterface.sentNewOrder(order)
 }
 
-const OpenPaperBagOrderForm = () => {
+const OpenPlasticBagOrderForm = () => {
     const [showCheckWorkNameModal, setShowCheckWorkNameModal] = useState(false)
     const [showCheckNameFormModal, setShowCheckNameFormModal] = useState(false)
     const [orderDetails, setOrderDetails] = useState([])
@@ -125,18 +135,19 @@ const OpenPaperBagOrderForm = () => {
     const menuValue = {
         area: getArea(),
         workName:"",
-        paperType: getPaperType(),
-        paperThickness: getPaperThickness(),
+        type: getType(),
         bagSize: getBagSize(),
-        bagShape: getShape(),
-        bagEars: getBagEar(),
+        bagMat: getBagMat(),
+        bagMatColor: getBagMatColor(),
+        bagSide: getBagSide(),
+        plasticThickness: getPlasticThickness(),
+        printFace: getPrintFace(),
         colorAmount: getColorAmount(),
         color: getColor(),
-        baseColorCheck:false,
-        baseColor:getBaseColor(),
         quantity: getQuantity(),
         unit: getUnit(),
         price: getPrice(),
+        emboss: false,
         comment:"",
         workType: getWorkType(),
         pattern: getPattern(),
@@ -198,34 +209,46 @@ const OpenPaperBagOrderForm = () => {
                 name:               nameForm.name.value,
                 address:            nameForm.address.value,
                 workName:           item.workName.value,
-                paperType:          item.paperType.value,
-                paperThickness:     item.paperThickness.value,
-                bagSize:            item.bagSize.value,
-                bagShape:           item.bagShape.value,
-                bagEars:            item.bagEars.value,
-                colorAmount:        item.colorAmount.value,
-                color:              [
-                                        (item.colorAmount.value >= 1 ? item.color1.value : undefined),
-                                        (item.colorAmount.value >= 2 ? item.color2.value : undefined),
-                                        (item.colorAmount.value >= 3 ? item.color3.value : undefined),
-                                        (item.colorAmount.value >= 4 ? item.color4.value : undefined)
+                type:               item.type.value,
+                plasticThickness:   item.plasticThickness.value,
+                bagSize:            {length:item.bagSizeLength.value, width:item.bagSizeWidth.value},
+                bagMat:             item.bagMat.value,
+                bagMatColor:        item.bagMatColor.value,
+                bagSide:            item.bagSide.value,
+                printFace:          item.printFace.value,
+                colorAmountFront:   item.colorAmountFront.value,
+                colorAmountBack:    item.colorAmountBack.value,
+                colorFront:         [
+                                        (item.colorAmountFront.value >= 1 ? item.colorFront1.value : undefined),
+                                        (item.colorAmountFront.value >= 2 ? item.colorFront2.value : undefined),
+                                        (item.colorAmountFront.value >= 3 ? item.colorFront3.value : undefined),
+                                        (item.colorAmountFront.value >= 4 ? item.colorFront4.value : undefined)
                                     ],
-                color1:             (item.colorAmount.value >= 1 ? item.color1.value : ""),
-                color2:             (item.colorAmount.value >= 2 ? item.color2.value : ""),
-                color3:             (item.colorAmount.value >= 3 ? item.color3.value : ""),
-                color4:             (item.colorAmount.value >= 4 ? item.color4.value : ""),
-                baseColorCheck:     item.baseColorCheck.value,
-                baseColor:          item.baseColor.value,
+                colorBack:          [
+                                        (item.colorAmountBack.value >= 1 ? item.colorBack1.value : undefined),
+                                        (item.colorAmountBack.value >= 2 ? item.colorBack2.value : undefined),
+                                        (item.colorAmountBack.value >= 3 ? item.colorBack3.value : undefined),
+                                        (item.colorAmountBack.value >= 4 ? item.colorBack4.value : undefined)
+                                    ],
+                colorFront1:        (item.colorAmountFront.value >= 1 ? item.colorFront1.value : ""),
+                colorFront2:        (item.colorAmountFront.value >= 2 ? item.colorFront2.value : ""),
+                colorFront3:        (item.colorAmountFront.value >= 3 ? item.colorFront3.value : ""),
+                colorFront4:        (item.colorAmountFront.value >= 4 ? item.colorFront4.value : ""),
+                colorBack1:         (item.colorAmountBack.value >= 1 ? item.colorBack1.value : ""),
+                colorBack2:         (item.colorAmountBack.value >= 2 ? item.colorBack2.value : ""),
+                colorBack3:         (item.colorAmountBack.value >= 3 ? item.colorBack3.value : ""),
+                colorBack4:         (item.colorAmountBack.value >= 4 ? item.colorBack4.value : ""),
                 quantity:           item.quantity.value,
                 unit:               item.unit.value,
                 price:              item.price.value,
                 workType:           item.workType.value,
                 pattern:            item.pattern.value,
+                emboss:             item.emboss.value,
                 comment:            item.comment.value,
                 sameBlock:          item.sameBlock,
                 sameColor:          item.sameColor,
                 vat:                addVAT ? 7 : 0,
-                bagType:            "กระดาษ"
+                bagType:            "พลาสติก"
             }
             order = [...order, data]
         })
@@ -267,11 +290,11 @@ const OpenPaperBagOrderForm = () => {
 
     return (
         <div style={{marginBottom:"100px"}}>
-            <div className={styles["paper-bag-order-form"]}>
-                <center><h1>ใบสั่งพิมพ์ ORDER กระดาษ</h1></center>
+            <div className={styles["plastic-bag-order-form"]}>
+                <center><h1>ใบสั่งพิมพ์ ORDER พลาสติก</h1></center>
                 <div className={ContainerStyles["container"]}>
                     <NameForm nameForm={nameForm} setNameForm={setNameForm} menuValue={menuValue}/>
-                    <PaperBagOrder orderDetails={orderDetails} setOrderDetails={setOrderDetails} menuValue={menuValue} customerName={nameForm.name.value}/>
+                    <PlasticBagOrder orderDetails={orderDetails} setOrderDetails={setOrderDetails} menuValue={menuValue} customerName={nameForm.name.value}/>
                     <label>VAT 7%</label>
                     <input type="checkbox" name="VAT" id="VAT" checked={addVAT} onChange={(event) => setAddVAT(event.target.checked)}/>
                     <input type="button" id="file-upload" style={{display:"none"}}/>
@@ -292,4 +315,4 @@ const OpenPaperBagOrderForm = () => {
     )
 }
 
-export default OpenPaperBagOrderForm;
+export default OpenPlasticBagOrderForm;
