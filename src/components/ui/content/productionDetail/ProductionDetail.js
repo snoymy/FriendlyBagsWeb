@@ -1,23 +1,38 @@
 import { Fragment, useState} from "react" 
-import styles from "./OrderStatus.module.css"
+import styles from "./ProductionDetail.module.css"
 import containerStyles from "./container.module.css" 
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../../ui/modal/Modal"
 
-const getOrderHistory = (name="*") => {
+const getOrderHistory = (name="*", filter={}) => {
     console.log(name)
-    return BackEndInterface.getOrderHistory(name)
+    let ret = []
+    const item = BackEndInterface.getOrderHistory(name)
+
+    if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
+        item.map((subItem, subIndex)=>{
+            if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
+                console.log(subItem)
+                ret = [...ret, subItem]
+            }
+        })
+    }
+    else{
+        ret = item
+    }
+
+    return ret
 }
 
-const OrderStatus = () => {
-    const [orderHistory, setOrderHistory] = useState(getOrderHistory())
+const ProductionDetail = () => {
+    const [orderHistory, setOrderHistory] = useState(getOrderHistory("*", {bagType:"พลาสติก"}))
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
 
     const modalContentPaper = (
         <div style={{padding: "30px"}}>
-            <div className={styles["order-status-table"]} style={{paddingBottom:"50px"}}>
+            <div className={styles["production-detail-table"]} style={{paddingBottom:"50px"}}>
             <table>
                 <thead>
                     <tr>
@@ -129,26 +144,20 @@ const OrderStatus = () => {
 
     const modalContentPlastic = (
         <div style={{padding: "30px"}}>
-            <div className={styles["order-status-table"]} style={{paddingBottom:"50px"}}>
+            <div className={styles["production-detail-table"]} style={{paddingBottom:"50px", height:300}}>
             <table>
                 <thead>
                     <tr>
-                        <th><label>ชนิดถุง</label></th>
-                        <th><label>งาน</label></th>
-                        <th><label>อัดลาย</label></th>
-                        <th><label>ขนาดถุง</label></th>
-                        <th><label>เนื้อถุง</label></th>
-                        <th><label>สีเนื้อถุง</label></th>
-                        <th><label>ข้างถุง</label></th>
-                        <th><label>ความหนาถุง</label></th>
-                        <th><label>พิมพ์</label></th>
-                        <th><label>จำนวนสีพิมพ์หน้า</label></th>
-                        <th><label>หน้า</label></th>
-                        <th><label>จำนวนสีพิมพ์หลัง</label></th>
-                        <th><label>หลัง</label></th>
-                        <th style={{width:"200px"}}><label>จำนวน</label></th>
-                        <th><label>ราคา</label></th>
-                        <th><label>แบบ</label></th>
+                        <th style={{width:"100px"}}><label>กว้าง</label></th>
+                        <th style={{width:"100px"}}><label>ยาว</label></th>
+                        <th style={{width:"300px"}}><label>จีบ</label></th>
+                        <th style={{width:"300px"}}><label>หนา</label></th>
+                        <th style={{width:"300px"}}><label>เนื้อถุง</label></th>
+                        <th style={{width:"300px"}}><label>สีถุง</label></th>
+                        <th style={{width:"300px"}}><label>จน.สีพิมพ์หน้า</label></th>
+                        <th style={{width:"300px"}}><label>จน.สีพิมพ์หลัง</label></th>
+                        <th style={{width:"100px"}}><label>สีพิมพ์หน้า</label></th>
+                        <th style={{width:"100px"}}><label>สีพิมพ์หลัง</label></th>
                     </tr>
                 </thead>
 
@@ -160,76 +169,34 @@ const OrderStatus = () => {
                         <Fragment key={index}>
                         <tr>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.type}</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.bagSize.length + " นิ้ว"}</label>
                             </td>
                             <td>
-                                <label>{item.workType === "sell" ? "งานขาย" : "งานพิมพ์"}</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.bagSize.width + " นิ้ว"}</label>
                             </td>
                             <td>
-                                <label>{item.emboss === true ? "อัด" : "ไม่อัด"}</label>
+
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSize.length}x{item.bagSize.width} นิ้ว</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.plasticThickness + " นิ้ว"}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.bagMat}</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.bagMat}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.bagMatColor}</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.bagMatColor}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.bagSide} นิ้ว</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.colorAmountFront}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.plasticThickness} gram</label>
-                            </td>
-                            <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.printFace}</label>
-                            </td>
-                            <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountFront}</label>
+                                <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.colorAmountBack}</label>
                             </td>
                             <td>
                                 <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountFront !== 0 ? item.colorFront.filter(n => n).join() : "-"}</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountBack}</label>
-                            </td>
-                            <td>
                                 <label style={{width:"60%", textAlign:"left"}}>{item.colorAmountBack !== 0 ? item.colorBack.filter(n => n).join() : "-"}</label>
-                            </td>
-                            <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.quantity} {item.unit}</label>
-                            </td>
-                            <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.price}</label>
-                            </td>
-                            <td>
-                                <input type="button" id="file-upload" style={{display:"none"}}/>
-                                <button type="button" onClick={()=>document.getElementById("file-upload").click()}>View</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style={{}}>
-                                <label>Comment:</label>
-                            </td>
-                            <td style={{textAlign:"left", verticalAlign: "top", border: "2px solid #e6e6e6", borderRadius: "5px"}} colSpan="4">
-                                <label>{item.comment}</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style={{textAlign:"left", paddingTop:"50px"}} colSpan={3}>
-                                <label style={{width:"60%", marginLeft:"10px"}}>ราคารวม </label> {item.vat !== 0 && <label>(vat {item.vat}%) </label>}
-                                <label>:&nbsp;&nbsp;&nbsp;</label>
-                                <div style={{display:"inline-block", padding: "0 5px", width: "70px", textAlign: "right", border: "2px solid #d7d7d7", borderRadius:"5px"}}>
-                                    <label>{item.quantity * item.price + ( (item.vat/100) * (item.quantity*item.price) )}</label>
-                                </div>
-                                <label>&nbsp;Baht</label>
                             </td>
                         </tr>
                         </Fragment>
@@ -255,17 +222,17 @@ const OrderStatus = () => {
 
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
-        <div className={styles["order-status"]}>
-            <div className={styles["order-status-table"]}>
+        <div className={styles["production-detail"]}>
+            <div className={styles["production-detail-table"]}>
                 <table>
                     <thead>
                         <tr>
                             {/*}<th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>{*/}
                             <th style={{width:"150px"}}><label>วันที่/เวลา</label></th>
-                            <th style={{width:"150px"}}><label>เลขที่ออร์เดอร์</label></th>
-                            <th style={{width:"300px"}}><label>นามลูกค้า</label></th>
+                            <th style={{width:"150px"}}><label>รับออร์เดอร์</label></th>
                             <th style={{width:"300px"}}><label>ชื่องาน</label></th>
-                            <th style={{width:"300px"}}><label>CS</label></th>
+                            <th style={{width:"100px"}}><label>จำนวน</label></th>
+                            <th style={{width:"100px"}}><label>หน่วย</label></th>
                             <th style={{width:"200px"}}><label>สถานะ</label></th>
                             <th style={{width:"130px"}}><label></label></th>
                         </tr>
@@ -283,16 +250,16 @@ const OrderStatus = () => {
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.date}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.orderID}</label>
-                                </td>
-                                <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.name}</label>
+
                                 </td>
                                 <td>
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.workName}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.cs}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.quantity}</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.unit}</label>
                                 </td>
                                 <td>
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.status}</label>
@@ -314,4 +281,5 @@ const OrderStatus = () => {
     )
 }
 
-export default OrderStatus;
+export default ProductionDetail;
+

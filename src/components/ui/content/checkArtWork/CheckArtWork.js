@@ -170,6 +170,7 @@ const CheckArtWork = ({filter})=>{
                 <thead>
                     <tr>
                         <th><label>ชนิดถุง</label></th>
+                        <th><label>ประเภท</label></th>
                         <th><label>งาน</label></th>
                         <th><label>อัดลาย</label></th>
                         <th><label>ขนาดถุง</label></th>
@@ -195,6 +196,9 @@ const CheckArtWork = ({filter})=>{
                     return (
                         <Fragment key={index}>
                         <tr>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagType}</label>
+                            </td>
                             <td>
                                 <label style={{width:"60%", textAlign:"left"}}>{item.type}</label>
                             </td>

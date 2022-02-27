@@ -91,7 +91,7 @@ let dataBase = {
             workName:           "demo3",
             plasticType:        "KW",
             plasticThickness:   "thick1",
-            bagSize:            "ตัด1",
+            bagSize:            {length:4, width:5},
             bagShape:           "ตั้ง",
             bagEars:            "หูเจาะ",
             bagType:            "พลาสติก",

@@ -1,23 +1,59 @@
 import { Fragment, useState} from "react" 
-import styles from "./OrderStatus.module.css"
+import styles from "./MachineScheduling.module.css"
 import containerStyles from "./container.module.css" 
 import BackEndInterface from "../../../../BackEndInterface"
-import Modal from "../../../ui/modal/Modal"
+import Modal from "../../modal/Modal"
 
-const getOrderHistory = (name="*") => {
+const getOrderHistory = (name="*", filter={}) => {
     console.log(name)
-    return BackEndInterface.getOrderHistory(name)
+    let ret = []
+    const item = BackEndInterface.getOrderHistory(name)
+
+    if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
+        item.map((subItem, subIndex)=>{
+            if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
+                console.log(subItem)
+                ret = [...ret, subItem]
+            }
+        })
+    }
+    else{
+        ret = item
+    }
+
+    return ret
 }
 
-const OrderStatus = () => {
-    const [orderHistory, setOrderHistory] = useState(getOrderHistory())
+const sentDataToBackEnd = (order) => {
+    BackEndInterface.sentEditedOrder(order)
+}
+
+const MachineScheduling = ({filter})=>{
+    const [orderHistory, setOrderHistory] = useState(getOrderHistory("*", filter))
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
 
+    const onDetailChange = (value, index, prop) => {
+        console.log(value)
+        setOrderHistory(orderHistory.map(
+                (subItem, subIndex) => {
+                    if(index !== subIndex) return {...subItem}
+                    return {...subItem, [prop]: value}
+                }
+            )
+        )
+    }
+
+    const packDataAndSent = () => {
+        sentDataToBackEnd(orderHistory)
+        alert("Success")
+        //window.location.reload();
+    }
+    
     const modalContentPaper = (
         <div style={{padding: "30px"}}>
-            <div className={styles["order-status-table"]} style={{paddingBottom:"50px"}}>
+            <div className={styles["check-artwork-table"]} style={{paddingBottom:"50px"}}>
             <table>
                 <thead>
                     <tr>
@@ -129,11 +165,12 @@ const OrderStatus = () => {
 
     const modalContentPlastic = (
         <div style={{padding: "30px"}}>
-            <div className={styles["order-status-table"]} style={{paddingBottom:"50px"}}>
+            <div className={styles["check-artwork-table"]} style={{paddingBottom:"50px"}}>
             <table>
                 <thead>
                     <tr>
                         <th><label>ชนิดถุง</label></th>
+                        <th><label>ประเภท</label></th>
                         <th><label>งาน</label></th>
                         <th><label>อัดลาย</label></th>
                         <th><label>ขนาดถุง</label></th>
@@ -159,6 +196,9 @@ const OrderStatus = () => {
                     return (
                         <Fragment key={index}>
                         <tr>
+                            <td>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.bagType}</label>
+                            </td>
                             <td>
                                 <label style={{width:"60%", textAlign:"left"}}>{item.type}</label>
                             </td>
@@ -255,19 +295,34 @@ const OrderStatus = () => {
 
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
-        <div className={styles["order-status"]}>
-            <div className={styles["order-status-table"]}>
+        <div className={styles["check-artwork"]}>
+            <div className={styles["check-artwork-table"]}>
                 <table>
                     <thead>
                         <tr>
                             {/*}<th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>{*/}
-                            <th style={{width:"150px"}}><label>วันที่/เวลา</label></th>
-                            <th style={{width:"150px"}}><label>เลขที่ออร์เดอร์</label></th>
-                            <th style={{width:"300px"}}><label>นามลูกค้า</label></th>
-                            <th style={{width:"300px"}}><label>ชื่องาน</label></th>
-                            <th style={{width:"300px"}}><label>CS</label></th>
-                            <th style={{width:"200px"}}><label>สถานะ</label></th>
-                            <th style={{width:"130px"}}><label></label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>ชื่องาน</label></th>
+                            <th style={{width:"150px"}} colSpan="4"><label>ขนาด</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>เนื้อถุง</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>สีถุง</label></th>
+                            <th style={{width:"150px"}} rowSpan="2" colSpan="4"><label>สีพิมพ์</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>แบบ</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>จำนวน</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>หน่วย</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>เวลาที่ใช้(นาที)</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>เวลาเริ่ม</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>เวลาจบ</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>ช่างเป่า/พิมพ์</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>ช่างตัด</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>QC</label></th>
+                            <th style={{width:"150px"}} rowSpan="2"><label>หัวหน้างาน</label></th>
+                        </tr>
+                        <tr>
+                            {/*}<th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>{*/}
+                            <th style={{width:"150px"}}><label>กว้าง</label></th>
+                            <th style={{width:"150px"}}><label>ยาว</label></th>
+                            <th style={{width:"150px"}}><label>จีบ</label></th>
+                            <th style={{width:"150px"}}><label>หนา</label></th>
                         </tr>
                     </thead>
 
@@ -279,26 +334,70 @@ const OrderStatus = () => {
                             <Fragment key={index}>
                             <tr>
                                 <td>
-                                    {/*}<label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>{*/}
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.date}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.orderID}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.name}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.workName}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.cs}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}><b>หน้า</b></label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.status}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={()=>{setViewIndex(index); setShowBagType(item.bagType); setShowModal(true);}}>View Details</button>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:"", }}><b>หลัง</b></label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                </td>
+                                <td>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
                                 </td>
                             </tr>
                             </Fragment>
@@ -306,12 +405,13 @@ const OrderStatus = () => {
                     })}
                     </tbody>
                 </table>
-                <Modal style={{width:"92%"}} content={modalContent(showBagType)} showModal={showModal} setShowModal={setShowModal}/>
+            <Modal style={{width:"92%"}} content={modalContent(showBagType)} showModal={showModal} setShowModal={setShowModal}/>
             </div>
+            <button type="button" onClick={packDataAndSent}>Submit</button>
         </div>
         </div>
        
     )
 }
 
-export default OrderStatus;
+export default MachineScheduling;

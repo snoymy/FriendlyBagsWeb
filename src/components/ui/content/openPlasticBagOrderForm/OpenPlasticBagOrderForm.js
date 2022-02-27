@@ -11,7 +11,7 @@ const getType = () => {
 }
 
 const getPlasticThickness = () => {
-    return ["thick1", "thick2"]
+    return {min:0, max:4}
 }
 
 const getBagMat = () => {

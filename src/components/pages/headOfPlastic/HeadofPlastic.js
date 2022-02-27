@@ -2,6 +2,8 @@ import { useParams } from "react-router";
 import Banner from "../../ui/banner/Banner";
 import OrderStatus from "../../ui/content/orderStatus/OrderStatus";
 import CheckArtWork from "../../ui/content/checkArtWork/CheckArtWork";
+import ProductionDetail from "../../ui/content/productionDetail/ProductionDetail";
+import MachineScheduling from "../../ui/content/machineScheduling/MachineScheduling";
 // import NewArtWorkOrder from "../../ui/content/newArtWorkOrder/NewArtWorkOrder";
 // import RecheckArtWork from "../../ui/content/recheckArtWork/RecheckArtWork";
 
@@ -13,7 +15,7 @@ const HeadOfPlastic = () => {
         switch(type){
             case "production-details":
                 return (
-                    <></>
+                <ProductionDetail/>
                 )
             case "check-artwork":
                 return (
@@ -21,7 +23,7 @@ const HeadOfPlastic = () => {
                 )
             case "machine-scheduling":
                 return (
-                    <></>
+                    <MachineScheduling/>
                 )
             case "order-status":
                 return (

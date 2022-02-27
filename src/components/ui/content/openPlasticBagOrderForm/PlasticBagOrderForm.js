@@ -71,7 +71,7 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
             bagMat: {value:menuValue.bagMat[0], editable:true},
             bagMatColor: {value:menuValue.bagMatColor[0], editable:true},
             bagSide: {value:menuValue.bagSide.min, editable:true},
-            plasticThickness: {value:menuValue.plasticThickness[0], editable:true},
+            plasticThickness: {value:menuValue.plasticThickness.min, editable:true},
             printFace: {value:menuValue.printFace.min, editable:true},
             colorAmountFront: {value:menuValue.colorAmount.min, editable:true},
             colorFront1: {value:menuValue.color[0], editable:false},
@@ -388,15 +388,7 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
                                 <label>นิ้ว</label>
                             </td>
                             <td>
-                                <select style={{width:"50%"}}name="plasticThickness" id="plasticThickness" value={item.plasticThickness.value} disabled={!item.plasticThickness.editable} onChange={(event) => onDetailChange(event.target.value, index, "plasticThickness")}>
-                                    {
-                                        menuValue.plasticThickness.map((menuItem, subIndex) => {
-                                            return (
-                                                <option key={subIndex} value={menuItem}>{menuItem}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                <input style={{width:"30%"}}type="number" min={menuValue.plasticThickness.min} name="plasticThickness" id="plasticThickness" value={item.plasticThickness.value} disabled={!item.plasticThickness.editable} onChange={(event) => onDetailChange(event.target.value, index, "plasticThickness")}/>
                                 <label>gram</label>
                             </td>
                             <td>

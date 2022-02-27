@@ -1,0 +1,167 @@
+.production-detail{
+    margin-bottom: 50px;
+}
+
+.production-detail-table{
+    height: 500px;
+    overflow-y: scroll;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.production-detail-table th{
+    text-align: center;
+    padding: 20px 5px 15px 5px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #eee;
+    min-width: 100px;
+}
+
+.production-detail-table td{
+    text-align: center;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.production-detail-table select{
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 5px 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 90px;
+}
+
+.production-detail-table input{
+    text-align: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 5px 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 70px;
+}
+
+.production-detail-table-delete-button{
+    color: white;
+    background-color: #ee0000;
+    border: none;
+    font-weight: bold;
+}
+
+.production-detail-table-delete-button:active{
+    color: white;
+    background-color: #aa0000;
+    border: none;
+    font-weight: bold;
+}
+
+.production-detail-table-work-name input{
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    margin-right: 30px;
+}
+
+.production-detail-table-work-name input:focus{
+    outline: none;
+    border-bottom: 2px solid #b8b8b8;
+}
+
+.production-detail-table textarea{
+    margin-right: 50px;
+    border-radius: 5px;
+    border: 2px solid #e0e0e0;
+}
+
+.production-detail-table textarea:focus{
+    outline: none;
+    border: 2px solid #b8b8b8;
+}
+
+.production-detail-table hr{
+    width: 100%;
+    color: #e0e0e0;
+    border: 1px solid #e0e0e0;
+}
+
+.production-detail button{
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+.production-detail-clear-button{
+    color: white;
+    background-color: #ee0000;
+    border: none;
+    border: 2px solid #ee0000 !important;
+    font-weight: bold;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.production-detail-clear-button:active{
+    color: white;
+    background-color: #aa0000;
+    border: none;
+    border: 2px solid #aa0000 !important;
+}
+
+.production-detail-add-button{
+    color: white;
+    background-color: #00cc00;
+    border: none;
+    font-weight: bold;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.production-detail-add-button:active{
+    color: white;
+    background-color: #00aa00;
+}
+
+.production-detail-add-order-button{
+    color: white;
+    background-color: #00cc00;
+    border: 2px solid #00cc00 !important;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.production-detail-add-order-button:active{
+    color: white;
+    background-color: #00aa00;
+    border: 2px solid #00aa00 !important;
+}
+
+.modal-content td{
+    padding-bottom: 20px;
+    padding-right: 30px;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+.modal-content span{
+    padding: 5px;
+    height: 100px;
+    display: block;
+    overflow: auto;
+    border-radius: 10px;
+}
+
+.modal-content hr{
+    width: 100%;
+    color: #e0e0e0;
+    border: 1px solid #e0e0e0;
+}
+
