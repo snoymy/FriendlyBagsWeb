@@ -126,15 +126,21 @@ let dataBase = {
 }
 
 const getOrderHistory = (name) => {
+    let fetchRes = fetch("");
+    let orderList;
+  
+    fetchRes
+        .then(res => res.json())
+        .then(d => {orderList = d})
+
     let filteredOrder = []
     if(name === "*"){
-        dataBase["order"].map((order, index) => {
-            order.status = "ตรวจสอบออร์เดอร์"
+        orderList.map((order, index) => {
             filteredOrder = [...filteredOrder, order] 
         })
         return filteredOrder 
     }
-    dataBase["order"].map((order, index) => {
+    orderList.map((order, index) => {
         if(order.name === name){
             filteredOrder = [...filteredOrder, order] 
         }
