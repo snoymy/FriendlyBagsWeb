@@ -126,27 +126,30 @@ let dataBase = {
 }
 
 const getOrderHistory = (name) => {
-    let fetchRes = fetch("");
-    let orderList;
-  
-    fetchRes
-        .then(res => res.json())
-        .then(d => {orderList = d})
+    return new Promise(async (resolve, reject)=>{
+        let fetchRes = await fetch("https://jsonplaceholder.typicode.com/todos/1").catch(err => console.log(err));
+        let d = await fetchRes.json();
+        console.log(d)
+        let orderList = d;
 
-    let filteredOrder = []
-    if(name === "*"){
-        orderList.map((order, index) => {
-            filteredOrder = [...filteredOrder, order] 
-        })
-        return filteredOrder 
-    }
-    orderList.map((order, index) => {
-        if(order.name === name){
-            filteredOrder = [...filteredOrder, order] 
+        let filteredOrder = [orderList]
+        resolve(filteredOrder)
+        /*
+        if(name === "*"){
+            orderList.map((order, index) => {
+                filteredOrder = [...filteredOrder, order] 
+            })
+            return filteredOrder 
         }
-            
+        orderList.map((order, index) => {
+            if(order.name === name){
+                filteredOrder = [...filteredOrder, order] 
+            }
+                
+        })
+        return filteredOrder
+        */
     })
-    return filteredOrder
 }
 
 const getBaseColor = () => {

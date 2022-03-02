@@ -6,7 +6,6 @@ import OrderStatus from "../../ui/content/orderStatus/OrderStatus";
 
 const Sales = () => {
     const {type} = useParams()
-    console.log(type)
 
     const Content = () => {
         switch(type){

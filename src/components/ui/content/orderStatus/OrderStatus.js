@@ -1,19 +1,20 @@
-import { Fragment, useState} from "react" 
+import { Fragment, useEffect, useState} from "react" 
 import styles from "./OrderStatus.module.css"
 import containerStyles from "./container.module.css" 
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../../ui/modal/Modal"
 
-const getOrderHistory = (name="*") => {
-    console.log(name)
-    return BackEndInterface.getOrderHistory(name)
-}
-
 const OrderStatus = () => {
-    const [orderHistory, setOrderHistory] = useState(getOrderHistory())
+    const [orderHistory, setOrderHistory] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
+
+    const getOrderHistory = async (name="*") => {
+        console.log(name)
+        let ret = await BackEndInterface.getOrderHistory(name)
+        setOrderHistory(getOrderHistory())
+    }
 
     const modalContentPaper = (
         <div style={{padding: "30px"}}>
