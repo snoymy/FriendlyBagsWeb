@@ -1,35 +1,15 @@
-import { Fragment, useState} from "react" 
+import { Fragment, useState, useEffect} from "react" 
 import styles from "./MachineScheduling.module.css"
 import containerStyles from "./container.module.css" 
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
-
-const getOrderHistory = (name="*", filter={}) => {
-    console.log(name)
-    let ret = []
-    const item = BackEndInterface.getOrderHistory(name)
-
-    if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
-        item.map((subItem, subIndex)=>{
-            if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
-                console.log(subItem)
-                ret = [...ret, subItem]
-            }
-        })
-    }
-    else{
-        ret = item
-    }
-
-    return ret
-}
 
 const sentDataToBackEnd = (order) => {
     BackEndInterface.sentEditedOrder(order)
 }
 
 const MachineScheduling = ({filter})=>{
-    const [orderHistory, setOrderHistory] = useState(getOrderHistory("*", filter))
+    const [orderHistory, setOrderHistory] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
@@ -43,6 +23,29 @@ const MachineScheduling = ({filter})=>{
                 }
             )
         )
+    }
+
+    useEffect(()=>{
+        getOrderHistory("*", filter)
+    }, [])
+
+    const getOrderHistory = async (name="*", filter={}) => {
+        console.log(name)
+        let ret = []
+        const item = await BackEndInterface.getOrderHistory(name)
+
+        if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
+            item.map((subItem, subIndex)=>{
+                if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
+                    console.log(subItem)
+                    ret = [...ret, subItem]
+                }
+            })
+        }
+        else{
+            ret = item
+        }
+        setOrderHistory(ret)
     }
 
     const packDataAndSent = () => {
@@ -301,6 +304,7 @@ const MachineScheduling = ({filter})=>{
                     <thead>
                         <tr>
                             {/*}<th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>{*/}
+                            <th style={{width:"150px"}} rowSpan="2"><label></label></th>
                             <th style={{width:"150px"}} rowSpan="2"><label>ชื่องาน</label></th>
                             <th style={{width:"150px"}} colSpan="4"><label>ขนาด</label></th>
                             <th style={{width:"150px"}} rowSpan="2"><label>เนื้อถุง</label></th>
@@ -333,6 +337,13 @@ const MachineScheduling = ({filter})=>{
                         return (
                             <Fragment key={index}>
                             <tr>
+                                <td>
+                                    <select style={{width: "50px", top: "25px", left: "-70px"}} name="status" id="status" value={item.working} onChange={(event) => onDetailChange(event.target.value, index, "working")}>
+                                            <option value="3">3</option>
+                                            <option value="5">5</option>
+                                            <option value="8">8</option>
+                                    </select>
+                                </td>
                                 <td>
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
                                 </td>

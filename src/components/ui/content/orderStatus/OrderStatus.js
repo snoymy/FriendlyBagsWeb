@@ -10,10 +10,14 @@ const OrderStatus = () => {
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
 
+    useEffect(()=>{
+        getOrderHistory()
+    }, [])
+
     const getOrderHistory = async (name="*") => {
         console.log(name)
         let ret = await BackEndInterface.getOrderHistory(name)
-        setOrderHistory(getOrderHistory())
+        setOrderHistory(ret)
     }
 
     const modalContentPaper = (

@@ -125,21 +125,28 @@ let dataBase = {
     ]
 }
 
+/*
+if(sever...mothondd == "GET")
+{
+    array([])
+}
+*/
+
 const getOrderHistory = (name) => {
     return new Promise(async (resolve, reject)=>{
-        let fetchRes = await fetch("https://jsonplaceholder.typicode.com/todos/1").catch(err => console.log(err));
+        let fetchRes = await fetch("http://localhost:80/api/getOrder.php").catch(err => console.log(err));
+        console.log(fetchRes);
         let d = await fetchRes.json();
         console.log(d)
         let orderList = d;
 
-        let filteredOrder = [orderList]
-        resolve(filteredOrder)
-        /*
+        let filteredOrder = []
+        
         if(name === "*"){
             orderList.map((order, index) => {
                 filteredOrder = [...filteredOrder, order] 
             })
-            return filteredOrder 
+            resolve(filteredOrder)
         }
         orderList.map((order, index) => {
             if(order.name === name){
@@ -147,8 +154,7 @@ const getOrderHistory = (name) => {
             }
                 
         })
-        return filteredOrder
-        */
+        resolve(filteredOrder)
     })
 }
 
@@ -161,10 +167,25 @@ const getCustomer = () => {
 }
 
 const sentNewOrder = (newOrder) => {
+    return new Promise(async (resolve, reject)=>{
+        let fetchRes = await fetch("http://localhost:80/api/getOrder.php" , {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newOrder)
+        } 
+        ).catch(err => console.log(err));
+
+        resolve()
+    })
+    /*
     dataBase["order"] = [...dataBase["order"], ...newOrder]
     let newcustomer = {name: newOrder[0].name, address:newOrder[0].address}
     dataBase["customer"] = [...dataBase["customer"], newcustomer]
     console.log(dataBase["customer"])
+    */
 }
 
 const sentEditedOrder = (editedOrder) => {

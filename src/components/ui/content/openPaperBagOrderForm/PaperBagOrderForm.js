@@ -1,31 +1,11 @@
-import { Fragment, useState} from "react" 
+import { Fragment, useState, useEffect} from "react" 
 import styles from "./PaperBagOrderForm.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
-const getOrderHistory = (name="", filter={bagType:"กระดาษ"}) => {
-    console.log(name)
-    let ret = []
-    const item = BackEndInterface.getOrderHistory(name)
-
-    if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
-        item.map((subItem, subIndex)=>{
-            if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
-                console.log(subItem)
-                ret = [...ret, subItem]
-            }
-        })
-    }
-    else{
-        ret = item
-    }
-
-    return ret
-}
-
 const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName}) => {
     const [showModal, setShowModal] = useState(false)
-    const [orderHistory, setOrderHistory] = useState(getOrderHistory(customerName))
+    const [orderHistory, setOrderHistory] = useState([])
 
     const removeOrder = (index) => {
         let tempOrderDetails = []
@@ -60,6 +40,29 @@ const PaperBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName})
                 }
             )
         )
+    }
+
+    useEffect(()=>{
+        getOrderHistory(customerName)
+    }, [])
+
+    const getOrderHistory = async (name="*", filter={bagType:"กระดาษ"}) => {
+        console.log(name)
+        let ret = []
+        const item = await BackEndInterface.getOrderHistory(name)
+
+        if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
+            item.map((subItem, subIndex)=>{
+                if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
+                    console.log(subItem)
+                    ret = [...ret, subItem]
+                }
+            })
+        }
+        else{
+            ret = item
+        }
+        setOrderHistory(ret)
     }
 
     const addNewOrder = () => {
