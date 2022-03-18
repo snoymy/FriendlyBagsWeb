@@ -165,11 +165,36 @@ const getOrderHistory = (name) => {
 }
 
 const getBaseColor = () => {
-   return dataBase["baseColor"] 
+    return new Promise(async (resolve, reject)=>{
+        let fetchRes = await fetch("http://localhost:80/api/getOrder.php").catch(err => console.log(err));
+        console.log(fetchRes);
+        let d 
+        try {
+            d = await fetchRes.json();
+        } catch (error) {
+            d = []
+            reject(d)
+        }
+        console.log(d)
+
+        resolve(d)
+    })
 }
 
 const getCustomer = () => {
-    return dataBase["customer"]
+    return new Promise(async (resolve, reject)=>{
+        let fetchRes = await fetch("http://localhost:80/api/getOrder.php").catch(err => console.log(err));
+        console.log(fetchRes);
+        let d 
+        try {
+            d = await fetchRes.json();
+        } catch (error) {
+            d = []
+            reject(d)
+        }
+
+        resolve(d)
+    })
 }
 
 const sentNewOrder = (newOrder) => {
@@ -180,21 +205,13 @@ const sentNewOrder = (newOrder) => {
             headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                    title:"test",
-                    barcode:"00000",
-                    contact:"00000000",
-                    address:"dfdf",
-                    quantity:"0"
-                })
+            body: JSON.stringify(neworder)
         } 
         ).catch(err => console.log("post error", err));
 
-        console.log("fetch", fetchRes);
         let d = await fetchRes.json();
-        console.log("postrest", d);
 
-        resolve()
+        resolve(d)
     })
     /*
     dataBase["order"] = [...dataBase["order"], ...newOrder]

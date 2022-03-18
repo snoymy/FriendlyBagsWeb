@@ -1,17 +1,24 @@
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import styles from "./NameForm.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
-const getCustomerData = () => {
-    return BackEndInterface.getCustomer()
-}
-
 const NameForm = ({nameForm, setNameForm, menuValue}) => {
     const [showModal, setShowModal] = useState(false)
     const [searchResult, setSearchResult] = useState([])
+    const [customerlist, setCustomerlist] = useState()
     const [name, setName] = useState("")
     const [date, setDate] = useState("")
+
+    const getCustomerData = async () => {
+        const cus = await BackEndInterface.getCustomer()
+
+        setCustomerlist(cus)
+    }
+
+    useEffect(() => {
+        getCustomerData()
+    }, [])
     
     const onFormChange = (event, prop) => {
         console.log(event.target.value)
@@ -57,7 +64,7 @@ const NameForm = ({nameForm, setNameForm, menuValue}) => {
 
     const fetchName = () => {
         let temp = []
-        const customerData = getCustomerData() 
+        const customerData = customerlist 
         customerData.map((item) => {
             if(name !== ""){
                 if(item.name.toLowerCase().search(name.toLowerCase()) >= 0){

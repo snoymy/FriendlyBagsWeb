@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import PlasticBagOrder from "./PlasticBagOrderForm"
 import NameForm from "./NameForm"
 import styles from "./OpenPlasticBagOrderForm.module.css"
@@ -70,16 +70,6 @@ const getDesign = () => {
     return ""
 }
 
-const getColor = () => {
-    //get from database
-    return BackEndInterface.getBaseColor()
-}
-
-const getBaseColor = () => {
-    //get from database
-    return BackEndInterface.getBaseColor()
-}
-
 const getArea = () => {
     let area = []
     for(let i = 0; i < 3; i++){
@@ -111,6 +101,7 @@ const OpenPlasticBagOrderForm = () => {
     const [showCheckNameFormModal, setShowCheckNameFormModal] = useState(false)
     const [orderDetails, setOrderDetails] = useState([])
     const [addVAT, setAddVAT] = useState(false)
+    const [colorMenu, setColorMenu] = useState()
     const [nameForm, setNameForm] = useState({
         name:{value:"", editable:true},
         date:{value:"", editable:true},
@@ -118,6 +109,16 @@ const OpenPlasticBagOrderForm = () => {
         address:{value:"", editable:true},
         area:{value:"", editable:true},
     })
+
+    const getColor = async () => {
+        const colors = await BackEndInterface.getBaseColor()
+
+        setColorMenu(colors)
+    }
+
+    useEffect(() => {
+        getColor()
+    }, [])
 
     const resetPageValue = () => {
         setShowCheckNameFormModal(false)
@@ -144,7 +145,7 @@ const OpenPlasticBagOrderForm = () => {
         plasticThickness: getPlasticThickness(),
         printFace: getPrintFace(),
         colorAmount: getColorAmount(),
-        color: getColor(),
+        color: colorMenu,
         quantity: getQuantity(),
         unit: getUnit(),
         price: getPrice(),
