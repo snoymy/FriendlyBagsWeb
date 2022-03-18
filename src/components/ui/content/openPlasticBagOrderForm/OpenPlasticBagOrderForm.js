@@ -101,8 +101,9 @@ const getArea = () => {
     return area
 }
 
-const sentDataToBackEnd = (order) => {
-    BackEndInterface.sentNewOrder(order)
+const sentDataToBackEnd = async (order) => {
+    await BackEndInterface.sentNewOrder(order)
+    alert("Success!")
 }
 
 const OpenPlasticBagOrderForm = () => {
@@ -248,13 +249,12 @@ const OpenPlasticBagOrderForm = () => {
                 sameBlock:          item.sameBlock,
                 sameColor:          item.sameColor,
                 vat:                addVAT ? 7 : 0,
-                bagType:            "พลาสติก"
+                bagType:            "พลาสติก",
+                design:             item.design.value,
             }
             order = [...order, data]
         })
-        console.log(order)
         sentDataToBackEnd(order)
-        alert("Success!")
         resetPageValue()
     }
 

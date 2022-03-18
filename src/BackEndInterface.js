@@ -136,7 +136,13 @@ const getOrderHistory = (name) => {
     return new Promise(async (resolve, reject)=>{
         let fetchRes = await fetch("http://localhost:80/api/getOrder.php").catch(err => console.log(err));
         console.log(fetchRes);
-        let d = await fetchRes.json();
+        let d 
+        try {
+            d = await fetchRes.json();
+        } catch (error) {
+            d = []
+            reject(d)
+        }
         console.log(d)
         let orderList = d;
 
@@ -168,15 +174,25 @@ const getCustomer = () => {
 
 const sentNewOrder = (newOrder) => {
     return new Promise(async (resolve, reject)=>{
-        let fetchRes = await fetch("http://localhost:80/api/getOrder.php" , {
-            method: 'POST',
+        console.log("order", newOrder);
+        let fetchRes = await fetch("http://localhost:8626/api/v1/company/addCompany" , {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newOrder)
+            body: JSON.stringify({
+                    title:"test",
+                    barcode:"00000",
+                    contact:"00000000",
+                    address:"dfdf",
+                    quantity:"0"
+                })
         } 
-        ).catch(err => console.log(err));
+        ).catch(err => console.log("post error", err));
+
+        console.log("fetch", fetchRes);
+        let d = await fetchRes.json();
+        console.log("postrest", d);
 
         resolve()
     })

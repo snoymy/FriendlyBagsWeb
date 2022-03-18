@@ -20,8 +20,18 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
         setOrderDetails(tempOrderDetails)
     }
 
+    const getBase64 = (file, cb) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+        cb(reader.result);
+        };
+        reader.onerror = function (error) {
+        console.log("Error: ", error);
+        };
+    }
+
     const onDetailChange = (value, index, prop, state=true) => {
-        console.log(value)
         setOrderDetails(orderDetails.map(
                 (subItem, subIndex) => {
                     if(index !== subIndex) return {...subItem}
@@ -40,6 +50,16 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
                 }
             )
         )
+    }
+
+    const onUpload = (e, index) => {
+        if (e.target.files[0].size > 512000) {
+            alert("ขนาดไฟล์ต้องไม่เกิน 500kB");
+        } else {
+            getBase64(e.target.files[0], (base) => {
+            onDetailChange(base, index, "design");
+            });
+        }
     }
 
     useEffect(()=>{
@@ -130,7 +150,7 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
             emboss: {value:menuValue.emboss, editable:true},
             comment: {value:order.comment, editable:true},
             sameBlock: {value:order.sameBlock, editable:true},
-            sameColor: {value:order.sameColor, editable:true}
+            sameColor: {value:order.sameColor, editable:true},
         }
 
         setOrderDetails([...orderDetails, newOrder])
@@ -197,7 +217,7 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
                                 <label style={{width:"60%", textAlign:"left"}}>{item.bagSide} นิ้ว</label>
                             </td>
                             <td>
-                                <label style={{width:"60%", textAlign:"left"}}>{item.plasticThickness} gram</label>
+                                <label style={{width:"60%", textAlign:"left"}}>{item.plasticThickness} micron</label>
                             </td>
                             <td>
                                 <label style={{width:"60%", textAlign:"left"}}>{item.printFace}</label>
@@ -309,7 +329,7 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
                         <th><label>เนื้อถุง</label></th>
                         <th><label>สีเนื้อถุง</label></th>
                         <th><label>ข้างถุง</label></th>
-                        <th><label>ความหนาถุง</label></th>
+                        <th style={{minWidth:"150px"}}><label>ความหนาถุง</label></th>
                         <th><label>พิมพ์</label></th>
                         <th><label>จำนวนสีพิมพ์หน้า</label></th>
                         <th><label>หน้า</label></th>
@@ -392,7 +412,7 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
                             </td>
                             <td>
                                 <input style={{width:"30%"}}type="number" min={menuValue.plasticThickness.min} name="plasticThickness" id="plasticThickness" value={item.plasticThickness.value} disabled={!item.plasticThickness.editable} onChange={(event) => onDetailChange(event.target.value, index, "plasticThickness")}/>
-                                <label>gram</label>
+                                <label>micron</label>
                             </td>
                             <td>
                                 <input style={{width:"40%"}}type="number" min={menuValue.printFace.min} max={menuValue.printFace.max} name="printFace" id="printFace" value={item.printFace.value} disabled={!item.printFace.editable} onChange={(event) => onDetailChange(event.target.value, index, "printFace")}/>
@@ -544,7 +564,7 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
                                 <input type="number" min={menuValue.price.min} name="price" id="price" value={item.price.value} disabled={!item.price.editable} onChange={(event) => onDetailChange(event.target.value, index, "price")}/>
                             </td>
                             <td>
-                                <input type="file" id="file-upload" style={{display:"none"}}/>
+                                <input type="file" id="file-upload" onChange={(e)=>onUpload(e, index)} style={{display:"none"}}/>
                                 <button type="button" disabled={!item.design.editable} onClick={()=>document.getElementById("file-upload").click()}>Upload</button>
                             </td>
                             <td>
