@@ -6,7 +6,7 @@ import Modal from "../../modal/Modal"
 const NameForm = ({nameForm, setNameForm, menuValue}) => {
     const [showModal, setShowModal] = useState(false)
     const [searchResult, setSearchResult] = useState([])
-    const [customerlist, setCustomerlist] = useState()
+    const [customerlist, setCustomerlist] = useState([])
     const [name, setName] = useState("")
     const [date, setDate] = useState("")
 

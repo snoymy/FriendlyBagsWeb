@@ -160,6 +160,10 @@ const PlasticBagOrder = ({orderDetails, setOrderDetails, menuValue, customerName
         setOrderDetails([])
     }
 
+    if(!Array.isArray(orderHistory)){
+        return <></>
+    }
+
     const modalContent = (
         <div style={{padding: "30px"}}>
         <div className={styles["plastic-bag-order-table"]}>

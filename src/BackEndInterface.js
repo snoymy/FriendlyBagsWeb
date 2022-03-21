@@ -164,7 +164,24 @@ const getOrderHistory = (name) => {
     })
 }
 
-const getBaseColor = () => {
+const getColor = () => {
+    return new Promise(async (resolve, reject)=>{
+        let fetchRes = await fetch("http://localhost:80/api/getOrder.php").catch(err => console.log(err));
+        console.log(fetchRes);
+        let d 
+        try {
+            d = await fetchRes.json();
+        } catch (error) {
+            d = []
+            reject(d)
+        }
+        console.log(d)
+
+        resolve(d)
+    })
+}
+
+const getMatColor = () => {
     return new Promise(async (resolve, reject)=>{
         let fetchRes = await fetch("http://localhost:80/api/getOrder.php").catch(err => console.log(err));
         console.log(fetchRes);
@@ -205,7 +222,7 @@ const sentNewOrder = (newOrder) => {
             headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify(neworder)
+            body: JSON.stringify(newOrder)
         } 
         ).catch(err => console.log("post error", err));
 
@@ -226,4 +243,4 @@ const sentEditedOrder = (editedOrder) => {
     console.log(dataBase["customer"])
 }
 
-export default {getBaseColor, getCustomer, getOrderHistory, sentNewOrder, sentEditedOrder}
+export default {getColor, getMatColor, getCustomer, getOrderHistory, sentNewOrder, sentEditedOrder}

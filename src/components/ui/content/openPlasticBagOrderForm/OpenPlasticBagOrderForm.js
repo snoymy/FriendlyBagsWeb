@@ -18,10 +18,6 @@ const getBagMat = () => {
     return ["PE", "HD.A", "HD.B"]
 }
 
-const getBagMatColor = () => {
-    return ["Color1", "Color2", "Color3"]
-}
-
 const getBagSide = () => {
     return {min:0}
 }
@@ -102,6 +98,7 @@ const OpenPlasticBagOrderForm = () => {
     const [orderDetails, setOrderDetails] = useState([])
     const [addVAT, setAddVAT] = useState(false)
     const [colorMenu, setColorMenu] = useState()
+    const [matColorMenu, setMatColorMenu] = useState()
     const [nameForm, setNameForm] = useState({
         name:{value:"", editable:true},
         date:{value:"", editable:true},
@@ -111,13 +108,20 @@ const OpenPlasticBagOrderForm = () => {
     })
 
     const getColor = async () => {
-        const colors = await BackEndInterface.getBaseColor()
+        const colors = await BackEndInterface.getColor()
 
         setColorMenu(colors)
     }
 
+    const getBagMatColor = async () => {
+        const colors = await BackEndInterface.getMatColor()
+
+        setMatColorMenu(colors)
+    }
+
     useEffect(() => {
         getColor()
+        getMatColor()
     }, [])
 
     const resetPageValue = () => {
@@ -140,7 +144,7 @@ const OpenPlasticBagOrderForm = () => {
         type: getType(),
         bagSize: getBagSize(),
         bagMat: getBagMat(),
-        bagMatColor: getBagMatColor(),
+        bagMatColor: matColorMenu,
         bagSide: getBagSide(),
         plasticThickness: getPlasticThickness(),
         printFace: getPrintFace(),
