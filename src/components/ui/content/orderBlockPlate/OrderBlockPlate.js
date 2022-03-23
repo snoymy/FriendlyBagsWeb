@@ -32,7 +32,7 @@ const OrderBlockPlate = ({filter})=>{
     const getOrderHistory = async (name="*", filter={bagType:"พลาสติก"}) => {
         console.log(name)
         let ret = []
-        const item = await BackEndInterface.getOrderHistory(name)
+        let item = await BackEndInterface.getOrderHistory(name)
 
         if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
             item.map((subItem, subIndex)=>{

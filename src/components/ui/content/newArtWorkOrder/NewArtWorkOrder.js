@@ -5,7 +5,7 @@ import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
 const NewArtWorkOrder = ()=>{
-    const [orderHistory, setOrderHistory] = useState()
+    const [orderHistory, setOrderHistory] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
