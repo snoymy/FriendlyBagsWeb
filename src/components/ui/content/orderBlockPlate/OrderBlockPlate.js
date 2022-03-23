@@ -83,6 +83,9 @@ const OrderBlockPlate = ({filter})=>{
                 {orderHistory.map((item, index) => {
                     console.log("map", item)
                     if(index === viewIndex && item.color !== undefined){
+                    if(item.approveStatus !== "Confirm"){
+                        return <></>
+                    }
                     return (
                         <Fragment key={index}>
                         <tr>

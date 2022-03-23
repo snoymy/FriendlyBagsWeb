@@ -4,26 +4,6 @@ import containerStyles from "./container.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
-const getOrderHistory = (name="*", filter={}) => {
-    console.log(name)
-    let ret = []
-    const item = BackEndInterface.getOrderHistory(name)
-
-    if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
-        item.map((subItem, subIndex)=>{
-            if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
-                console.log(subItem)
-                ret = [...ret, subItem]
-            }
-        })
-    }
-    else{
-        ret = item
-    }
-
-    return ret
-}
-
 const sentDataToBackEnd = (order) => {
     BackEndInterface.sentEditedOrder(order)
 }

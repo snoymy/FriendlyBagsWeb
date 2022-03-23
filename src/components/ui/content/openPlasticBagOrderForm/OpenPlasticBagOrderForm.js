@@ -121,7 +121,7 @@ const OpenPlasticBagOrderForm = () => {
 
     useEffect(() => {
         getColor()
-        getMatColor()
+        getBagMatColor()
     }, [])
 
     const resetPageValue = () => {

@@ -1,19 +1,48 @@
-import { Fragment, useState} from "react" 
+import { Fragment, useState, useEffect} from "react" 
 import styles from "./NewArtWorkOrder.module.css"
 import containerStyles from "./container.module.css" 
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
-const getOrderHistory = (name="*") => {
-    console.log(name)
-    return BackEndInterface.getOrderHistory(name)
-}
-
 const NewArtWorkOrder = ()=>{
-    const [orderHistory, setOrderHistory] = useState(getOrderHistory())
+    const [orderHistory, setOrderHistory] = useState()
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
+
+    const onDetailChange = (value, index, prop) => {
+        console.log(value)
+        setOrderHistory(orderHistory.map(
+                (subItem, subIndex) => {
+                    if(index !== subIndex) return {...subItem}
+                    return {...subItem, [prop]: value}
+                }
+            )
+        )
+    }
+
+    useEffect(()=>{
+        getOrderHistory("*")
+    }, [])
+
+    const getOrderHistory = async (name="*", filter={bagType:"พลาสติก"}) => {
+        console.log(name)
+        let ret = []
+        const item = await BackEndInterface.getOrderHistory(name)
+
+        if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
+            item.map((subItem, subIndex)=>{
+                if(filter.bagType !== undefined ? subItem.bagType === filter.bagType : true){
+                    console.log(subItem)
+                    ret = [...ret, subItem]
+                }
+            })
+        }
+        else{
+            ret = item
+        }
+        setOrderHistory(ret)
+    }
 
     const modalContentPaper = (
         <div style={{padding: "30px"}}>
@@ -276,6 +305,7 @@ const NewArtWorkOrder = ()=>{
                         <tr><td><label>&nbsp;</label></td></tr>
                     {orderHistory.map((item, index) => {
                         console.log("map", item)
+                        if(item.approveNewArtWork !== "Confirm")
                         return (
                             <Fragment key={index}>
                             <tr>
@@ -303,7 +333,7 @@ const NewArtWorkOrder = ()=>{
                                     <button type="button" onClick={()=>document.getElementById("file-upload").click()}>Upload</button>
                                 </td>
                                 <td>
-                                    <button type="button">Confirm</button>
+                                    <button type="button" onPress={()=>{onDetailChange("Confirm", index, "approveNewArtWork")}}>Confirm</button>
                                 </td>
                             </tr>
                             </Fragment>

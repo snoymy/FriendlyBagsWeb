@@ -26,7 +26,7 @@ const ApproveOrder = ({filter})=>{
     }
 
     useEffect(()=>{
-        getOrderHistory(getOrderHistory("*", filter))
+        getOrderHistory("*", filter)
     }, [])
 
     const getOrderHistory = async (name="*", filter={}) => {
