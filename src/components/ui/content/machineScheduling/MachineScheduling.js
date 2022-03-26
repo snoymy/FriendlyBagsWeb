@@ -9,14 +9,15 @@ const sentDataToBackEnd = (order) => {
 }
 
 const MachineScheduling = ({filter})=>{
-    const [orderHistory, setOrderHistory] = useState([])
+    const [machineScheduling, setMachineScheduling] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
+    const [mc, setmc] = useState(1)
 
     const onDetailChange = (value, index, prop) => {
         console.log(value)
-        setOrderHistory(orderHistory.map(
+        setMachineScheduling(machineScheduling.map(
                 (subItem, subIndex) => {
                     if(index !== subIndex) return {...subItem}
                     return {...subItem, [prop]: value}
@@ -26,13 +27,12 @@ const MachineScheduling = ({filter})=>{
     }
 
     useEffect(()=>{
-        getOrderHistory("*", filter)
+        getMachineScheduling(mc)
     }, [])
 
-    const getOrderHistory = async (name="*", filter={}) => {
-        console.log(name)
+    const getMachineScheduling = async (mc) => {
         let ret = []
-        const item = await BackEndInterface.getOrderHistory(name)
+        const item = await BackEndInterface.getMC(mc)
 
         if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
             item.map((subItem, subIndex)=>{
@@ -45,11 +45,11 @@ const MachineScheduling = ({filter})=>{
         else{
             ret = item
         }
-        setOrderHistory(ret)
+        setMachineScheduling(ret)
     }
 
     const packDataAndSent = () => {
-        sentDataToBackEnd(orderHistory)
+        sentDataToBackEnd(machineScheduling)
         alert("Success")
         //window.location.reload();
     }
@@ -80,7 +80,7 @@ const MachineScheduling = ({filter})=>{
 
                 <tbody>
                     <tr><td><label>&nbsp;</label></td></tr>
-                {orderHistory.map((item, index) => {
+                {machineScheduling.map((item, index) => {
                     console.log("map", item)
                     if(index === viewIndex && item.color !== undefined){
                     return (
@@ -194,7 +194,7 @@ const MachineScheduling = ({filter})=>{
 
                 <tbody>
                     <tr><td><label>&nbsp;</label></td></tr>
-                {orderHistory.map((item, index) => {
+                {machineScheduling.map((item, index) => {
                     if(index === viewIndex && item.colorFront !== undefined && item.colorBack !== undefined)
                     return (
                         <Fragment key={index}>
@@ -299,12 +299,21 @@ const MachineScheduling = ({filter})=>{
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
         <div className={styles["check-artwork"]}>
+        <select style={{width: "100px", top: "25px", left: "-70px"}} name="status" id="status" value={mc} onChange={(event)=>setmc(event.target.value)}>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+            <option value={9}>9</option>
+        </select>
             <div className={styles["check-artwork-table"]}>
                 <table>
                     <thead>
                         <tr>
                             {/*}<th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>{*/}
-                            <th style={{width:"150px"}} rowSpan="2"><label></label></th>
                             <th style={{width:"150px"}} rowSpan="2"><label>ชื่องาน</label></th>
                             <th style={{width:"150px"}} colSpan="4"><label>ขนาด</label></th>
                             <th style={{width:"150px"}} rowSpan="2"><label>เนื้อถุง</label></th>
@@ -332,83 +341,75 @@ const MachineScheduling = ({filter})=>{
 
                     <tbody>
                         <tr><td><label>&nbsp;</label></td></tr>
-                    {orderHistory.map((item, index) => {
+                    {machineScheduling.map((item, index) => {
                         console.log("map", item)
                         return (
                             <Fragment key={index}>
                             <tr>
                                 <td>
-                                    <select style={{width: "50px", top: "25px", left: "-70px"}} name="status" id="status" value={item.working} onChange={(event) => onDetailChange(event.target.value, index, "working")}>
-                                            <option value="3">3</option>
-                                            <option value="5">5</option>
-                                            <option value="8">8</option>
-                                    </select>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.name}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
-                                </td>
-
-                                <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.width}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.height}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.plasticThickness}</label>
                                 </td>
 
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.bagMat}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.bagMatColor}</label>
                                 </td>
 
                                 <td>
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}><b>หน้า</b></label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.colorFront}</label>
                                 </td>
                                 <td>
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:"", }}><b>หลัง</b></label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.colorBack}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.design}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.quantity}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.unit}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.useTime}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.startTime}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.endTime}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.print}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.cut}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.qc}</label>
                                 </td>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>test</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.leader}</label>
                                 </td>
                             </tr>
                             </Fragment>
