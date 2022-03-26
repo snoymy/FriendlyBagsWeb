@@ -164,14 +164,36 @@ const getOrderHistory = (name) => {
     })
 }
 
-const getMC = (num) => {
+const getPCM = (num) => {
     return new Promise(async (resolve, reject)=>{
-        let fetchRes = await fetch("http://localhost:8626/api/v1/company/addCompany" , {
+        let fetchRes = await fetch("http://localhost:8626/api/v1/company/addCompany" + "?pcm=" + num, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify({mc:num})
+        } 
+        ).catch(err => console.log("post error", err));
+        console.log(fetchRes);
+        let d 
+        try {
+            d = await fetchRes.json();
+        } catch (error) {
+            d = []
+            reject(d)
+        }
+        console.log(d)
+
+        resolve(d)
+    })
+}
+
+const getMC = (num) => {
+    return new Promise(async (resolve, reject)=>{
+        let fetchRes = await fetch("http://localhost:8626/api/v1/company/addCompany" + "?mc=" + num, {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+            'Content-Type': 'application/json',
+            },
         } 
         ).catch(err => console.log("post error", err));
         console.log(fetchRes);
@@ -267,4 +289,4 @@ const sentEditedOrder = (editedOrder) => {
     console.log(dataBase["customer"])
 }
 
-export default {getColor, getMatColor, getCustomer, getOrderHistory, getMC, sentNewOrder, sentEditedOrder}
+export default {getColor, getMatColor, getCustomer, getOrderHistory, getMC, getPCM, sentNewOrder, sentEditedOrder}

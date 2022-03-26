@@ -4,20 +4,20 @@ import containerStyles from "./container.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../../ui/modal/Modal"
 
-const ProductionDetail = () => {
-    const [orderHistory, setOrderHistory] = useState([])
+const ProductionDetail = ({filter}) => {
+    const [productionDetail, setProductionDetail] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
+    const [pcm, setpcm] = useState(3)
 
     useEffect(()=>{
-        getOrderHistory(getOrderHistory("*", {bagType:"พลาสติก"}))
+        getProductionDetail(pcm)
     }, [])
 
-    const getOrderHistory = async (name="*", filter={}) => {
-        console.log(name)
+    const getProductionDetail = async (pcm) => {
         let ret = []
-        const item = await BackEndInterface.getOrderHistory(name)
+        const item = await BackEndInterface.getMC(pcm)
 
         if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
             item.map((subItem, subIndex)=>{
@@ -30,7 +30,7 @@ const ProductionDetail = () => {
         else{
             ret = item
         }
-        setOrderHistory(ret)
+        setProductionDetail(ret)
     }
 
     const modalContentPaper = (
@@ -59,7 +59,7 @@ const ProductionDetail = () => {
 
                 <tbody>
                     <tr><td><label>&nbsp;</label></td></tr>
-                {orderHistory.map((item, index) => {
+                {productionDetail.map((item, index) => {
                     console.log("map", item)
                     if(index === viewIndex && item.color !== undefined){
                     return (
@@ -166,7 +166,7 @@ const ProductionDetail = () => {
 
                 <tbody>
                     <tr><td><label>&nbsp;</label></td></tr>
-                {orderHistory.map((item, index) => {
+                {productionDetail.map((item, index) => {
                     if(index === viewIndex && item.colorFront !== undefined && item.colorBack !== undefined)
                     return (
                         <Fragment key={index}>
@@ -226,6 +226,11 @@ const ProductionDetail = () => {
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
         <div className={styles["production-detail"]}>
+        <select style={{width: "100px", top: "25px", left: "-70px"}} name="status" id="status" value={pcm} onChange={(event)=>setpcm(event.target.value)}>
+            <option value={3}>3</option>
+            <option value={5}>5</option>
+            <option value={8}>8</option>
+        </select>
             <div className={styles["production-detail-table"]}>
                 <table>
                     <thead>
@@ -243,7 +248,7 @@ const ProductionDetail = () => {
 
                     <tbody>
                         <tr><td><label>&nbsp;</label></td></tr>
-                    {orderHistory.map((item, index) => {
+                    {productionDetail.map((item, index) => {
                         console.log("map", item)
                         return (
                             <Fragment key={index}>
