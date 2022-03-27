@@ -9,7 +9,7 @@ const sentDataToBackEnd = (order) => {
 }
 
 const ProductionDetail = ({filter}) => {
-    const [productionDetail, setProductionDetail] = useState([{date:"test"},{date:"test2"}])
+    const [productionDetail, setProductionDetail] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
