@@ -4,12 +4,27 @@ import containerStyles from "./container.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../../ui/modal/Modal"
 
+const sentDataToBackEnd = (order) => {
+    BackEndInterface.sentNewOrder(order)
+}
+
 const ProductionDetail = ({filter}) => {
-    const [productionDetail, setProductionDetail] = useState([])
+    const [productionDetail, setProductionDetail] = useState([{date:"test"},{date:"test2"}])
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
     const [pcm, setpcm] = useState(3)
+
+    const onDetailChange = (value, index, prop) => {
+        console.log(value)
+        setProductionDetail(productionDetail.map(
+                (subItem, subIndex) => {
+                    if(index !== subIndex) return {...subItem}
+                    return {...subItem, [prop]: value}
+                }
+            )
+        )
+    }
 
     useEffect(()=>{
         getProductionDetail(pcm)
@@ -31,6 +46,12 @@ const ProductionDetail = ({filter}) => {
             ret = item
         }
         setProductionDetail(ret)
+    }
+
+    const packDataAndSent = () => {
+        sentDataToBackEnd(productionDetail)
+        alert("Success")
+        //window.location.reload();
     }
 
     const modalContentPaper = (
@@ -226,16 +247,12 @@ const ProductionDetail = ({filter}) => {
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
         <div className={styles["production-detail"]}>
-        <select style={{width: "100px", top: "25px", left: "-70px"}} name="status" id="status" value={pcm} onChange={(event)=>setpcm(event.target.value)}>
-            <option value={3}>3</option>
-            <option value={5}>5</option>
-            <option value={8}>8</option>
-        </select>
             <div className={styles["production-detail-table"]}>
                 <table>
                     <thead>
                         <tr>
                             {/*}<th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>{*/}
+                            <th style={{width:"150px"}}><label></label></th>
                             <th style={{width:"150px"}}><label>วันที่/เวลา</label></th>
                             <th style={{width:"150px"}}><label>รับออร์เดอร์</label></th>
                             <th style={{width:"300px"}}><label>ชื่องาน</label></th>
@@ -253,6 +270,13 @@ const ProductionDetail = ({filter}) => {
                         return (
                             <Fragment key={index}>
                             <tr>
+                                <td>
+                                    <select style={{width: "100px", top: "25px", left: "-70px"}} name="pcm" id="pcm" value={item.PCM} onChange={(event)=>onDetailChange(event.target.value, index, "PCM")}>
+                                        <option value={3}>3</option>
+                                        <option value={5}>5</option>
+                                        <option value={8}>8</option>
+                                    </select>
+                                </td>
                                 <td>
                                     {/*}<label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>{*/}
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.date}</label>
@@ -283,6 +307,7 @@ const ProductionDetail = ({filter}) => {
                 </table>
                 <Modal style={{width:"92%"}} content={modalContent(showBagType)} showModal={showModal} setShowModal={setShowModal}/>
             </div>
+            <button type="button" onClick={packDataAndSent}>Submit</button>
         </div>
         </div>
        

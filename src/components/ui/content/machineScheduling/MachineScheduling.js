@@ -5,7 +5,7 @@ import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../modal/Modal"
 
 const sentDataToBackEnd = (order) => {
-    BackEndInterface.sentEditedOrder(order)
+    BackEndInterface.sentNewOrder(order)
 }
 
 const MachineScheduling = ({filter})=>{
@@ -419,7 +419,9 @@ const MachineScheduling = ({filter})=>{
                 </table>
             <Modal style={{width:"92%"}} content={modalContent(showBagType)} showModal={showModal} setShowModal={setShowModal}/>
             </div>
+            {/*
             <button type="button" onClick={packDataAndSent}>Submit</button>
+            */}
         </div>
         </div>
        
