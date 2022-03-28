@@ -4,8 +4,9 @@ import containerStyles from "./container.module.css"
 import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../../ui/modal/Modal"
 
-const sentDataToBackEnd = (order) => {
-    BackEndInterface.sentNewOrder(order)
+const sentDataToBackEnd = async (order) => {
+    await BackEndInterface.sentNewOrder(order)
+    alert("Success!")
 }
 
 const ProductionDetail = ({filter}) => {
