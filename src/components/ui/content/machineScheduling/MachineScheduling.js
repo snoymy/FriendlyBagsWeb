@@ -29,7 +29,7 @@ const MachineScheduling = ({filter})=>{
 
     useEffect(()=>{
         getMachineScheduling(mc)
-    }, [])
+    }, [mc])
 
     const getMachineScheduling = async (mc) => {
         let ret = []
@@ -46,7 +46,7 @@ const MachineScheduling = ({filter})=>{
         else{
             ret = item
         }
-        setMachineScheduling(ret)
+        setMachineScheduling(item)
     }
 
     const packDataAndSent = () => {
@@ -348,7 +348,7 @@ const MachineScheduling = ({filter})=>{
                             <Fragment key={index}>
                             <tr>
                                 <td>
-                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.name}</label>
+                                    <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.workName}</label>
                                 </td>
                                 <td>
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.width}</label>

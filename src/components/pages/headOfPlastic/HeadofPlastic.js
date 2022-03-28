@@ -23,7 +23,7 @@ const HeadOfPlastic = () => {
                 )
             case "machine-scheduling":
                 return (
-                    <MachineScheduling/>
+                    <MachineScheduling filter={{bagType:"พลาสติก"}}/>
                 )
             case "order-status":
                 return (

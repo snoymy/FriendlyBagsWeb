@@ -14,7 +14,7 @@ const ProductionDetail = ({filter}) => {
     const [showModal, setShowModal] = useState(false)
     const [viewIndex, setViewIndex] = useState(0)
     const [showBagType, setShowBagType] = useState("กระดาษ")
-    const [pcm, setpcm] = useState(3)
+    const [pmc, setpmc] = useState(3)
 
     const onDetailChange = (value, index, prop) => {
         console.log(value)
@@ -28,12 +28,12 @@ const ProductionDetail = ({filter}) => {
     }
 
     useEffect(()=>{
-        getProductionDetail(pcm)
+        getProductionDetail(pmc)
     }, [])
 
-    const getProductionDetail = async (pcm) => {
+    const getProductionDetail = async (pmc) => {
         let ret = []
-        const item = await BackEndInterface.getMC(pcm)
+        const item = await BackEndInterface.getMC(pmc)
 
         if(!(Object.keys(filter).length === 0 && filter.constructor === Object)){
             item.map((subItem, subIndex)=>{
@@ -46,11 +46,17 @@ const ProductionDetail = ({filter}) => {
         else{
             ret = item
         }
-        setProductionDetail(ret)
+        setProductionDetail(item)
     }
 
     const packDataAndSent = () => {
-        sentDataToBackEnd(productionDetail)
+        let tmp = []
+
+        productionDetail.map((item)=>{
+            tmp = [...tmp, {...item, PMC:pmc}]
+        })
+        
+        sentDataToBackEnd(tmp)
         alert("Success")
         //window.location.reload();
     }
@@ -248,12 +254,16 @@ const ProductionDetail = ({filter}) => {
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
         <div className={styles["production-detail"]}>
+        <select style={{width: "100px", top: "25px", left: "-70px"}} name="pmc" id="pmc" value={pmc} onChange={(event)=>setpmc(event.target.value)}>
+            <option value={3}>3</option>
+            <option value={5}>5</option>
+            <option value={8}>8</option>
+        </select>
             <div className={styles["production-detail-table"]}>
                 <table>
                     <thead>
                         <tr>
                             {/*}<th><label style={{paddingLeft:"10px", paddingRight:"10px"}}>ลำดับที่</label></th>{*/}
-                            <th style={{width:"150px"}}><label></label></th>
                             <th style={{width:"150px"}}><label>วันที่/เวลา</label></th>
                             <th style={{width:"150px"}}><label>รับออร์เดอร์</label></th>
                             <th style={{width:"300px"}}><label>ชื่องาน</label></th>
@@ -271,13 +281,6 @@ const ProductionDetail = ({filter}) => {
                         return (
                             <Fragment key={index}>
                             <tr>
-                                <td>
-                                    <select style={{width: "100px", top: "25px", left: "-70px"}} name="pcm" id="pcm" value={item.PCM} onChange={(event)=>onDetailChange(event.target.value, index, "PCM")}>
-                                        <option value={3}>3</option>
-                                        <option value={5}>5</option>
-                                        <option value={8}>8</option>
-                                    </select>
-                                </td>
                                 <td>
                                     {/*}<label style={{paddingLeft:"10px", paddingRight:"10px"}}>{index+1}</label>{*/}
                                     <label style={{paddingLeft:"10px", paddingRight:"10px", width:""}}>{item.date}</label>
