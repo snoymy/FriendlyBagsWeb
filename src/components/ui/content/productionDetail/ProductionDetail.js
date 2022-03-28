@@ -5,7 +5,7 @@ import BackEndInterface from "../../../../BackEndInterface"
 import Modal from "../../../ui/modal/Modal"
 
 const sentDataToBackEnd = async (order) => {
-    await BackEndInterface.sentNewOrder(order)
+    await BackEndInterface.sentPMC(order)
     alert("Success!")
 }
 

@@ -284,9 +284,38 @@ const sentNewOrder = (newOrder) => {
     */
 }
 
+const sentPMC = (newOrder) => {
+    return new Promise(async (resolve, reject)=>{
+        console.log("order", newOrder);
+        let fetchRes = await fetch("http://localhost:8626/api/v1/company/addCompany" , {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newOrder)
+        } 
+        ).catch(err => console.log("post error", err));
+
+        let d = []
+        try{
+            d = await fetchRes.json();
+        } catch (error) {
+            d = []
+            reject(d)
+        }
+        resolve(d)
+    })
+    /*
+    dataBase["order"] = [...dataBase["order"], ...newOrder]
+    let newcustomer = {name: newOrder[0].name, address:newOrder[0].address}
+    dataBase["customer"] = [...dataBase["customer"], newcustomer]
+    console.log(dataBase["customer"])
+    */
+}
+
 const sentEditedOrder = (editedOrder) => {
     dataBase["order"] = editedOrder
     console.log(dataBase["customer"])
 }
 
-export default {getColor, getMatColor, getCustomer, getOrderHistory, getMC, getPCM, sentNewOrder, sentEditedOrder}
+export default {getColor, getMatColor, getCustomer, getOrderHistory, getMC, getPCM, sentNewOrder, sentPMC, sentEditedOrder}

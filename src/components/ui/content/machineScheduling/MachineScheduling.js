@@ -54,7 +54,7 @@ const MachineScheduling = ({filter})=>{
         alert("Success")
         //window.location.reload();
     }
-    
+    /*
     const modalContentPaper = (
         <div style={{padding: "30px"}}>
             <div className={styles["check-artwork-table"]} style={{paddingBottom:"50px"}}>
@@ -296,6 +296,7 @@ const MachineScheduling = ({filter})=>{
             return modalContentPlastic
         }
     }
+    */
 
     return (
         <div className={containerStyles["container"]} style={{padding: "30px"}}>
@@ -418,7 +419,7 @@ const MachineScheduling = ({filter})=>{
                     })}
                     </tbody>
                 </table>
-            <Modal style={{width:"92%"}} content={modalContent(showBagType)} showModal={showModal} setShowModal={setShowModal}/>
+            {/*<Modal style={{width:"92%"}} content={modalContent(showBagType)} showModal={showModal} setShowModal={setShowModal}/>*/}
             </div>
             {/*
             <button type="button" onClick={packDataAndSent}>Submit</button>
